@@ -2474,12 +2474,21 @@ function toggleEntries(date) {
   if (!isOpen) {
     el.classList.add('open');
     arrow.classList.add('open');
-    /* 每次打開都重新從 API 抓最新 */
     el.innerHTML = '<div class="loading">載入中...</div>';
     apiGet('getRecords', { date: date })
       .then(function(records) {
         state.cache[date] = records;
-        renderEntries(date, el);
+        /* 🩺 強制 debug 模式：把原始資料 dump 在畫面上 */
+        var debugDump = '<pre style="background:#000;color:#0f0;padding:12px;font-size:10px;font-family:monospace;white-space:pre-wrap;word-break:break-all;border-radius:8px;margin-bottom:12px;">'
+          + '🩺 查詢日期: ' + date + '\n'
+          + 'API 回傳筆數: ' + records.length + '\n\n'
+          + JSON.stringify(records, null, 2)
+          + '</pre>';
+        el.innerHTML = debugDump;
+        /* 仍然嘗試正常渲染 */
+        var realContainer = document.createElement('div');
+        el.appendChild(realContainer);
+        renderEntries(date, realContainer);
       })
       .catch(function(err) {
         el.innerHTML = '<div class="entry-empty">讀取失敗：' + (err.message || err) + '</div>';
