@@ -2451,12 +2451,43 @@ function renderTripBody() {
   data.days.forEach(function(day) { loadDayCount(day.date); });
 }
 
+/* 全部記錄都從 getAllRecords 抓，前端自己依日期分 */
+var _allRecords = null;
+var _allRecordsLoading = false;
+var _allRecordsCallbacks = [];
+
+function fetchAllRecords(force) {
+  return new Promise(function(resolve, reject) {
+    if (_allRecords && !force) { resolve(_allRecords); return; }
+    if (_allRecordsLoading) { _allRecordsCallbacks.push(resolve); return; }
+    _allRecordsLoading = true;
+    apiGet('getAllRecords')
+      .then(function(records) {
+        _allRecords = records || [];
+        _allRecordsLoading = false;
+        resolve(_allRecords);
+        _allRecordsCallbacks.forEach(function(cb) { cb(_allRecords); });
+        _allRecordsCallbacks = [];
+      })
+      .catch(function(err) {
+        _allRecordsLoading = false;
+        _allRecordsCallbacks = [];
+        reject(err);
+      });
+  });
+}
+
+function recordsForDate(date) {
+  if (!_allRecords) return [];
+  /* 在 getAllRecords 沒提供 rowIndex，這裡的記錄不能刪除（這版先不支援）*/
+  return _allRecords.filter(function(r) {
+    return String(r.date).substring(0, 10) === String(date).substring(0, 10);
+  });
+}
+
 function loadDayCount(date) {
-  apiGet('getRecords', { date: date })
-    .then(function(records) {
-      state.cache[date] = records;
-      updateDayCount(date, records);
-    })
+  fetchAllRecords()
+    .then(function() { updateDayCount(date, recordsForDate(date)); })
     .catch(function() { updateDayCount(date, []); });
 }
 
@@ -2475,20 +2506,10 @@ function toggleEntries(date) {
     el.classList.add('open');
     arrow.classList.add('open');
     el.innerHTML = '<div class="loading">載入中...</div>';
-    apiGet('getRecords', { date: date })
-      .then(function(records) {
-        state.cache[date] = records;
-        /* 🩺 強制 debug 模式：把原始資料 dump 在畫面上 */
-        var debugDump = '<pre style="background:#000;color:#0f0;padding:12px;font-size:10px;font-family:monospace;white-space:pre-wrap;word-break:break-all;border-radius:8px;margin-bottom:12px;">'
-          + '🩺 查詢日期: ' + date + '\n'
-          + 'API 回傳筆數: ' + records.length + '\n\n'
-          + JSON.stringify(records, null, 2)
-          + '</pre>';
-        el.innerHTML = debugDump;
-        /* 仍然嘗試正常渲染 */
-        var realContainer = document.createElement('div');
-        el.appendChild(realContainer);
-        renderEntries(date, realContainer);
+    /* 強制重抓最新 */
+    fetchAllRecords(true)
+      .then(function() {
+        renderEntries(date, el);
       })
       .catch(function(err) {
         el.innerHTML = '<div class="entry-empty">讀取失敗：' + (err.message || err) + '</div>';
@@ -2500,13 +2521,13 @@ function toggleEntries(date) {
 }
 
 function renderEntries(date, container) {
-  var records = state.cache[date] || [];
+  var records = recordsForDate(date);
   var real = records.filter(function(r) { return !r.isFee; });
   if (real.length === 0) {
     container.innerHTML = '<div class="entry-empty">尚無記錄，按下方 ＋ 新增</div>';
     return;
   }
-  var html = '<div class="entries-hint">↕ 長按可拖曳排序</div>';
+  var html = '<div class="entries-hint">共 ' + real.length + ' 筆</div>';
   real.forEach(function(r, i) {
     var photoHtml = r.photoUrl
       ? '<div class="entry-photo-wrap"><img src="' + r.photoUrl + '" loading="lazy"></div>'
@@ -2516,13 +2537,10 @@ function renderEntries(date, container) {
       expHtml = '<div class="entry-foot">'
         + '<span class="entry-cat">' + (r.category || '') + '</span>'
         + '<span class="entry-amt">€' + Number(r.amountEUR).toFixed(2) + '</span>'
-        + '<span class="entry-pay">' + (r.payment === '刷卡' ? '💳 +1.5%' : '💵 現金') + '</span>'
-        + '<button class="entry-del" onclick="deleteEntry(' + r.rowIndex + ',\'' + date + '\')">✕</button>'
+        + '<span class="entry-pay">' + (r.payment === '刷卡' ? '💳' : '💵') + ' ' + (r.payment || '') + '</span>'
         + '</div>';
     }
-    html += '<div class="entry-card" draggable="true" data-i="' + i + '" '
-      + 'ondragstart="onDragStart(event)" ondragover="onDragOver(event)" '
-      + 'ondrop="onDrop(event,\'' + date + '\')" ondragend="onDragEnd(event)">'
+    html += '<div class="entry-card">'
       + photoHtml
       + '<div class="entry-body">'
       + '<div class="entry-note">' + escHtml(r.note || '') + '</div>'
@@ -2681,20 +2699,21 @@ function saveRecord() {
   apiPost('saveRecord', data)
     .then(function() {
       btn.disabled = false; btn.textContent = '儲存記錄';
-      /* 完全清掉 cache，下次讀會重新從 Sheet 抓 */
-      delete state.cache[date];
-      /* 也清空所有記錄統計快取 */
+      /* 強制重抓所有記錄 */
+      _allRecords = null;
       state.allRecords = [];
       closeModal();
       showToast('✓ 已儲存');
       /* 延遲重新載入，給 Sheet commit 時間 */
       setTimeout(function() {
-        loadDayCount(date);
-        var el = document.getElementById('entries-' + date);
-        if (el && el.classList.contains('open')) {
-          renderEntries(date, el);
-        }
-      }, 800);
+        fetchAllRecords(true).then(function() {
+          loadDayCount(date);
+          var el = document.getElementById('entries-' + date);
+          if (el && el.classList.contains('open')) {
+            renderEntries(date, el);
+          }
+        });
+      }, 1200);
     })
     .catch(function(err) {
       btn.disabled = false; btn.textContent = '儲存記錄';
