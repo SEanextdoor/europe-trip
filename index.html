@@ -1,0 +1,2927 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>歐遊紀事</title>
+
+<!-- PWA / iOS 加到主畫面 設定 -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="歐遊紀事">
+<meta name="theme-color" content="#FF6B3D">
+<meta name="format-detection" content="telephone=no">
+
+<!-- 內嵌 SVG 主畫面圖示（橙色圓 + 白色飛機）-->
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23FFB940'/><stop offset='0.5' stop-color='%23FF6B3D'/><stop offset='1' stop-color='%23E63946'/></linearGradient></defs><rect width='180' height='180' rx='40' fill='url(%23g)'/><text x='90' y='118' text-anchor='middle' font-size='90' fill='white'>%E2%9C%88</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700;900&family=Noto+Sans+TC:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style id="base-styles">
+:root {
+  --bg:        #FFF8F0;
+  --bg-tint:   #FFF1E0;
+  --surface:   #FFFFFF;
+  --surface-2: #FFFAF2;
+  --line:      #F0E5D8;
+  --line-strong: #D4C4AC;
+  --ink:       #1A1410;
+  --ink-2:     #4A3D33;
+  --ink-3:     #8A7A6A;
+  --ink-4:     #B8A898;
+  --accent:    #FF6B3D;        /* 強烈橙 — 主色 */
+  --accent-2:  #FFB940;        /* 暖黃 */
+  --hot:       #E63946;        /* 鮮紅 */
+  --cool:      #2EC4B6;        /* 薄荷綠 */
+  --deep:      #14213D;        /* 深藍 */
+  --bcn:       #FF6B3D;
+  --mad:       #E63946;
+  --lis:       #2EC4B6;
+  --par:       #14213D;
+  --shadow-sm: 0 1px 2px rgba(20,15,10,0.06), 0 2px 8px rgba(20,15,10,0.04);
+  --shadow-md: 0 4px 12px rgba(20,15,10,0.08), 0 12px 32px rgba(20,15,10,0.06);
+  --shadow-lg: 0 8px 24px rgba(20,15,10,0.12), 0 24px 48px rgba(20,15,10,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+/* Apps Script iframe 容器強制撐滿 — 這是關鍵 */
+html, body {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100%;
+  background: var(--bg);
+  font-family: 'Plus Jakarta Sans', 'Noto Sans TC', system-ui, sans-serif;
+  color: var(--ink);
+  font-size: 14px;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "palt", "kern";
+}
+
+/* Apps Script 會在 body 外包一層 div / iframe，強制它們也撐滿 */
+body > div,
+body > iframe {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#app {
+  display: flex; flex-direction: column;
+  height: 100vh; height: 100dvh;
+  width: 100%;
+  margin: 0 auto;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 大螢幕（如桌機 Chrome）才框成 480 寬，手機完全撐滿 */
+@media (min-width: 540px) {
+  #app {
+    max-width: 480px;
+    box-shadow: 0 0 80px rgba(20,15,10,0.1);
+  }
+}
+
+/* 手機上撐滿寬度，不要被 480px 框死 */
+@media (max-width: 480px) {
+  #app {
+    max-width: 100%;
+    box-shadow: none;
+  }
+}
+
+/* ════════════════════════════════════════
+   Header — 大圖背景 hero
+════════════════════════════════════════ */
+#header {
+  flex-shrink: 0;
+  background: var(--surface);
+  position: relative;
+  padding-top: env(safe-area-inset-top, 0);
+  z-index: 10;
+}
+
+.hero {
+  position: relative;
+  height: 168px;
+  overflow: hidden;
+  background-color: var(--deep);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.05);
+  transition: opacity 0.6s ease, background-image 0.6s ease;
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(20,15,10,0.15) 0%, rgba(20,15,10,0.55) 100%);
+}
+
+.hero-content {
+  position: absolute;
+  left: 0; right: 0; bottom: 0; top: 0;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #fff;
+  z-index: 2;
+}
+.hero-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 12px;
+}
+.hero-brand {
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-mark {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.hero-brand-text { line-height: 1.1; }
+.hero-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px; font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.hero-title-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 13px;
+  opacity: 0.9;
+  margin-top: 1px;
+  letter-spacing: 0.02em;
+}
+
+.hero-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.95);
+  color: var(--ink);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.hero-pill::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(255,107,61,0.25);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.6; }
+}
+
+.hero-bottom {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.hero-city {
+  font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+  font-size: 30px; font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.hero-city-en {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  opacity: 0.85;
+  text-transform: uppercase;
+}
+
+/* 旅程進度條 */
+.trip-progress {
+  background: var(--surface);
+  padding: 14px 20px 12px;
+  position: relative;
+  border-bottom: 1px solid var(--line);
+}
+.tp-meta {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 8px;
+}
+.tp-status {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; font-weight: 600;
+  color: var(--ink-2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.tp-status .num {
+  color: var(--accent);
+  font-weight: 800;
+  margin-right: 2px;
+}
+.tp-day {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: var(--ink-2);
+}
+.tp-day .live {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--cool);
+  margin-right: 6px;
+  box-shadow: 0 0 0 3px rgba(46,196,182,0.25);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.tp-track {
+  height: 6px;
+  background: var(--line);
+  border-radius: 999px;
+  position: relative;
+  overflow: visible;
+}
+.tp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-2), var(--accent), var(--hot));
+  border-radius: 999px;
+  position: relative;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 12px rgba(255,107,61,0.4);
+}
+.tp-plane {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  font-size: 16px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none; z-index: 2;
+}
+
+.tp-stops {
+  display: flex; justify-content: space-between;
+  margin-top: 8px;
+  padding: 0 2px;
+}
+.tp-stops span {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--ink-3);
+  position: relative;
+}
+.tp-stops span.passed { color: var(--accent); }
+.tp-stops span.passed::after {
+  content: '';
+  position: absolute;
+  top: -10px; left: 50%;
+  transform: translateX(-50%);
+  width: 4px; height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+/* ════════════════════════════════════════
+   Content
+════════════════════════════════════════ */
+#content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+#content::-webkit-scrollbar { width: 0; }
+
+.tab-panel { display: none; padding-bottom: 100px; }
+.tab-panel.active { display: block; animation: fade-up 0.4s ease-out; }
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* ════════════════════════════════════════
+   城市切換 — 大小不一的卡片風
+════════════════════════════════════════ */
+.city-row {
+  display: flex; gap: 8px;
+  padding: 14px 16px 14px;
+  overflow-x: auto;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  scrollbar-width: none;
+}
+.city-row::-webkit-scrollbar { display: none; }
+
+.city-btn {
+  white-space: nowrap;
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-2);
+  cursor: pointer;
+  border-radius: 999px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.02em;
+}
+.city-btn .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: all 0.25s;
+}
+.city-btn:hover {
+  border-color: var(--ink-2);
+  transform: translateY(-1px);
+}
+.city-btn.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+  box-shadow: 0 4px 12px rgba(20,15,10,0.2);
+  transform: translateY(-1px);
+}
+.city-btn.active .dot {
+  width: 8px; height: 8px;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.2);
+}
+
+/* ════════════════════════════════════════
+   城市資訊 — 帶照片 banner
+════════════════════════════════════════ */
+.city-info {
+  position: relative;
+  padding: 18px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.city-meta-row {
+  display: flex; gap: 14px;
+  flex-wrap: wrap;
+}
+.city-meta-item {
+  display: flex; align-items: center; gap: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  color: var(--ink-2);
+  font-weight: 500;
+}
+.city-meta-item .ico {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--bg-tint);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ════════════════════════════════════════
+   每日區塊
+════════════════════════════════════════ */
+.day-block {
+  padding: 0 20px;
+  position: relative;
+}
+
+.day-label {
+  display: flex; align-items: center; gap: 12px;
+  padding: 22px 0 14px;
+}
+.day-label .day-date {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+.day-label .day-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  background: var(--ink);
+  color: #fff;
+  padding: 3px 9px;
+  border-radius: 999px;
+  margin-left: auto;
+}
+.day-label .day-tag .num {
+  font-weight: 700;
+  color: var(--accent-2);
+}
+
+/* 時間軸 */
+.tl-item {
+  display: flex; gap: 14px;
+  margin-bottom: 14px;
+  position: relative;
+}
+.tl-dot-col {
+  display: flex; flex-direction: column;
+  align-items: center;
+  padding-top: 4px;
+  width: 18px;
+  flex-shrink: 0;
+  position: relative;
+}
+.tl-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid currentColor;
+  box-shadow: 0 0 0 3px var(--bg);
+  position: relative;
+  flex-shrink: 0;
+  z-index: 2;
+}
+.tl-line {
+  width: 2px;
+  flex: 1;
+  background: var(--line-strong);
+  margin-top: 4px;
+  min-height: 24px;
+  border-radius: 1px;
+}
+
+.tl-card {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s;
+  min-width: 0;
+}
+.tl-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--line-strong);
+}
+
+.tl-head {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 4px;
+}
+.tl-icon {
+  width: 32px; height: 32px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.icon-transport { background: rgba(46,196,182,0.15); color: #1a8c80; }
+.icon-hotel     { background: rgba(20,33,61,0.1);    color: var(--deep); }
+.icon-activity  { background: rgba(255,107,61,0.15); color: var(--accent); }
+
+.tl-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14.5px; font-weight: 700;
+  color: var(--ink);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+.tl-desc {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  color: var(--ink-3);
+  margin-top: 3px;
+  line-height: 1.5;
+}
+
+.tl-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10.5px; font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+  margin-top: 8px;
+  letter-spacing: 0.04em;
+}
+.badge-transport { background: rgba(46,196,182,0.15); color: #1a8c80; }
+.badge-hotel     { background: rgba(20,33,61,0.1);    color: var(--deep); }
+.badge-activity  { background: rgba(255,107,61,0.15); color: var(--accent); }
+
+/* PDF 按鈕 */
+.pdf-row {
+  display: flex; flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+}
+.pdf-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; font-weight: 600;
+  color: var(--ink-2);
+  background: var(--bg-tint);
+  border: none;
+  border-radius: 8px;
+  padding: 5px 10px 5px 8px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: all 0.2s;
+}
+.pdf-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.pdf-btn .pdf-icon {
+  font-size: 13px;
+}
+
+/* 今日記錄折疊 */
+.review-toggle {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  margin: 16px 0;
+  background: linear-gradient(135deg, #FFF1E0 0%, #FFE4D0 100%);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  width: 100%;
+  font-family: inherit;
+  position: relative;
+  transition: all 0.25s;
+  overflow: hidden;
+}
+.review-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 100% 0%, rgba(255,107,61,0.2), transparent 70%);
+}
+.review-toggle:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+.review-toggle-icon {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(255,107,61,0.4);
+}
+.review-toggle-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13.5px; font-weight: 700;
+  color: var(--ink);
+  flex: 1; text-align: left;
+  letter-spacing: -0.01em;
+  position: relative;
+  z-index: 1;
+}
+.review-toggle-count {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11.5px; font-weight: 600;
+  color: var(--ink-2);
+  background: rgba(255,255,255,0.7);
+  padding: 3px 10px;
+  border-radius: 999px;
+  position: relative;
+  z-index: 1;
+}
+.review-toggle-arrow {
+  font-size: 11px;
+  color: var(--ink-2);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+}
+.review-toggle-arrow.open { transform: rotate(90deg); }
+
+.day-entries {
+  display: none;
+  padding-bottom: 8px;
+}
+.day-entries.open { display: block; animation: unfold 0.4s; }
+@keyframes unfold {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.entries-hint {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10.5px; font-weight: 500;
+  color: var(--ink-4);
+  text-align: center;
+  padding: 0 0 10px;
+  letter-spacing: 0.06em;
+}
+
+/* 拍立得記錄卡 */
+.entry-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 8px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-md);
+  cursor: grab;
+  position: relative;
+  transition: all 0.25s;
+  border: 1px solid var(--line);
+}
+.entry-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.entry-card.dragging { opacity: 0.5; }
+.entry-card.drag-over {
+  border: 2px dashed var(--accent);
+  background: var(--bg-tint);
+}
+
+.entry-photo-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #FFE4D0 0%, #FFD0B0 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.entry-photo-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.entry-photo-wrap.no-photo {
+  aspect-ratio: auto;
+  height: 0;
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+.entry-body {
+  padding: 4px 8px 8px;
+}
+.entry-note {
+  font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  word-break: break-word;
+}
+.entry-foot {
+  display: flex; align-items: center; gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.entry-cat {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10.5px; font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--bg-tint);
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+.entry-amt {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px; font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.entry-pay {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; font-weight: 600;
+  color: var(--ink-3);
+}
+.entry-del {
+  margin-left: auto;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  font-size: 12px;
+  color: var(--ink-3);
+  background: var(--bg-tint);
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.entry-del:hover {
+  background: var(--hot);
+  color: #fff;
+}
+
+.entry-empty {
+  text-align: center;
+  padding: 24px 16px;
+  background: var(--surface);
+  border: 1px dashed var(--line-strong);
+  border-radius: 14px;
+  margin-bottom: 8px;
+  color: var(--ink-3);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+.entry-empty::before {
+  content: '✦';
+  display: block;
+  font-size: 20px;
+  color: var(--accent-2);
+  margin-bottom: 6px;
+}
+</style>
+</head>
+<style>
+/* ════════════════════════════════════════
+   Bottom navigation（floating）
+════════════════════════════════════════ */
+.bottom-tabs {
+  position: fixed;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 360px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(20, 15, 10, 0.08);
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 8px;
+  z-index: 100;
+  box-shadow:
+    0 8px 32px rgba(20, 15, 10, 0.12),
+    0 2px 8px rgba(20, 15, 10, 0.08);
+}
+
+.bt-btn {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 2px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--ink-3);
+  transition: all 0.25s;
+  font-family: inherit;
+  border-radius: 24px;
+  height: 48px;
+}
+.bt-btn .bt-icon {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+}
+.bt-btn .bt-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.bt-btn.active {
+  color: var(--accent);
+}
+.bt-btn:active { transform: scale(0.95); }
+
+.bt-fab {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--accent-2) 0%, var(--accent) 50%, var(--hot) 100%);
+  color: #fff;
+  font-size: 28px;
+  font-weight: 300;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow:
+    0 4px 16px rgba(255, 107, 61, 0.5),
+    0 8px 24px rgba(230, 57, 70, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+.bt-fab:hover {
+  transform: scale(1.06) rotate(90deg);
+  box-shadow:
+    0 6px 20px rgba(255, 107, 61, 0.6),
+    0 12px 32px rgba(230, 57, 70, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+.bt-fab:active { transform: scale(0.95); }
+
+/* ════════════════════════════════════════
+   Modal
+════════════════════════════════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(20, 15, 10, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 200;
+  align-items: flex-end;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; animation: fade-in 0.25s ease; }
+
+.modal-sheet {
+  background: var(--surface);
+  border-radius: 24px 24px 0 0;
+  padding: 12px 22px calc(28px + env(safe-area-inset-bottom, 0));
+  width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slide-up 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 -4px 32px rgba(20, 15, 10, 0.2);
+}
+@media (min-width: 540px) {
+  .modal-sheet { max-width: 480px; }
+}
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.modal-handle {
+  width: 44px; height: 5px;
+  background: var(--line-strong);
+  border-radius: 999px;
+  margin: 0 auto 18px;
+}
+
+.modal-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 22px; font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+.modal-title-sub {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 22px;
+  margin-top: 2px;
+}
+
+.form-row { margin-bottom: 16px; }
+.form-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; font-weight: 700;
+  color: var(--ink-2);
+  margin-bottom: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.form-input, .form-textarea {
+  width: 100%;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--surface-2);
+  transition: all 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+  font-weight: 500;
+}
+.form-input:focus, .form-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 0 0 4px rgba(255, 107, 61, 0.12);
+}
+.form-textarea {
+  height: 88px; resize: none;
+  line-height: 1.5;
+}
+
+.form-divider {
+  display: flex; align-items: center;
+  gap: 12px;
+  margin: 22px 0 14px;
+  color: var(--ink-3);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.form-divider::before, .form-divider::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: var(--line);
+}
+
+.photo-upload {
+  background: linear-gradient(135deg, #FFF1E0 0%, #FFE4D0 100%);
+  border: 2px dashed var(--accent-2);
+  border-radius: 14px;
+  height: 110px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+  overflow: hidden;
+}
+.photo-upload:hover {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, #FFE4D0 0%, #FFD0B0 100%);
+}
+.photo-upload input {
+  position: absolute; inset: 0;
+  opacity: 0; cursor: pointer;
+}
+.photo-upload-label {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  color: var(--ink-2);
+  pointer-events: none;
+}
+.pu-ico {
+  width: 28px; height: 28px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 300;
+  box-shadow: 0 2px 8px rgba(255, 107, 61, 0.4);
+}
+.photo-preview {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.toggle-row {
+  display: flex; gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.pill-group {
+  display: flex;
+  background: var(--surface-2);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+  padding: 3px;
+}
+.pill-opt {
+  padding: 7px 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  color: var(--ink-3);
+  background: transparent;
+  border: none;
+  letter-spacing: 0.02em;
+  transition: all 0.2s;
+  border-radius: 999px;
+}
+.pill-opt.active {
+  background: var(--ink);
+  color: #fff;
+}
+
+.cat-scroll {
+  display: flex; gap: 8px;
+  margin-bottom: 14px;
+  overflow-x: auto;
+  padding: 2px 0 4px;
+  scrollbar-width: none;
+}
+.cat-scroll::-webkit-scrollbar { display: none; }
+
+.cat-opt {
+  white-space: nowrap;
+  padding: 8px 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-2);
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: all 0.2s;
+}
+.cat-opt:hover { border-color: var(--ink-2); }
+.cat-opt.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(255, 107, 61, 0.4);
+}
+
+.amt-row {
+  display: flex; gap: 10px;
+  align-items: center;
+}
+.amt-input {
+  flex: 1;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 18px; font-weight: 800;
+  color: var(--ink);
+  background: var(--surface-2);
+  letter-spacing: -0.02em;
+  transition: all 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+  min-width: 0;
+}
+.amt-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 0 0 4px rgba(255, 107, 61, 0.12);
+}
+.amt-sep {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px; font-weight: 700;
+  color: var(--ink-3);
+}
+
+.fee-notice {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px; font-weight: 600;
+  color: #1a8c80;
+  background: rgba(46,196,182,0.12);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  display: none;
+}
+.fee-notice.show { display: block; animation: fade-in 0.3s ease; }
+
+.addr-wrap { position: relative; }
+.addr-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%; left: 0; right: 0;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  z-index: 999;
+  max-height: 240px;
+  overflow-y: auto;
+  margin-top: 4px;
+  box-shadow: var(--shadow-md);
+}
+.dd-item {
+  padding: 12px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--line);
+}
+.dd-item:last-child { border-bottom: none; }
+.dd-item:hover { background: var(--bg-tint); }
+.dd-main {
+  font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+  font-size: 13.5px; font-weight: 600;
+  color: var(--ink);
+}
+.dd-sub {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11.5px;
+  color: var(--ink-3);
+  margin-top: 2px;
+}
+
+.save-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--accent-2) 0%, var(--accent) 50%, var(--hot) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px; font-weight: 800;
+  cursor: pointer;
+  margin-top: 8px;
+  letter-spacing: 0.04em;
+  box-shadow:
+    0 4px 16px rgba(255, 107, 61, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  transition: all 0.2s;
+}
+.save-btn:hover { transform: translateY(-1px); }
+.save-btn:active { transform: translateY(1px); }
+.save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ════════════════════════════════════════
+   統計頁
+════════════════════════════════════════ */
+.stats-wrap { padding: 22px 20px 0; }
+
+.stats-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+.stats-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 24px; font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.stats-title-sub {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  margin-top: 2px;
+}
+
+.stat-cards {
+  display: flex; gap: 12px;
+  margin-bottom: 22px;
+}
+.stat-card {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px 18px;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.stat-card-primary {
+  background: linear-gradient(135deg, var(--ink) 0%, #2A1F18 100%);
+  border-color: var(--ink);
+  color: #fff;
+}
+.stat-card-primary::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  opacity: 0.4;
+}
+.stat-card-primary .stat-num { color: #fff; }
+.stat-card-primary .stat-lbl { color: rgba(255,255,255,0.7); }
+
+.stat-num {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 26px; font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  position: relative;
+}
+.stat-lbl {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; font-weight: 600;
+  color: var(--ink-3);
+  margin-top: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.bar-section {
+  margin-bottom: 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 18px;
+  box-shadow: var(--shadow-sm);
+}
+.bar-section-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+  display: flex; align-items: center; gap: 8px;
+}
+.bar-section-label::before {
+  content: '';
+  width: 4px; height: 16px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.bar-row {
+  display: flex; align-items: center;
+  gap: 10px; margin-bottom: 12px;
+}
+.bar-row:last-child { margin-bottom: 0; }
+.bar-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px; font-weight: 600;
+  color: var(--ink-2);
+  width: 64px;
+  flex-shrink: 0;
+}
+.bar-track {
+  flex: 1; height: 10px;
+  background: var(--bg-tint);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.bar-amt {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px; font-weight: 700;
+  color: var(--ink);
+  width: 64px;
+  text-align: right;
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
+}
+
+.prepaid-item {
+  display: flex; justify-content: space-between;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.prepaid-item:last-child { border-bottom: none; }
+.prepaid-name {
+  font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+  font-size: 12.5px; font-weight: 500;
+  color: var(--ink-2);
+  flex: 1; padding-right: 10px;
+}
+.prepaid-amt {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: var(--ink);
+  min-width: 90px;
+  text-align: right;
+  letter-spacing: -0.01em;
+}
+.prepaid-subtotals {
+  background: var(--bg-tint);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 14px;
+}
+.prepaid-subtotals .row {
+  display: flex; justify-content: space-between;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12.5px; font-weight: 500;
+  color: var(--ink-2);
+  margin-bottom: 8px;
+}
+.prepaid-subtotals .row:last-child { margin-bottom: 0; }
+.prepaid-subtotals .row.total {
+  border-top: 1px solid var(--line-strong);
+  margin-top: 10px;
+  padding-top: 10px;
+  font-weight: 800;
+  color: var(--ink);
+  font-size: 14px;
+}
+.prepaid-subtotals .row span:last-child {
+  font-weight: 800;
+}
+
+.grand-total-box {
+  margin-top: 22px;
+  background: linear-gradient(135deg, var(--ink) 0%, #2A1F18 100%);
+  border-radius: 18px;
+  padding: 22px 24px;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+.grand-total-box::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle,
+    var(--accent) 0%,
+    rgba(255, 107, 61, 0.3) 30%,
+    transparent 70%);
+  opacity: 0.6;
+}
+.grand-total-box::after {
+  content: '✦';
+  position: absolute;
+  top: 18px; right: 22px;
+  font-size: 18px;
+  color: var(--accent-2);
+  z-index: 1;
+}
+.grand-total-box .gt-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px;
+  color: var(--accent-2);
+  margin-bottom: 8px;
+  letter-spacing: 0.3em;
+  position: relative;
+}
+.grand-total-box .gt-parts {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px; font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 14px;
+  line-height: 1.9;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  position: relative;
+}
+.grand-total-box .gt-total {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 36px; font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  position: relative;
+}
+
+/* Toast */
+#toast {
+  position: fixed;
+  bottom: calc(100px + env(safe-area-inset-bottom, 0));
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink);
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13.5px; font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 999px;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 999;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  box-shadow: 0 8px 24px rgba(20, 15, 10, 0.3);
+}
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.loading {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+/* ════════════════════════════════════════
+   RWD · 手機緊湊優化
+════════════════════════════════════════ */
+@media (max-width: 480px) {
+  /* base font-size 不縮，14px 是手機正常大小 */
+
+  .hero { height: 168px; }
+  .hero-content { padding: 16px 20px; }
+  .hero-mark { width: 36px; height: 36px; font-size: 16px; }
+  .hero-title { font-size: 16px; }
+  .hero-title-sub { font-size: 13px; }
+  .hero-pill { font-size: 12px; padding: 5px 12px; }
+  .hero-city { font-size: 30px; }
+  .hero-city-en { font-size: 14px; letter-spacing: 0.3em; }
+
+  .trip-progress { padding: 14px 20px 12px; }
+  .tp-status { font-size: 11px; }
+  .tp-day { font-size: 14px; }
+  .tp-track { height: 6px; }
+  .tp-stops span { font-size: 10px; }
+
+  .city-row { padding: 14px 16px; gap: 8px; }
+  .city-btn { padding: 8px 14px; font-size: 13px; }
+
+  .city-info { padding: 18px 20px; }
+  .city-meta-item { font-size: 12px; }
+  .city-meta-item .ico { width: 24px; height: 24px; font-size: 12px; }
+
+  .day-block { padding: 0 20px; }
+  .day-label { padding: 22px 0 14px; gap: 12px; }
+  .day-label .day-date { font-size: 14px; }
+  .day-label .day-tag { font-size: 11px; padding: 3px 9px; }
+
+  .tl-item { gap: 14px; margin-bottom: 14px; }
+  .tl-dot-col { width: 18px; }
+  .tl-dot { width: 14px; height: 14px; border-width: 3px; }
+  .tl-card { padding: 12px 14px; border-radius: 14px; }
+  .tl-icon { width: 32px; height: 32px; font-size: 16px; border-radius: 10px; }
+  .tl-title { font-size: 14.5px; }
+  .tl-desc { font-size: 12px; }
+  .tl-badge { font-size: 10.5px; padding: 3px 9px; }
+
+  .pdf-btn { font-size: 11px; padding: 5px 10px 5px 8px; }
+
+  .review-toggle { padding: 14px 16px; gap: 12px; margin: 16px 0; border-radius: 14px; }
+  .review-toggle-icon { width: 32px; height: 32px; font-size: 14px; }
+  .review-toggle-label { font-size: 13.5px; }
+  .review-toggle-count { font-size: 11.5px; padding: 3px 10px; }
+
+  .entry-card { padding: 8px; margin-bottom: 12px; border-radius: 14px; }
+  .entry-photo-wrap { border-radius: 10px; margin-bottom: 12px; }
+  .entry-body { padding: 4px 8px 8px; }
+  .entry-note { font-size: 14px; }
+  .entry-cat { font-size: 10.5px; }
+  .entry-amt { font-size: 15px; }
+  .entry-pay { font-size: 11px; }
+  .entry-del { width: 28px; height: 28px; font-size: 12px; }
+
+  .bottom-tabs {
+    height: 64px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0));
+    width: calc(100% - 32px);
+    max-width: 360px;
+    border-radius: 32px;
+    padding: 0 8px;
+  }
+  .bt-btn { height: 48px; padding: 8px 12px; }
+  .bt-btn .bt-icon { font-size: 18px; }
+  .bt-btn .bt-label { font-size: 10px; }
+  .bt-fab { width: 56px; height: 56px; font-size: 28px; margin: 0 4px; }
+
+  .modal-sheet { padding: 12px 22px calc(28px + env(safe-area-inset-bottom, 0)); border-radius: 24px 24px 0 0; }
+  .modal-title { font-size: 22px; }
+  .modal-title-sub { font-size: 12px; margin-bottom: 22px; }
+
+  .form-row { margin-bottom: 16px; }
+  .form-label { font-size: 11px; }
+  .form-input, .form-textarea { padding: 12px 14px; font-size: 16px; border-radius: 12px; }
+  .form-textarea { height: 88px; }
+
+  .photo-upload { height: 110px; border-radius: 14px; }
+  .photo-upload-label { font-size: 13px; gap: 8px; }
+  .pu-ico { width: 28px; height: 28px; font-size: 18px; }
+
+  .pill-opt { padding: 7px 16px; font-size: 13px; }
+  .cat-opt { padding: 8px 16px; font-size: 13px; }
+
+  .amt-row { gap: 10px; }
+  .amt-input { padding: 12px 14px; font-size: 18px; border-radius: 12px; }
+
+  .save-btn { padding: 16px; font-size: 15px; border-radius: 14px; }
+
+  .stats-wrap { padding: 22px 20px 0; }
+  .stats-title { font-size: 24px; }
+  .stats-title-sub { font-size: 12px; }
+
+  .stat-cards { gap: 12px; margin-bottom: 22px; }
+  .stat-card { padding: 16px 18px; border-radius: 16px; }
+  .stat-num { font-size: 26px; }
+  .stat-lbl { font-size: 11px; }
+
+  .bar-section { padding: 18px 18px; margin-bottom: 22px; border-radius: 16px; }
+  .bar-section-label { font-size: 13px; margin-bottom: 14px; }
+  .bar-row { gap: 10px; margin-bottom: 12px; }
+  .bar-label { width: 64px; font-size: 12px; }
+  .bar-amt { width: 64px; font-size: 12px; }
+  .bar-track { height: 10px; }
+
+  .prepaid-item { padding: 10px 0; }
+  .prepaid-name { font-size: 12.5px; }
+  .prepaid-amt { font-size: 13px; min-width: 90px; }
+  .prepaid-subtotals { padding: 14px 16px; }
+  .prepaid-subtotals .row { font-size: 12.5px; }
+  .prepaid-subtotals .row.total { font-size: 14px; }
+
+  .grand-total-box { padding: 22px 24px; border-radius: 18px; margin-top: 22px; }
+  .grand-total-box .gt-label { font-size: 11px; }
+  .grand-total-box .gt-parts { font-size: 12px; }
+  .grand-total-box .gt-total { font-size: 36px; }
+
+  .tab-panel { padding-bottom: 100px; }
+}
+
+/* ════════════════════════════════════════
+   🖍 蠟筆小新巴塞隆納彩蛋
+════════════════════════════════════════ */
+.shin-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFE158 0%, #FFB940 100%);
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  margin-left: 4px;
+  vertical-align: middle;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(255, 185, 64, 0.4);
+  position: relative;
+  animation: wiggle 3s ease-in-out infinite;
+}
+@keyframes wiggle {
+  0%, 90%, 100% { transform: rotate(0); }
+  93% { transform: rotate(-12deg); }
+  96% { transform: rotate(12deg); }
+}
+.shin-trigger:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(255, 185, 64, 0.6);
+}
+.shin-trigger::after {
+  content: '?';
+  position: absolute;
+  top: -6px; right: -6px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--hot);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid var(--surface);
+}
+
+/* 蠟筆小新 modal — 全螢幕主題 */
+.shin-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(20, 15, 10, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 300;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.shin-overlay.open {
+  display: flex;
+  animation: fade-in 0.3s ease;
+}
+
+.shin-modal {
+  width: 100%;
+  max-width: 440px;
+  max-height: 88vh;
+  overflow-y: auto;
+  background: linear-gradient(180deg, #FFE158 0%, #FFB940 12%, #FF8A4D 60%, #E63946 100%);
+  border-radius: 24px;
+  position: relative;
+  animation: shin-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow:
+    0 8px 0 rgba(20, 15, 10, 0.85),       /* 漫畫立體陰影 */
+    0 20px 60px rgba(20, 15, 10, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  border: 3px solid #1a1410;
+  padding: 0;
+  scrollbar-width: none;
+}
+.shin-modal::-webkit-scrollbar { display: none; }
+
+@keyframes shin-pop {
+  0%   { transform: scale(0.8) rotate(-3deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+/* 漫畫風斑點裝飾 */
+.shin-modal::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(255,255,255,0.12) 0, transparent 4px),
+    radial-gradient(circle at 88% 18%, rgba(255,255,255,0.15) 0, transparent 6px),
+    radial-gradient(circle at 18% 92%, rgba(255,255,255,0.10) 0, transparent 5px),
+    radial-gradient(circle at 82% 78%, rgba(255,255,255,0.12) 0, transparent 4px);
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.shin-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 2px solid #1a1410;
+  background: #fff;
+  color: #1a1410;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 5;
+  font-family: inherit;
+  font-weight: 800;
+  transition: all 0.2s;
+  box-shadow: 0 3px 0 rgba(20, 15, 10, 0.85);
+}
+.shin-close:hover { transform: rotate(90deg) translateY(-1px); }
+.shin-close:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(20, 15, 10, 0.85); }
+
+.shin-header {
+  padding: 28px 22px 16px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* 小新像 — 純 CSS 畫的小新表情符號 */
+.shin-emoji {
+  font-size: 48px;
+  margin-bottom: 8px;
+  display: inline-block;
+  animation: bounce 2s ease-in-out infinite;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-6px) rotate(-3deg); }
+}
+
+.shin-title {
+  font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+  font-size: 22px; font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  line-height: 1.25;
+}
+.shin-title-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: rgba(255,255,255,0.95);
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+
+.shin-intro {
+  background: rgba(255, 252, 245, 0.97);
+  border: 2px solid #1a1410;
+  margin: 0 16px 16px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+  font-size: 12.5px;
+  color: var(--ink-2);
+  line-height: 1.65;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 4px 0 rgba(20, 15, 10, 0.85);
+}
+.shin-intro b {
+  color: var(--hot);
+  font-weight: 800;
+}
+
+/* 景點卡 */
+.shin-spots {
+  padding: 0 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.shin-spot {
+  background: rgba(255, 252, 245, 0.97);
+  border: 2px solid #1a1410;
+  border-radius: 14px;
+  padding: 10px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 0 rgba(20, 15, 10, 0.85);
+  position: relative;
+  overflow: hidden;
+}
+.shin-spot:hover {
+  transform: translateX(2px) translateY(-2px);
+  box-shadow: 0 6px 0 rgba(20, 15, 10, 0.85);
+}
+.shin-spot:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(20, 15, 10, 0.85);
+}
+
+.shin-spot-img {
+  width: 78px; height: 78px;
+  border-radius: 14px;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 2px rgba(20, 15, 10, 0.85);
+}
+
+/* 漫畫風 — 上半天空、下半地面 */
+.shin-spot-img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    var(--sky-top, #BFE3F5) 0%,
+    var(--sky-mid, #E8F4FA) 50%,
+    var(--ground, #C8B89A) 50%,
+    var(--ground-deep, #A89878) 100%);
+}
+/* 黑色漫畫線描邊內側 */
+.shin-spot-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  border: 2px solid #1a1410;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* 主體插圖（emoji 大字）*/
+.shin-spot-emoji {
+  position: relative;
+  z-index: 3;
+  font-size: 38px;
+  line-height: 1;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 2px 0 rgba(20, 15, 10, 0.25));
+}
+
+/* 太陽 / 雲朵裝飾 */
+.shin-spot-img .sun {
+  position: absolute;
+  top: 8px; right: 9px;
+  width: 14px; height: 14px;
+  background: #FFE158;
+  border: 2px solid #1a1410;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow:
+    0 0 0 3px rgba(255, 225, 88, 0.4);
+}
+.shin-spot-img .cloud {
+  position: absolute;
+  top: 14px; left: 8px;
+  width: 18px; height: 8px;
+  background: #fff;
+  border: 1.5px solid #1a1410;
+  border-radius: 999px;
+  z-index: 2;
+}
+.shin-spot-img .cloud::before {
+  content: '';
+  position: absolute;
+  top: -5px; left: 3px;
+  width: 9px; height: 9px;
+  background: #fff;
+  border: 1.5px solid #1a1410;
+  border-radius: 50%;
+}
+.shin-spot-img .cloud::after {
+  content: '';
+  position: absolute;
+  top: -3px; right: 2px;
+  width: 7px; height: 7px;
+  background: #fff;
+  border: 1.5px solid #1a1410;
+  border-radius: 50%;
+}
+
+/* 小新標誌（只在某些景點出現）*/
+.shin-spot-img .shin-mark {
+  position: absolute;
+  bottom: 6px; right: 6px;
+  width: 18px; height: 18px;
+  background: #1a1410;
+  color: #FFE158;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  z-index: 4;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0;
+  box-shadow: 0 2px 0 rgba(20, 15, 10, 0.3);
+}
+
+.shin-spot-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.shin-spot-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--hot);
+  margin-bottom: 2px;
+}
+.shin-spot-title {
+  font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+  font-size: 14.5px; font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+.shin-spot-title-en {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; font-weight: 600;
+  color: var(--ink-3);
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+.shin-spot-quote {
+  font-family: 'Caveat', cursive;
+  font-size: 13.5px;
+  color: var(--accent);
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.shin-spot-quote::before { content: '「'; opacity: 0.6; }
+.shin-spot-quote::after { content: '」'; opacity: 0.6; }
+
+.shin-spot-arrow {
+  font-size: 16px;
+  color: var(--ink-3);
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+
+/* 底部小語 */
+.shin-foot {
+  padding: 4px 22px 22px;
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: rgba(255,255,255,0.95);
+  position: relative;
+  z-index: 2;
+  letter-spacing: 0.02em;
+}
+
+/* RWD 蠟筆小新彩蛋 */
+@media (max-width: 480px) {
+  .shin-modal { border-radius: 20px; }
+  .shin-emoji { font-size: 42px; }
+  .shin-title { font-size: 19px; }
+  .shin-title-sub { font-size: 16px; }
+  .shin-intro { font-size: 12px; padding: 12px 14px; margin: 0 14px 14px; }
+  .shin-spots { padding: 0 14px 14px; gap: 9px; }
+  .shin-spot { padding: 9px; gap: 10px; }
+  .shin-spot-img { width: 72px; height: 72px; border-radius: 12px; }
+  .shin-spot-emoji { font-size: 34px; margin-bottom: 6px; }
+  .shin-spot-img .sun { width: 12px; height: 12px; top: 7px; right: 8px; }
+  .shin-spot-img .cloud { width: 16px; height: 7px; top: 12px; left: 7px; }
+  .shin-spot-img .shin-mark { width: 16px; height: 16px; font-size: 9px; bottom: 5px; right: 5px; }
+  .shin-spot-title { font-size: 13.5px; }
+  .shin-spot-title-en { font-size: 10.5px; }
+  .shin-spot-quote { font-size: 13px; }
+  .shin-spot-num { font-size: 10.5px; }
+  .shin-foot { font-size: 15px; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="header">
+    <div class="hero">
+      <div class="hero-bg" id="hero-bg"></div>
+      <div class="hero-content">
+        <div class="hero-top">
+          <div class="hero-brand">
+            <div class="hero-mark">✈</div>
+            <div class="hero-brand-text">
+              <div class="hero-title">歐遊紀事</div>
+              <div class="hero-title-sub">our trip · 15 days</div>
+            </div>
+          </div>
+          <span class="hero-pill" id="hero-pill">出發倒數</span>
+        </div>
+        <div class="hero-bottom">
+          <div class="hero-city" id="hero-city">巴塞隆納</div>
+          <div class="hero-city-en" id="hero-city-en">Barcelona</div>
+        </div>
+      </div>
+    </div>
+    <div class="trip-progress">
+      <div class="tp-meta">
+        <span class="tp-status" id="tp-status">出發倒數</span>
+        <span class="tp-day" id="tp-day"><span class="live"></span>Day 0 / 15</span>
+      </div>
+      <div class="tp-track">
+        <div class="tp-fill" id="tp-fill"></div>
+        <span class="tp-plane" id="tp-plane">✈</span>
+      </div>
+      <div class="tp-stops" id="tp-stops">
+        <span data-city="巴塞隆納">BCN</span>
+        <span data-city="馬德里">MAD</span>
+        <span data-city="里斯本">LIS</span>
+        <span data-city="巴黎">CDG</span>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <div id="tab-trip" class="tab-panel active">
+      <div class="city-row" id="city-row"></div>
+      <div id="trip-body"></div>
+    </div>
+    <div id="tab-stats" class="tab-panel">
+      <div class="stats-wrap">
+        <div class="stats-header">
+          <div>
+            <div class="stats-title">花費紀錄</div>
+            <div class="stats-title-sub">DÉPENSES</div>
+          </div>
+          <div class="pill-group">
+            <button class="pill-opt active" onclick="setStatsCurrency('EUR',this)">EUR</button>
+            <button class="pill-opt" onclick="setStatsCurrency('NTD',this)">NTD</button>
+          </div>
+        </div>
+        <div class="stat-cards">
+          <div class="stat-card stat-card-primary">
+            <div class="stat-num" id="s-total">€ 0</div>
+            <div class="stat-lbl">總花費</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="s-count">0</div>
+            <div class="stat-lbl">筆記錄</div>
+          </div>
+        </div>
+        <div class="bar-section"><div class="bar-section-label">各類別 · By Category</div><div id="cat-bars"></div></div>
+        <div class="bar-section"><div class="bar-section-label">各城市 · By City</div><div id="city-bars"></div></div>
+        <div class="bar-section"><div class="bar-section-label">行前已付訂單 · Prepaid</div><div id="prepaid-list"></div><div class="prepaid-subtotals" id="prepaid-subtotals"></div></div>
+        <div class="grand-total-box" id="grand-total-box"></div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-tabs">
+    <button class="bt-btn active" onclick="switchTab('trip')">
+      <span class="bt-icon">✦</span>
+      <span class="bt-label">旅程</span>
+    </button>
+    <button class="bt-fab" onclick="openModal()" aria-label="新增記錄">+</button>
+    <button class="bt-btn" onclick="switchTab('stats')">
+      <span class="bt-icon">$</span>
+      <span class="bt-label">花費</span>
+    </button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-title">新增記錄</div>
+    <div class="modal-title-sub">NEW ENTRY</div>
+    <div class="form-row"><div class="form-label">日期</div><input class="form-input" id="m-date" type="date"></div>
+    <div class="form-row"><div class="form-label">城市</div><div class="cat-scroll" id="m-city-row"></div></div>
+    <div class="form-row">
+      <div class="form-label">照片 / 影片</div>
+      <div class="photo-upload" id="photo-upload-area">
+        <input type="file" id="photo-input" accept="image/*,video/*" onchange="handlePhoto(this)">
+        <div class="photo-upload-label" id="photo-label"><span class="pu-ico">+</span>點擊上傳　存至 Google Drive</div>
+        <img id="photo-preview" class="photo-preview" style="display:none;">
+      </div>
+    </div>
+    <div class="form-row"><div class="form-label">備註</div><textarea class="form-textarea" id="m-note" placeholder="今天的記錄..."></textarea></div>
+    <div class="form-divider"><span>小筆花費（選填）</span></div>
+    <div class="cat-scroll" id="m-cat-row">
+      <button class="cat-opt active" onclick="pickCat(this)">餐食</button>
+      <button class="cat-opt" onclick="pickCat(this)">當地交通</button>
+      <button class="cat-opt" onclick="pickCat(this)">景點票務</button>
+      <button class="cat-opt" onclick="pickCat(this)">購物</button>
+      <button class="cat-opt" onclick="pickCat(this)">其他</button>
+    </div>
+    <div class="toggle-row">
+      <div class="pill-group" id="cur-toggle">
+        <button class="pill-opt active" onclick="setCurrency('EUR',this)">EUR</button>
+        <button class="pill-opt" onclick="setCurrency('NTD',this)">NTD</button>
+      </div>
+      <div class="pill-group" id="pay-toggle">
+        <button class="pill-opt active" onclick="setPayment('現金',this)">現金</button>
+        <button class="pill-opt" onclick="setPayment('刷卡',this)">刷卡</button>
+      </div>
+    </div>
+    <div class="amt-row" style="margin-bottom:12px;">
+      <input class="amt-input" id="m-eur" type="number" step="0.01" placeholder="EUR" oninput="calcOther()">
+      <span class="amt-sep">≈</span>
+      <input class="amt-input" id="m-ntd" type="number" step="1" placeholder="NTD" oninput="calcOtherNTD()">
+    </div>
+    <div class="fee-notice" id="fee-notice">⚡ 將自動新增 1.5% 刷卡手續費</div>
+    <div class="form-row">
+      <div class="form-label">地點（選填）</div>
+      <div class="addr-wrap">
+        <input class="form-input" id="m-loc" type="text" placeholder="搜尋地點..." autocomplete="off" oninput="onLocInput()">
+        <div class="addr-dropdown" id="loc-drop"></div>
+      </div>
+    </div>
+    <button class="save-btn" id="save-btn" onclick="saveRecord()">儲存記錄</button>
+  </div>
+</div>
+<!-- 蠟筆小新巴塞隆納彩蛋 -->
+<div class="shin-overlay" id="shin-overlay" onclick="closeShinOutside(event)">
+  <div class="shin-modal" onclick="event.stopPropagation()">
+    <button class="shin-close" onclick="closeShin()" aria-label="關閉">✕</button>
+    <div class="shin-header">
+      <span class="shin-emoji">🖍</span>
+      <div class="shin-title">小新一家也來過巴塞隆納！</div>
+      <div class="shin-title-sub">Shin-chan in Barcelona · 2004</div>
+    </div>
+    <div class="shin-intro">
+      <b>2004 年</b>，作者臼井儀人親自為西班牙粉絲畫了 <b>3 集特別篇</b>，野原一家抽中西班牙旅遊大獎，跟著導遊 Carmen 在巴塞隆納大冒險！這是他們去過的地方 ↓
+    </div>
+    <div class="shin-spots" id="shin-spots"></div>
+    <div class="shin-foot">跟著小新一起去打卡吧！🎒✨</div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script>
+/* ════════════════════════════════════════
+   API 設定 — 連到 Apps Script 後端
+════════════════════════════════════════ */
+var API_URL = 'https://script.google.com/macros/s/AKfycbyxf9rG4l4uTwVKyH_gK33vOglTDzo92hcOSgswO7r4MbFKjexnqD9q1WUChBAeBH35PA/exec';
+
+/* GET 請求（讀資料） */
+function apiGet(action, params) {
+  var qs = 'action=' + encodeURIComponent(action);
+  if (params) {
+    Object.keys(params).forEach(function(k) {
+      qs += '&' + encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
+    });
+  }
+  return fetch(API_URL + '?' + qs)
+    .then(function(r) { return r.json(); })
+    .then(function(j) {
+      if (!j.ok) throw new Error(j.error || 'API 失敗');
+      return j.data;
+    });
+}
+
+/* POST 請求（寫資料） */
+function apiPost(action, data) {
+  /* 注意：用 text/plain 避免 CORS preflight，Apps Script 仍能解析 JSON */
+  return fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: action, data: data, rowIndex: data && data.rowIndex, rate: data && data.rate }),
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+  })
+    .then(function(r) { return r.json(); })
+    .then(function(j) {
+      if (!j.ok) throw new Error(j.error || 'API 失敗');
+      return j.data;
+    });
+}
+
+var RATE = 37.03;
+var CITIES = ['巴塞隆納', '馬德里', '里斯本', '巴黎'];
+var CITY_EN = { '巴塞隆納': 'Barcelona', '馬德里': 'Madrid', '里斯本': 'Lisboa', '巴黎': 'Paris' };
+var CITY_STAMP = { '巴塞隆納': 'BCN', '馬德里': 'MAD', '里斯本': 'LIS', '巴黎': 'CDG' };
+
+/* 城市色 dot */
+var CITY_DOT = { '巴塞隆納': '#FF6B3D', '馬德里': '#E63946', '里斯本': '#2EC4B6', '巴黎': '#14213D' };
+
+/* 城市地標背景圖（Unsplash 熱門照片 ID）*/
+var CITY_BG = {
+  '巴塞隆納': 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=1080&q=80&auto=format&fit=crop',  // 聖家堂
+  '馬德里':   'https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=1080&q=80&auto=format&fit=crop',  // 馬德里天際線
+  '里斯本':   'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=1080&q=80&auto=format&fit=crop',  // 里斯本電車
+  '巴黎':     'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1080&q=80&auto=format&fit=crop'  // 艾菲爾鐵塔
+};
+
+/* 🖍 蠟筆小新巴塞隆納特別篇景點（2004 三集 SP）*/
+/* 每個景點配卡通配色 + emoji + 裝飾 */
+var SHIN_SPOTS = [
+  {
+    name: '聖家堂',
+    en: 'Sagrada Família',
+    quote: '哇～這個塔好高喔！',
+    emoji: '⛪',
+    skyTop: '#9DD3F0', skyMid: '#D8EEF8',
+    ground: '#E8C896', groundDeep: '#C8A878',
+    deco: 'sun cloud',
+    shinMark: '!',
+    map: 'https://www.google.com/maps/search/?api=1&query=Sagrada+Familia+Barcelona'
+  },
+  {
+    name: '奎爾公園',
+    en: 'Parc Güell',
+    quote: '小新在這裡走丟了！',
+    emoji: '🦎',
+    skyTop: '#C5E8F5', skyMid: '#E8F4F9',
+    ground: '#A8D098', groundDeep: '#7AB888',
+    deco: 'sun',
+    shinMark: '?',
+    map: 'https://www.google.com/maps/search/?api=1&query=Park+Guell+Barcelona'
+  },
+  {
+    name: '哥倫布紀念塔',
+    en: 'Mirador de Colón',
+    quote: '哥倫布先生你好～',
+    emoji: '⚓',
+    skyTop: '#88BFE0', skyMid: '#C5DFEC',
+    ground: '#7BB8D0', groundDeep: '#5A98B5',
+    deco: 'cloud',
+    shinMark: '↑',
+    map: 'https://www.google.com/maps/search/?api=1&query=Mirador+de+Colon+Barcelona'
+  },
+  {
+    name: '蘭布拉大道',
+    en: 'Las Ramblas',
+    quote: '逛街吃西班牙海鮮飯！',
+    emoji: '🥘',
+    skyTop: '#FFD980', skyMid: '#FFE8B0',
+    ground: '#D8B080', groundDeep: '#B89058',
+    deco: 'sun',
+    shinMark: '♥',
+    map: 'https://www.google.com/maps/search/?api=1&query=La+Rambla+Barcelona'
+  }
+];
+
+/* 城市資訊 */
+var CITY_META = {
+  '巴塞隆納': { country: '西班牙', tz: 'GMT+2', weather: '19° / 12°', lang: '西班牙文 · 加泰隆尼亞文' },
+  '馬德里':   { country: '西班牙', tz: 'GMT+2', weather: '21° / 9°',  lang: '西班牙文' },
+  '里斯本':   { country: '葡萄牙', tz: 'GMT+1', weather: '22° / 14°', lang: '葡萄牙文' },
+  '巴黎':     { country: '法國',   tz: 'GMT+2', weather: '17° / 9°',  lang: '法文' }
+};
+
+var TRIP_START = new Date(2026, 4, 3);
+var TRIP_END   = new Date(2026, 4, 17);
+
+var state = {
+  activeTab: 'trip',
+  activeCity: localStorage.getItem('lastCity') || '巴塞隆納',
+  currency: 'EUR',
+  payment: '現金',
+  category: '餐食',
+  photoBase64: '',
+  photoName: '',
+  photoMime: '',
+  statsCur: 'EUR',
+  allRecords: [],
+  cache: {}
+};
+
+function pdfUrl(id) { return 'https://drive.google.com/file/d/' + id + '/view'; }
+
+var ITINERARY = {
+  '巴塞隆納': { sub: '4 晚 · 05/03 — 05/07', days: [
+    { date: '2026-05-03', label: '05/03 週日', num: 1, items: [
+      { type: 'transport', title: 'TPE → CDG → BCN · 長榮 BR67', desc: '23:30 出發，經巴黎轉機飛巴塞隆納', pdfs: [
+        { label: '長榮來回（Sean）',   id: '1wZZOOwZPeMwVgxX78DAVKOq6tsc4CeS1' },
+        { label: '長榮來回（Micheee）', id: '1YpCwnw2KiLsElQblNdLMOe8i0ZrG6VT7' },
+        { label: '長榮來回（Tancy）',   id: '1w5azqw7OMxWE7mtk_5yrujd44E2lQdVV' },
+        { label: '巴黎→巴塞隆納（Sean）', id: '100w2Mv2dTKvWYUmSexSSD2Wftjf0dEB0' },
+        { label: '機場貴賓室',          id: '1ZUD1mg11dJnbMSPUO3qSDKzskCcsZ5pT' }
+      ]}
+    ]},
+    { date: '2026-05-04', label: '05/04 週一', num: 2, items: [
+      { type: 'hotel', title: 'Airbnb · Check-in 4 晚', desc: '巴塞隆納市區' }
+    ]},
+    { date: '2026-05-05', label: '05/05 週二', num: 3, items: [] },
+    { date: '2026-05-06', label: '05/06 週三', num: 4, items: [] },
+    { date: '2026-05-07', label: '05/07 週四', num: 5, items: [
+      { type: 'transport', title: 'BCN → MAD · 火車', desc: 'Barcelona Sants → Madrid Atocha · 13:20', pdfs: [
+        { label: '火車票', id: '1MdFG1gboF71ZJm0u8z5swWGJYInUoe9o' }
+      ]}
+    ]}
+  ]},
+  '馬德里': { sub: '4 晚 · 05/07 — 05/11', days: [
+    { date: '2026-05-07', label: '05/07 週四', num: 5, items: [
+      { type: 'hotel', title: 'Barceló Torre de Madrid', desc: 'Check-in 4 晚 · 馬德里市區', pdfs: [
+        { label: '訂房確認', id: '1MfbeKbXfIlE17TMwyro0kOq29oRPiSjS' }
+      ]}
+    ]},
+    { date: '2026-05-08', label: '05/08 週五', num: 6, items: [] },
+    { date: '2026-05-09', label: '05/09 週六', num: 7, items: [] },
+    { date: '2026-05-10', label: '05/10 週日', num: 8, items: [] },
+    { date: '2026-05-11', label: '05/11 週一', num: 9, items: [
+      { type: 'transport', title: 'MAD → LIS · 班機', desc: '前往里斯本', pdfs: [
+        { label: '馬德里→里斯本（Sean）', id: '1X-8zZqRul9ccDxwllCRoYAyZ_KeD7fas' }
+      ]}
+    ]}
+  ]},
+  '里斯本': { sub: '3 晚 · 05/11 — 05/14 · 生日週 🎂', days: [
+    { date: '2026-05-11', label: '05/11 週一', num: 9, items: [
+      { type: 'hotel', title: 'Altis Prime Apartamentos', desc: 'Check-in 3 晚 · 里斯本市區', pdfs: [
+        { label: '訂房確認', id: '1_FBIHpxwoBUp4sjs_U9cCbtpQcOhHCy8' }
+      ]}
+    ]},
+    { date: '2026-05-12', label: '05/12 週二', num: 10, items: [] },
+    { date: '2026-05-13', label: '05/13 週三', num: 11, items: [] },
+    { date: '2026-05-14', label: '05/14 週四', num: 12, items: [
+      { type: 'transport', title: 'LIS → CDG · 班機', desc: '前往巴黎', pdfs: [
+        { label: '里斯本→巴黎（Air France）', id: '1_uHH_yBp2yn9B7MCe2PbuR0iXCr_5D4J' }
+      ]}
+    ]}
+  ]},
+  '巴黎': { sub: '3 晚 · 05/14 — 05/17', days: [
+    { date: '2026-05-14', label: '05/14 週四', num: 12, items: [
+      { type: 'hotel', title: 'Hotel Gabbie', desc: 'Check-in 3 晚 · 巴黎市區', pdfs: [
+        { label: '訂房確認', id: '1d3WuncgFecsrIxvy3DNRUCz4jBOkvKsE' }
+      ]}
+    ]},
+    { date: '2026-05-15', label: '05/15 週五', num: 13, items: [] },
+    { date: '2026-05-16', label: '05/16 週六', num: 14, items: [] },
+    { date: '2026-05-17', label: '05/17 週日', num: 15, items: [
+      { type: 'transport', title: 'CDG → TPE · 長榮', desc: '返家 ✦', pdfs: [
+        { label: '長榮來回（Sean）',   id: '1wZZOOwZPeMwVgxX78DAVKOq6tsc4CeS1' },
+        { label: '長榮來回（Micheee）', id: '1YpCwnw2KiLsElQblNdLMOe8i0ZrG6VT7' },
+        { label: '長榮來回（Tancy）',   id: '1w5azqw7OMxWE7mtk_5yrujd44E2lQdVV' },
+        { label: 'LoungeKey',           id: '1tyaHsgMl4nKNy7kKKGSGkIRFm-FlOFhr' },
+        { label: '接送車券',            id: '1-T9JhpgAUXKBBmX0eT98fhrcHVybm8_8' }
+      ]}
+    ]}
+  ]}
+};
+
+/* ════════════════════════════════════════
+   進度條
+════════════════════════════════════════ */
+function renderProgress() {
+  var now = new Date();
+  var total = (TRIP_END - TRIP_START) / 86400000;
+  var pct, statusText, dayNum;
+
+  if (now < TRIP_START) {
+    var daysLeft = Math.ceil((TRIP_START - now) / 86400000);
+    pct = 0;
+    statusText = '<span class="num">' + daysLeft + '</span> 天後出發';
+    dayNum = 'DAY 0 / ' + (total + 1);
+  } else if (now > TRIP_END) {
+    pct = 100;
+    statusText = '✓ 旅程結束';
+    dayNum = 'DAY ' + (total + 1) + ' / ' + (total + 1);
+  } else {
+    var elapsed = (now - TRIP_START) / 86400000;
+    pct = Math.min(100, Math.max(0, (elapsed / total) * 100));
+    var d = Math.floor(elapsed) + 1;
+    statusText = '旅途中 · LIVE';
+    dayNum = '<span class="live"></span>DAY ' + d + ' / ' + (total + 1);
+  }
+
+  document.getElementById('tp-fill').style.width = pct + '%';
+  document.getElementById('tp-plane').style.left = Math.min(98, Math.max(2, pct)) + '%';
+  document.getElementById('tp-status').innerHTML = statusText;
+  document.getElementById('tp-day').innerHTML = dayNum;
+
+  /* 哪些站已過 */
+  var stopBoundaries = [0, 28, 56, 78, 100];   // BCN, MAD, LIS, PAR 各自結束的%
+  var stops = document.querySelectorAll('#tp-stops span');
+  stops.forEach(function(s, i) {
+    s.classList.toggle('passed', pct >= stopBoundaries[i]);
+  });
+}
+
+function updateHero() {
+  var bg = document.getElementById('hero-bg');
+  bg.style.backgroundImage = 'url("' + CITY_BG[state.activeCity] + '")';
+  document.getElementById('hero-city').textContent = state.activeCity;
+  document.getElementById('hero-city-en').textContent = CITY_EN[state.activeCity];
+
+  var now = new Date();
+  var pillEl = document.getElementById('hero-pill');
+  if (now < TRIP_START) {
+    var d = Math.ceil((TRIP_START - now) / 86400000);
+    pillEl.innerHTML = 'D-' + d + ' · 倒數中';
+  } else if (now > TRIP_END) {
+    pillEl.innerHTML = '已結束';
+  } else {
+    pillEl.innerHTML = 'LIVE · 旅途中';
+  }
+}
+
+function switchTab(t) {
+  document.querySelectorAll('.bt-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (t === 'trip') document.querySelectorAll('.bt-btn')[0].classList.add('active');
+  else document.querySelectorAll('.bt-btn')[1].classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.getElementById('tab-' + t).classList.add('active');
+  if (t === 'stats') loadStats();
+}
+
+function renderCityRow() {
+  var row = document.getElementById('city-row');
+  row.innerHTML = '';
+  CITIES.forEach(function(c) {
+    var btn = document.createElement('button');
+    btn.className = 'city-btn' + (c === state.activeCity ? ' active' : '');
+    btn.innerHTML = '<span class="dot" style="background:' + CITY_DOT[c] + ';"></span>' + c;
+    btn.onclick = function() { selectCity(c); };
+    row.appendChild(btn);
+  });
+}
+
+function selectCity(city) {
+  state.activeCity = city;
+  localStorage.setItem('lastCity', city);
+  renderCityRow();
+  renderTripBody();
+  updateHero();
+}
+
+function renderTripBody() {
+  var body = document.getElementById('trip-body');
+  var data = ITINERARY[state.activeCity];
+  if (!data) return;
+  var meta = CITY_META[state.activeCity] || {};
+  var isBCN = state.activeCity === '巴塞隆納';
+
+  /* 巴塞隆納專屬彩蛋按鈕 */
+  var subText = data.sub || '';
+  var shinTrigger = isBCN
+    ? '<button class="shin-trigger" onclick="openShin()" aria-label="蠟筆小新彩蛋" title="🖍">🖍</button>'
+    : '';
+
+  var html = '<div class="city-info">'
+    + '<div class="city-meta-row">'
+    +   '<span class="city-meta-item"><span class="ico">▣</span>' + (meta.country || '') + '</span>'
+    +   '<span class="city-meta-item"><span class="ico">◷</span>' + (meta.tz || '') + '</span>'
+    +   '<span class="city-meta-item"><span class="ico">☼</span>' + (meta.weather || '') + '</span>'
+    + '</div>'
+    + '<div class="city-meta-row" style="margin-top:8px;">'
+    +   '<span class="city-meta-item"><span class="ico">A</span>' + (meta.lang || '') + '</span>'
+    +   '<span class="city-meta-item"><span class="ico">✦</span>' + subText + shinTrigger + '</span>'
+    + '</div>'
+    + '</div>';
+
+  data.days.forEach(function(day) {
+    html += '<div class="day-block">';
+    html += '<div class="day-label"><span class="day-date">' + day.label + '</span><span class="day-tag">DAY <span class="num">' + day.num + '</span></span></div>';
+
+    day.items.forEach(function(item, idx) {
+      var isLast = idx === day.items.length - 1;
+      var dotColor = item.type === 'transport' ? '#2EC4B6'
+                   : item.type === 'hotel'     ? '#14213D'
+                   : '#FF6B3D';
+      var iconClass = 'icon-' + item.type;
+      var badgeClass = 'badge-' + item.type;
+      var badgeText = item.type === 'transport' ? '交通'
+                    : item.type === 'hotel'     ? '住宿' : '景點';
+      var iconChar = item.type === 'transport' ? '✈'
+                   : item.type === 'hotel'     ? '⌂' : '✦';
+
+      var pdfHtml = '';
+      if (item.pdfs && item.pdfs.length) {
+        var btns = item.pdfs.map(function(p) {
+          return '<button class="pdf-btn" onclick="window.open(\'' + pdfUrl(p.id) + '\',\'_blank\')"><span class="pdf-icon">📄</span>' + p.label + '</button>';
+        }).join('');
+        pdfHtml = '<div class="pdf-row">' + btns + '</div>';
+      }
+
+      html += '<div class="tl-item">'
+        + '<div class="tl-dot-col"><div class="tl-dot" style="color:' + dotColor + ';"></div>'
+        + (isLast ? '' : '<div class="tl-line"></div>') + '</div>'
+        + '<div class="tl-card">'
+        +   '<div class="tl-head">'
+        +     '<div class="tl-icon ' + iconClass + '">' + iconChar + '</div>'
+        +     '<div style="flex:1;min-width:0;">'
+        +       '<div class="tl-title">' + item.title + '</div>'
+        +       (item.desc ? '<div class="tl-desc">' + item.desc + '</div>' : '')
+        +     '</div>'
+        +   '</div>'
+        +   '<span class="tl-badge ' + badgeClass + '">' + badgeText + '</span>'
+        +   pdfHtml
+        + '</div></div>';
+    });
+
+    html += '<button class="review-toggle" onclick="toggleEntries(\'' + day.date + '\',this)">'
+      + '<span class="review-toggle-icon">❤</span>'
+      + '<span class="review-toggle-label">今日記錄</span>'
+      + '<span class="review-toggle-count" id="cnt-' + day.date + '">…</span>'
+      + '<span class="review-toggle-arrow" id="arr-' + day.date + '">▶</span>'
+      + '</button>'
+      + '<div class="day-entries" id="entries-' + day.date + '"></div>';
+    html += '</div>';
+  });
+
+  body.innerHTML = html;
+  data.days.forEach(function(day) { loadDayCount(day.date); });
+}
+
+function loadDayCount(date) {
+  if (state.cache[date] !== undefined) { updateDayCount(date, state.cache[date]); return; }
+  apiGet('getRecords', { date: date })
+    .then(function(records) {
+      state.cache[date] = records;
+      updateDayCount(date, records);
+    })
+    .catch(function() { updateDayCount(date, []); });
+}
+
+function updateDayCount(date, records) {
+  var el = document.getElementById('cnt-' + date);
+  if (!el) return;
+  var real = records.filter(function(r) { return !r.isFee; });
+  el.textContent = real.length ? real.length + ' 筆' : '尚無';
+}
+
+function toggleEntries(date) {
+  var el = document.getElementById('entries-' + date);
+  var arrow = document.getElementById('arr-' + date);
+  var isOpen = el.classList.contains('open');
+  if (!isOpen) {
+    el.classList.add('open');
+    arrow.classList.add('open');
+    renderEntries(date, el);
+  } else {
+    el.classList.remove('open');
+    arrow.classList.remove('open');
+  }
+}
+
+function renderEntries(date, container) {
+  var records = state.cache[date];
+  if (!records) {
+    container.innerHTML = '<div class="loading">載入中...</div>';
+    apiGet('getRecords', { date: date })
+      .then(function(r) {
+        state.cache[date] = r;
+        renderEntries(date, container);
+      })
+      .catch(function() {
+        container.innerHTML = '<div class="entry-empty">無法連線</div>';
+      });
+    return;
+  }
+  var real = records.filter(function(r) { return !r.isFee; });
+  if (real.length === 0) {
+    container.innerHTML = '<div class="entry-empty">尚無記錄，按下方 ＋ 新增</div>';
+    return;
+  }
+  var html = '<div class="entries-hint">↕ 長按可拖曳排序</div>';
+  real.forEach(function(r, i) {
+    var photoHtml = r.photoUrl
+      ? '<div class="entry-photo-wrap"><img src="' + r.photoUrl + '" loading="lazy"></div>'
+      : '';
+    var expHtml = '';
+    if (r.amountEUR) {
+      expHtml = '<div class="entry-foot">'
+        + '<span class="entry-cat">' + (r.category || '') + '</span>'
+        + '<span class="entry-amt">€' + Number(r.amountEUR).toFixed(2) + '</span>'
+        + '<span class="entry-pay">' + (r.payment === '刷卡' ? '💳 +1.5%' : '💵 現金') + '</span>'
+        + '<button class="entry-del" onclick="deleteEntry(' + r.rowIndex + ',\'' + date + '\')">✕</button>'
+        + '</div>';
+    }
+    html += '<div class="entry-card" draggable="true" data-i="' + i + '" '
+      + 'ondragstart="onDragStart(event)" ondragover="onDragOver(event)" '
+      + 'ondrop="onDrop(event,\'' + date + '\')" ondragend="onDragEnd(event)">'
+      + photoHtml
+      + '<div class="entry-body">'
+      + '<div class="entry-note">' + escHtml(r.note || '') + '</div>'
+      + expHtml
+      + '</div></div>';
+  });
+  container.innerHTML = html;
+}
+
+function deleteEntry(rowIndex, date) {
+  if (!confirm('確定刪除這筆記錄？')) return;
+  apiPost('deleteRecord', { rowIndex: rowIndex })
+    .then(function() {
+      delete state.cache[date];
+      var el = document.getElementById('entries-' + date);
+      if (el) renderEntries(date, el);
+      loadDayCount(date);
+      showToast('已刪除');
+    })
+    .catch(function(err) { showToast('錯誤：' + err.message); });
+}
+
+var dragSrc = null;
+function onDragStart(e) { dragSrc = e.currentTarget; e.currentTarget.classList.add('dragging'); }
+function onDragEnd(e) { e.currentTarget.classList.remove('dragging'); document.querySelectorAll('.entry-card').forEach(function(c) { c.classList.remove('drag-over'); }); }
+function onDragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+function onDrop(e, date) {
+  e.preventDefault();
+  var target = e.currentTarget;
+  target.classList.remove('drag-over');
+  if (dragSrc && dragSrc !== target) {
+    var parent = target.parentNode;
+    var nodes = Array.from(parent.querySelectorAll('.entry-card'));
+    var fromI = nodes.indexOf(dragSrc);
+    var toI = nodes.indexOf(target);
+    if (fromI < toI) parent.insertBefore(dragSrc, target.nextSibling);
+    else parent.insertBefore(dragSrc, target);
+  }
+}
+
+/* ════════════════════════════════════════
+   Modal
+════════════════════════════════════════ */
+function openModal() {
+  var today = new Date();
+  document.getElementById('m-date').value = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+  var cr = document.getElementById('m-city-row');
+  cr.innerHTML = '';
+  CITIES.forEach(function(c) {
+    var btn = document.createElement('button');
+    btn.className = 'cat-opt' + (c === state.activeCity ? ' active' : '');
+    btn.textContent = c;
+    btn.onclick = function() {
+      cr.querySelectorAll('.cat-opt').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      state.activeCity = c;
+      localStorage.setItem('lastCity', c);
+    };
+    cr.appendChild(btn);
+  });
+  document.getElementById('m-note').value = '';
+  document.getElementById('m-eur').value = '';
+  document.getElementById('m-ntd').value = '';
+  document.getElementById('m-loc').value = '';
+  document.getElementById('photo-label').style.display = '';
+  document.getElementById('photo-preview').style.display = 'none';
+  document.getElementById('fee-notice').classList.remove('show');
+  state.photoBase64 = ''; state.photoName = ''; state.photoMime = '';
+  state.currency = 'EUR'; state.payment = '現金';
+  setActivePill('cur-toggle', 0);
+  setActivePill('pay-toggle', 0);
+  document.getElementById('m-eur').placeholder = 'EUR';
+  document.getElementById('m-ntd').placeholder = 'NTD';
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+function closeModalOutside(e) { if (e.target === document.getElementById('modal')) closeModal(); }
+function pickCat(btn) {
+  document.querySelectorAll('#m-cat-row .cat-opt').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  state.category = btn.textContent;
+}
+function setCurrency(cur) {
+  state.currency = cur;
+  setActivePill('cur-toggle', cur === 'EUR' ? 0 : 1);
+  document.getElementById('m-eur').placeholder = cur === 'EUR' ? 'EUR' : 'NTD';
+  document.getElementById('m-ntd').placeholder = cur === 'EUR' ? 'NTD' : 'EUR';
+  document.getElementById('m-eur').value = '';
+  document.getElementById('m-ntd').value = '';
+}
+function setPayment(pay) {
+  state.payment = pay;
+  setActivePill('pay-toggle', pay === '現金' ? 0 : 1);
+  document.getElementById('fee-notice').classList.toggle('show', pay === '刷卡');
+}
+function setActivePill(groupId, idx) {
+  document.querySelectorAll('#' + groupId + ' .pill-opt').forEach(function(b, i) { b.classList.toggle('active', i === idx); });
+}
+function calcOther() {
+  var eur = parseFloat(document.getElementById('m-eur').value);
+  if (state.currency === 'EUR' && !isNaN(eur)) document.getElementById('m-ntd').value = Math.round(eur * RATE);
+}
+function calcOtherNTD() {
+  var ntd = parseFloat(document.getElementById('m-ntd').value);
+  if (state.currency === 'NTD' && !isNaN(ntd)) document.getElementById('m-eur').value = (ntd / RATE).toFixed(2);
+  else if (state.currency === 'EUR' && !isNaN(ntd)) document.getElementById('m-eur').value = (ntd / RATE).toFixed(2);
+}
+function handlePhoto(input) {
+  var file = input.files[0]; if (!file) return;
+  state.photoName = file.name; state.photoMime = file.type;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var dataUrl = e.target.result;
+    state.photoBase64 = dataUrl.split(',')[1];
+    if (file.type.startsWith('image/')) {
+      document.getElementById('photo-preview').src = dataUrl;
+      document.getElementById('photo-preview').style.display = 'block';
+      document.getElementById('photo-label').style.display = 'none';
+    } else {
+      document.getElementById('photo-label').innerHTML = '<span class="pu-ico">▶</span>' + file.name;
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveRecord() {
+  var btn = document.getElementById('save-btn');
+  var date = document.getElementById('m-date').value;
+  var note = document.getElementById('m-note').value.trim();
+  var rawEur = parseFloat(document.getElementById('m-eur').value) || 0;
+  var rawNtd = parseFloat(document.getElementById('m-ntd').value) || 0;
+  var amtEUR, amtTWD;
+  if (state.currency === 'EUR') { amtEUR = rawEur; amtTWD = rawNtd || Math.round(rawEur * RATE); }
+  else { amtTWD = rawNtd; amtEUR = rawEur || parseFloat((rawNtd / RATE).toFixed(2)); }
+  var city = document.getElementById('m-city-row').querySelector('.active').textContent;
+  btn.disabled = true; btn.textContent = '儲存中...';
+  var data = {
+    date: date, city: city, category: state.category, note: note,
+    amountEUR: amtEUR || '', amountTWD: amtTWD || '',
+    location: document.getElementById('m-loc').value.trim(),
+    paymentMethod: state.payment,
+    photoBase64: state.photoBase64, photoName: state.photoName, photoMime: state.photoMime
+  };
+  apiPost('saveRecord', data)
+    .then(function() {
+      btn.disabled = false; btn.textContent = '儲存記錄';
+      delete state.cache[date];
+      closeModal();
+      showToast('✓ 已儲存');
+      var el = document.getElementById('entries-' + date);
+      if (el && el.classList.contains('open')) { loadDayCount(date); renderEntries(date, el); }
+      else { loadDayCount(date); }
+    })
+    .catch(function(err) {
+      btn.disabled = false; btn.textContent = '儲存記錄';
+      showToast('錯誤：' + err.message);
+    });
+}
+
+/* ════════════════════════════════════════
+   統計
+════════════════════════════════════════ */
+var BAR_COLORS = { '餐食': '#FF6B3D', '當地交通': '#2EC4B6', '景點票務': '#FFB940', '購物': '#E63946', '其他': '#8A7A6A', '手續費': '#B8A898' };
+var CITY_BAR_COLORS = { '巴塞隆納': '#FF6B3D', '馬德里': '#E63946', '里斯本': '#2EC4B6', '巴黎': '#14213D' };
+
+var PREPAID = [
+  { name: '長榮航空 三人份（去程＋回程）', cur: 'NTD', ntd: 146520, eur: null },
+  { name: 'Barcelona Airbnb（4晚）',        cur: 'NTD', ntd: 37871,  eur: null },
+  { name: 'Barceló Torre de Madrid（4晚）',  cur: 'EUR', ntd: null,   eur: 915.08 },
+  { name: 'Altis Prime Lisbon（3晚）',       cur: 'EUR', ntd: null,   eur: 568.65 },
+  { name: 'Hotel Gabbie Paris（3晚）',       cur: 'EUR', ntd: null,   eur: 935.70 },
+  { name: 'iryo 高鐵 BCN → MAD',            cur: 'EUR', ntd: null,   eur: 126.47 },
+  { name: 'TAP MAD → LIS 班機',             cur: 'EUR', ntd: null,   eur: 167.14 },
+  { name: 'Air France LIS → CDG 班機',      cur: 'NTD', ntd: 24418,  eur: null },
+  { name: 'aeroride 機場接駁',              cur: 'NTD', ntd: 300,    eur: null },
+  { name: '旅遊保險',                        cur: 'NTD', ntd: 8000,   eur: null },
+  { name: 'HSBC LoungeKey 貴賓室',          cur: 'FREE', ntd: 0,     eur: null }
+];
+var PREPAID_NTD_SUBTOTAL = 217109;
+var PREPAID_EUR_SUBTOTAL = 2713.04;
+var PREPAID_GRAND_NTD = 317573;
+
+function setStatsCurrency(cur) {
+  state.statsCur = cur;
+  document.querySelectorAll('.stats-wrap .pill-group .pill-opt').forEach(function(b, i) { b.classList.toggle('active', i === (cur === 'EUR' ? 0 : 1)); });
+  renderStats();
+}
+
+function loadStats() {
+  renderPrepaid();
+  document.getElementById('s-total').textContent = '…';
+  document.getElementById('s-count').textContent = '–';
+  document.getElementById('cat-bars').innerHTML = '<div class="loading">載入中</div>';
+  document.getElementById('city-bars').innerHTML = '';
+  apiGet('getAllRecords')
+    .then(function(records) { state.allRecords = records; renderTripStats(); })
+    .catch(function() {
+      document.getElementById('s-total').textContent = '—';
+      document.getElementById('cat-bars').innerHTML = '<div class="entry-empty">無法連線</div>';
+    });
+}
+
+function renderPrepaid() {
+  var isEUR = state.statsCur === 'EUR';
+  var prepaidHtml = PREPAID.map(function(p) {
+    var amtStr;
+    if (p.cur === 'FREE') amtStr = '免費';
+    else if (isEUR) amtStr = (p.eur !== null) ? ('€' + p.eur.toFixed(2)) : ('≈€' + (p.ntd / RATE).toFixed(0));
+    else amtStr = (p.ntd !== null) ? ('NT$' + p.ntd.toLocaleString()) : ('≈NT$' + Math.round(p.eur * RATE).toLocaleString());
+    return '<div class="prepaid-item"><span class="prepaid-name">' + p.name + '</span><span class="prepaid-amt">' + amtStr + '</span></div>';
+  }).join('');
+  document.getElementById('prepaid-list').innerHTML = prepaidHtml;
+  var eurSub = isEUR ? ('€' + PREPAID_EUR_SUBTOTAL.toFixed(2)) : ('≈NT$' + Math.round(PREPAID_EUR_SUBTOTAL * RATE).toLocaleString());
+  var ntdSub = isEUR ? ('≈€' + Math.round(PREPAID_NTD_SUBTOTAL / RATE)) : ('NT$' + PREPAID_NTD_SUBTOTAL.toLocaleString());
+  var grandPD = isEUR ? ('≈€' + Math.round(PREPAID_GRAND_NTD / RATE)) : ('NT$' + PREPAID_GRAND_NTD.toLocaleString());
+  document.getElementById('prepaid-subtotals').innerHTML =
+    '<div class="row"><span>EUR 品項小計</span><span>' + eurSub + '</span></div>'
+    + '<div class="row"><span>NTD 品項小計</span><span>' + ntdSub + '</span></div>'
+    + '<div class="row total"><span>行前已付 合計</span><span>' + grandPD + '</span></div>';
+}
+
+function renderTripStats() {
+  var records = state.allRecords;
+  var isEUR = state.statsCur === 'EUR';
+  var tripTotal = 0, catMap = {}, cityMap = {};
+  records.forEach(function(r) {
+    var amt = isEUR ? (parseFloat(r.amountEUR) || 0) : (parseFloat(r.amountTWD) || 0);
+    tripTotal += amt;
+    catMap[r.category || '其他'] = (catMap[r.category || '其他'] || 0) + amt;
+    cityMap[r.city || '–'] = (cityMap[r.city || '–'] || 0) + amt;
+  });
+  var prefix = isEUR ? '€' : 'NT$';
+  document.getElementById('s-total').textContent = prefix + fmt(tripTotal);
+  document.getElementById('s-count').textContent = records.filter(function(r) { return !r.isFee; }).length;
+  document.getElementById('cat-bars').innerHTML = buildBars(catMap, BAR_COLORS, prefix);
+  document.getElementById('city-bars').innerHTML = buildBars(cityMap, CITY_BAR_COLORS, prefix);
+  var grandTotal = isEUR ? (tripTotal + PREPAID_GRAND_NTD / RATE) : (tripTotal + PREPAID_GRAND_NTD);
+  var prepaidDisp = isEUR ? ('≈€' + Math.round(PREPAID_GRAND_NTD / RATE)) : ('NT$' + PREPAID_GRAND_NTD.toLocaleString());
+  document.getElementById('grand-total-box').innerHTML =
+    '<div class="gt-label">GRAND TOTAL</div>'
+    + '<div class="gt-parts">行前已付　' + prepaidDisp + '<br>旅途記錄　' + prefix + fmt(tripTotal) + '</div>'
+    + '<div class="gt-total">' + prefix + fmt(grandTotal) + '</div>';
+}
+
+function renderStats() { renderPrepaid(); renderTripStats(); }
+
+function buildBars(map, colors, prefix) {
+  var entries = Object.keys(map).map(function(k) { return [k, map[k]]; });
+  entries.sort(function(a, b) { return b[1] - a[1]; });
+  if (!entries.length) return '<div class="entry-empty">尚無記錄</div>';
+  var max = entries[0][1] || 1;
+  return entries.map(function(e) {
+    var pct = Math.round(e[1] / max * 100);
+    var color = colors[e[0]] || '#8A7A6A';
+    return '<div class="bar-row">'
+      + '<div class="bar-label">' + e[0] + '</div>'
+      + '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%;background:linear-gradient(90deg,' + color + ',' + color + 'cc);"></div></div>'
+      + '<div class="bar-amt">' + prefix + fmt(e[1]) + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+function fmt(n) { return n >= 100 ? Math.round(n).toLocaleString() : n.toFixed(2); }
+
+/* Places */
+var _acTimer, _lastSuggestions = [];
+function onLocInput() {
+  clearTimeout(_acTimer);
+  var val = document.getElementById('m-loc').value.trim();
+  if (val.length < 2) { document.getElementById('loc-drop').style.display = 'none'; return; }
+  _acTimer = setTimeout(async function() {
+    try {
+      var res = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions({ input: val, language: 'zh-TW' });
+      var sugg = (res.suggestions || []).slice(0, 5);
+      _lastSuggestions = sugg;
+      var drop = document.getElementById('loc-drop');
+      if (!sugg.length) { drop.style.display = 'none'; return; }
+      drop.innerHTML = sugg.map(function(s, i) {
+        var p = s.placePrediction;
+        var main = (p.structuredFormat && p.structuredFormat.mainText && p.structuredFormat.mainText.text) || (p.text && p.text.text) || '';
+        var sub = (p.structuredFormat && p.structuredFormat.secondaryText && p.structuredFormat.secondaryText.text) || '';
+        return '<div class="dd-item" data-i="' + i + '"><div class="dd-main">' + escHtml(main) + '</div><div class="dd-sub">' + escHtml(sub) + '</div></div>';
+      }).join('');
+      drop.style.display = 'block';
+      drop.querySelectorAll('.dd-item').forEach(function(item) {
+        var pick = function(e) {
+          e.preventDefault();
+          var p = _lastSuggestions[+item.dataset.i].placePrediction;
+          var addr = (p.text && p.text.text) || (p.structuredFormat && p.structuredFormat.mainText && p.structuredFormat.mainText.text) || '';
+          document.getElementById('m-loc').value = addr;
+          drop.style.display = 'none';
+        };
+        item.addEventListener('mousedown', pick);
+        item.addEventListener('touchstart', pick, { passive: false });
+      });
+    } catch (err) { document.getElementById('loc-drop').style.display = 'none'; }
+  }, 320);
+}
+document.getElementById('m-loc').addEventListener('blur', function() {
+  setTimeout(function() { document.getElementById('loc-drop').style.display = 'none'; }, 250);
+});
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2500);
+}
+function escHtml(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+/* ════════════════════════════════════════
+   🖍 蠟筆小新彩蛋
+════════════════════════════════════════ */
+function openShin() {
+  /* 渲染景點卡 */
+  var html = SHIN_SPOTS.map(function(s, i) {
+    var n = String(i + 1).padStart(2, '0');
+    var decoHtml = '';
+    if (s.deco && s.deco.indexOf('sun') !== -1) decoHtml += '<span class="sun"></span>';
+    if (s.deco && s.deco.indexOf('cloud') !== -1) decoHtml += '<span class="cloud"></span>';
+    var imgStyle = '--sky-top:' + s.skyTop + ';--sky-mid:' + s.skyMid
+                 + ';--ground:' + s.ground + ';--ground-deep:' + s.groundDeep + ';';
+    return '<a class="shin-spot" href="' + s.map + '" target="_blank" rel="noopener">'
+      + '<div class="shin-spot-img" style="' + imgStyle + '">'
+      +   decoHtml
+      +   '<span class="shin-spot-emoji">' + s.emoji + '</span>'
+      +   (s.shinMark ? '<span class="shin-mark">' + s.shinMark + '</span>' : '')
+      + '</div>'
+      + '<div class="shin-spot-body">'
+      +   '<div class="shin-spot-num">SPOT ' + n + '</div>'
+      +   '<div class="shin-spot-title">' + s.name + '</div>'
+      +   '<div class="shin-spot-title-en">' + s.en + '</div>'
+      +   '<div class="shin-spot-quote">' + s.quote + '</div>'
+      + '</div>'
+      + '<span class="shin-spot-arrow">›</span>'
+      + '</a>';
+  }).join('');
+  document.getElementById('shin-spots').innerHTML = html;
+  document.getElementById('shin-overlay').classList.add('open');
+}
+function closeShin() { document.getElementById('shin-overlay').classList.remove('open'); }
+function closeShinOutside(e) {
+  if (e.target === document.getElementById('shin-overlay')) closeShin();
+}
+
+/* 隱藏彩蛋：連點 Hero 城市名 3 次（巴塞隆納時）也會打開 */
+var _shinTaps = 0, _shinTimer = null;
+function setupShinSecret() {
+  var heroCity = document.getElementById('hero-city');
+  if (!heroCity) return;
+  heroCity.addEventListener('click', function() {
+    if (state.activeCity !== '巴塞隆納') return;
+    _shinTaps++;
+    clearTimeout(_shinTimer);
+    if (_shinTaps >= 3) {
+      _shinTaps = 0;
+      openShin();
+    } else {
+      _shinTimer = setTimeout(function() { _shinTaps = 0; }, 800);
+    }
+  });
+}
+
+/* Apps Script 沙箱 iframe 寬度修正 — 嘗試強制讓父層 iframe 填滿 */
+function fixAppsScriptFrame() {
+  try {
+    /* 強制再寫入 viewport meta（防止 Apps Script 吃掉）*/
+    var vp = document.querySelector('meta[name="viewport"]');
+    if (!vp) {
+      vp = document.createElement('meta');
+      vp.name = 'viewport';
+      document.head.appendChild(vp);
+    }
+    vp.setAttribute('content', 'width=device-width, initial-scale=1, viewport-fit=cover');
+
+    /* 清掉 body 上下層所有元素的 width 限制 */
+    var nodes = document.querySelectorAll('html, body, body > div, body > iframe');
+    nodes.forEach(function(el) {
+      el.style.setProperty('width', '100%', 'important');
+      el.style.setProperty('max-width', '100%', 'important');
+      el.style.setProperty('margin', '0', 'important');
+      el.style.setProperty('padding', '0', 'important');
+    });
+  } catch (e) {}
+}
+
+function init() {
+  fixAppsScriptFrame();
+  renderProgress();
+  updateHero();
+  renderCityRow();
+  renderTripBody();
+  setupShinSecret();
+  /* 多執行幾次，因為 Apps Script 的外殼會在頁面 ready 後才注入 */
+  setTimeout(fixAppsScriptFrame, 100);
+  setTimeout(fixAppsScriptFrame, 500);
+  setTimeout(fixAppsScriptFrame, 1500);
+}
+init();
+</script>
+<script>
+async function initAutocomplete() { await google.maps.importLibrary('places'); }
+var _ms = document.createElement('script');
+_ms.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyB-Fvg-qvZaP8V-g-0qiuNVil8fiPKXWec&loading=async&libraries=places&language=zh-TW&callback=initAutocomplete';
+document.head.appendChild(_ms);
+</script>
+</body>
+</html>
