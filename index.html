@@ -2452,7 +2452,6 @@ function renderTripBody() {
 }
 
 function loadDayCount(date) {
-  if (state.cache[date] !== undefined) { updateDayCount(date, state.cache[date]); return; }
   apiGet('getRecords', { date: date })
     .then(function(records) {
       state.cache[date] = records;
@@ -2475,7 +2474,16 @@ function toggleEntries(date) {
   if (!isOpen) {
     el.classList.add('open');
     arrow.classList.add('open');
-    renderEntries(date, el);
+    /* 每次打開都重新從 API 抓最新 */
+    el.innerHTML = '<div class="loading">載入中...</div>';
+    apiGet('getRecords', { date: date })
+      .then(function(records) {
+        state.cache[date] = records;
+        renderEntries(date, el);
+      })
+      .catch(function(err) {
+        el.innerHTML = '<div class="entry-empty">讀取失敗：' + (err.message || err) + '</div>';
+      });
   } else {
     el.classList.remove('open');
     arrow.classList.remove('open');
@@ -2483,19 +2491,7 @@ function toggleEntries(date) {
 }
 
 function renderEntries(date, container) {
-  var records = state.cache[date];
-  if (!records) {
-    container.innerHTML = '<div class="loading">載入中...</div>';
-    apiGet('getRecords', { date: date })
-      .then(function(r) {
-        state.cache[date] = r;
-        renderEntries(date, container);
-      })
-      .catch(function() {
-        container.innerHTML = '<div class="entry-empty">無法連線</div>';
-      });
-    return;
-  }
+  var records = state.cache[date] || [];
   var real = records.filter(function(r) { return !r.isFee; });
   if (real.length === 0) {
     container.innerHTML = '<div class="entry-empty">尚無記錄，按下方 ＋ 新增</div>';
@@ -2628,6 +2624,19 @@ function calcOtherNTD() {
 }
 function handlePhoto(input) {
   var file = input.files[0]; if (!file) return;
+  /* 檔案大小檢查：超過 8MB 直接拒絕（Apps Script base64 上傳限制）*/
+  var MAX = 8 * 1024 * 1024;
+  if (file.size > MAX) {
+    showToast('檔案太大（' + Math.round(file.size/1048576) + 'MB），請選 8MB 以下');
+    input.value = '';
+    return;
+  }
+  /* 影片暫不支援（base64 編碼後容易超出限制 + Drive 影片連結不能 inline 顯示）*/
+  if (file.type.startsWith('video/')) {
+    showToast('影片暫不支援，請改用照片');
+    input.value = '';
+    return;
+  }
   state.photoName = file.name; state.photoMime = file.type;
   var reader = new FileReader();
   reader.onload = function(e) {
@@ -2637,8 +2646,6 @@ function handlePhoto(input) {
       document.getElementById('photo-preview').src = dataUrl;
       document.getElementById('photo-preview').style.display = 'block';
       document.getElementById('photo-label').style.display = 'none';
-    } else {
-      document.getElementById('photo-label').innerHTML = '<span class="pu-ico">▶</span>' + file.name;
     }
   };
   reader.readAsDataURL(file);
@@ -2973,6 +2980,28 @@ function fixAppsScriptFrame() {
 }
 
 function init() {
+  /* 🩺 診斷模式：?debug=2026-05-04 會直接在頁面上顯示 API 回應 */
+  var qs = new URLSearchParams(location.search);
+  var debugDate = qs.get('debug');
+  if (debugDate) {
+    var box = document.createElement('div');
+    box.style.cssText = 'position:fixed;inset:0;background:#000;color:#0f0;padding:14px;font-family:monospace;font-size:11px;overflow:auto;z-index:99999;white-space:pre-wrap;word-break:break-all;';
+    box.innerHTML = '🩺 診斷中... 日期=' + debugDate + '\n\n';
+    document.body.appendChild(box);
+
+    box.innerHTML += '【1】呼叫 getRecords API...\n';
+    apiGet('getRecords', { date: debugDate })
+      .then(function(records) {
+        box.innerHTML += '【1】成功！回傳 ' + records.length + ' 筆\n';
+        box.innerHTML += JSON.stringify(records, null, 2) + '\n\n';
+        box.innerHTML += '【2】filter !isFee 後 = ' + records.filter(function(r){return !r.isFee;}).length + ' 筆\n\n';
+        box.innerHTML += '✓ 完成。截圖此畫面給 Claude 看。';
+      })
+      .catch(function(err) {
+        box.innerHTML += '✗ 錯誤：' + err.message + '\n';
+      });
+    return;  /* 不執行其他 init */
+  }
   fixAppsScriptFrame();
   renderProgress();
   updateHero();
