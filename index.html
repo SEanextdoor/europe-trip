@@ -2099,7 +2099,9 @@ function apiGet(action, params) {
       qs += '&' + encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
     });
   }
-  return fetch(API_URL + '?' + qs)
+  /* 加時間戳避免瀏覽器快取（每次請求都是新的） */
+  qs += '&_t=' + Date.now();
+  return fetch(API_URL + '?' + qs, { cache: 'no-store' })
     .then(function(r) { return r.json(); })
     .then(function(j) {
       if (!j.ok) throw new Error(j.error || 'API 失敗');
@@ -2663,12 +2665,20 @@ function saveRecord() {
   apiPost('saveRecord', data)
     .then(function() {
       btn.disabled = false; btn.textContent = '儲存記錄';
+      /* 完全清掉 cache，下次讀會重新從 Sheet 抓 */
       delete state.cache[date];
+      /* 也清空所有記錄統計快取 */
+      state.allRecords = [];
       closeModal();
       showToast('✓ 已儲存');
-      var el = document.getElementById('entries-' + date);
-      if (el && el.classList.contains('open')) { loadDayCount(date); renderEntries(date, el); }
-      else { loadDayCount(date); }
+      /* 延遲重新載入，給 Sheet commit 時間 */
+      setTimeout(function() {
+        loadDayCount(date);
+        var el = document.getElementById('entries-' + date);
+        if (el && el.classList.contains('open')) {
+          renderEntries(date, el);
+        }
+      }, 800);
     })
     .catch(function(err) {
       btn.disabled = false; btn.textContent = '儲存記錄';
@@ -2713,9 +2723,9 @@ function loadStats() {
   document.getElementById('city-bars').innerHTML = '';
   apiGet('getAllRecords')
     .then(function(records) { state.allRecords = records; renderTripStats(); })
-    .catch(function() {
+    .catch(function(err) {
       document.getElementById('s-total').textContent = '—';
-      document.getElementById('cat-bars').innerHTML = '<div class="entry-empty">無法連線</div>';
+      document.getElementById('cat-bars').innerHTML = '<div class="entry-empty">無法連線：' + (err.message || err) + '</div>';
     });
 }
 
@@ -2783,13 +2793,36 @@ function fmt(n) { return n >= 100 ? Math.round(n).toLocaleString() : n.toFixed(2
 
 /* Places */
 var _acTimer, _lastSuggestions = [];
+/* 各城市中心座標（搜尋偏好用）*/
+var CITY_BIAS = {
+  '巴塞隆納': { lat: 41.3851, lng: 2.1734, radius: 15000 },
+  '馬德里':   { lat: 40.4168, lng: -3.7038, radius: 15000 },
+  '里斯本':   { lat: 38.7223, lng: -9.1393, radius: 15000 },
+  '巴黎':     { lat: 48.8566, lng: 2.3522, radius: 15000 }
+};
+
 function onLocInput() {
   clearTimeout(_acTimer);
   var val = document.getElementById('m-loc').value.trim();
   if (val.length < 2) { document.getElementById('loc-drop').style.display = 'none'; return; }
   _acTimer = setTimeout(async function() {
     try {
-      var res = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions({ input: val, language: 'zh-TW' });
+      /* 取得目前選的城市，套用搜尋偏好 */
+      var modalCity = document.getElementById('m-city-row').querySelector('.active');
+      var cityName = modalCity ? modalCity.textContent : state.activeCity;
+      var bias = CITY_BIAS[cityName];
+
+      var req = { input: val, language: 'zh-TW', region: 'es' };
+      if (bias) {
+        req.locationBias = {
+          circle: {
+            center: { lat: bias.lat, lng: bias.lng },
+            radius: bias.radius
+          }
+        };
+      }
+
+      var res = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(req);
       var sugg = (res.suggestions || []).slice(0, 5);
       _lastSuggestions = sugg;
       var drop = document.getElementById('loc-drop');
@@ -2812,7 +2845,10 @@ function onLocInput() {
         item.addEventListener('mousedown', pick);
         item.addEventListener('touchstart', pick, { passive: false });
       });
-    } catch (err) { document.getElementById('loc-drop').style.display = 'none'; }
+    } catch (err) {
+      console.error('Places autocomplete error:', err);
+      document.getElementById('loc-drop').style.display = 'none';
+    }
   }, 320);
 }
 document.getElementById('m-loc').addEventListener('blur', function() {
