@@ -2479,9 +2479,19 @@ function fetchAllRecords(force) {
 
 function recordsForDate(date) {
   if (!_allRecords) return [];
-  /* 在 getAllRecords 沒提供 rowIndex，這裡的記錄不能刪除（這版先不支援）*/
+  var target = String(date).substring(0, 10);
+  /* 🩺 把比對結果暴露成 window.__lastDebug 供診斷 */
+  var samples = _allRecords.slice(0, 3).map(function(r) {
+    return { rawDate: r.date, normalized: String(r.date).substring(0, 10), match: String(r.date).substring(0, 10) === target };
+  });
+  window.__lastDebug = {
+    queryDate: date,
+    target: target,
+    totalRecords: _allRecords.length,
+    samples: samples
+  };
   return _allRecords.filter(function(r) {
-    return String(r.date).substring(0, 10) === String(date).substring(0, 10);
+    return String(r.date).substring(0, 10) === target;
   });
 }
 
@@ -2561,24 +2571,6 @@ function deleteEntry(rowIndex, date) {
       showToast('已刪除');
     })
     .catch(function(err) { showToast('錯誤：' + err.message); });
-}
-
-var dragSrc = null;
-function onDragStart(e) { dragSrc = e.currentTarget; e.currentTarget.classList.add('dragging'); }
-function onDragEnd(e) { e.currentTarget.classList.remove('dragging'); document.querySelectorAll('.entry-card').forEach(function(c) { c.classList.remove('drag-over'); }); }
-function onDragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
-function onDrop(e, date) {
-  e.preventDefault();
-  var target = e.currentTarget;
-  target.classList.remove('drag-over');
-  if (dragSrc && dragSrc !== target) {
-    var parent = target.parentNode;
-    var nodes = Array.from(parent.querySelectorAll('.entry-card'));
-    var fromI = nodes.indexOf(dragSrc);
-    var toI = nodes.indexOf(target);
-    if (fromI < toI) parent.insertBefore(dragSrc, target.nextSibling);
-    else parent.insertBefore(dragSrc, target);
-  }
 }
 
 /* ════════════════════════════════════════
@@ -2984,62 +2976,14 @@ function setupShinSecret() {
   });
 }
 
-/* Apps Script 沙箱 iframe 寬度修正 — 嘗試強制讓父層 iframe 填滿 */
-function fixAppsScriptFrame() {
-  try {
-    /* 強制再寫入 viewport meta（防止 Apps Script 吃掉）*/
-    var vp = document.querySelector('meta[name="viewport"]');
-    if (!vp) {
-      vp = document.createElement('meta');
-      vp.name = 'viewport';
-      document.head.appendChild(vp);
-    }
-    vp.setAttribute('content', 'width=device-width, initial-scale=1, viewport-fit=cover');
-
-    /* 清掉 body 上下層所有元素的 width 限制 */
-    var nodes = document.querySelectorAll('html, body, body > div, body > iframe');
-    nodes.forEach(function(el) {
-      el.style.setProperty('width', '100%', 'important');
-      el.style.setProperty('max-width', '100%', 'important');
-      el.style.setProperty('margin', '0', 'important');
-      el.style.setProperty('padding', '0', 'important');
-    });
-  } catch (e) {}
-}
-
 function init() {
-  /* 🩺 診斷模式：?debug=2026-05-04 會直接在頁面上顯示 API 回應 */
-  var qs = new URLSearchParams(location.search);
-  var debugDate = qs.get('debug');
-  if (debugDate) {
-    var box = document.createElement('div');
-    box.style.cssText = 'position:fixed;inset:0;background:#000;color:#0f0;padding:14px;font-family:monospace;font-size:11px;overflow:auto;z-index:99999;white-space:pre-wrap;word-break:break-all;';
-    box.innerHTML = '🩺 診斷中... 日期=' + debugDate + '\n\n';
-    document.body.appendChild(box);
-
-    box.innerHTML += '【1】呼叫 getRecords API...\n';
-    apiGet('getRecords', { date: debugDate })
-      .then(function(records) {
-        box.innerHTML += '【1】成功！回傳 ' + records.length + ' 筆\n';
-        box.innerHTML += JSON.stringify(records, null, 2) + '\n\n';
-        box.innerHTML += '【2】filter !isFee 後 = ' + records.filter(function(r){return !r.isFee;}).length + ' 筆\n\n';
-        box.innerHTML += '✓ 完成。截圖此畫面給 Claude 看。';
-      })
-      .catch(function(err) {
-        box.innerHTML += '✗ 錯誤：' + err.message + '\n';
-      });
-    return;  /* 不執行其他 init */
-  }
-  fixAppsScriptFrame();
   renderProgress();
   updateHero();
   renderCityRow();
   renderTripBody();
   setupShinSecret();
-  /* 多執行幾次，因為 Apps Script 的外殼會在頁面 ready 後才注入 */
-  setTimeout(fixAppsScriptFrame, 100);
-  setTimeout(fixAppsScriptFrame, 500);
-  setTimeout(fixAppsScriptFrame, 1500);
+  /* 預先載入所有記錄（在背景跑，不阻塞畫面） */
+  fetchAllRecords().catch(function() {});
 }
 init();
 </script>
