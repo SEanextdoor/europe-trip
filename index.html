@@ -2047,8 +2047,8 @@ body > iframe {
         <button class="pill-opt" onclick="setCurrency('NTD',this)">NTD</button>
       </div>
       <div class="pill-group" id="pay-toggle">
-        <button class="pill-opt active" onclick="setPayment('現金',this)">現金</button>
-        <button class="pill-opt" onclick="setPayment('刷卡',this)">刷卡</button>
+        <button class="pill-opt" onclick="setPayment('現金',this)">現金</button>
+        <button class="pill-opt active" onclick="setPayment('刷卡',this)">刷卡</button>
       </div>
     </div>
     <div class="amt-row" style="margin-bottom:12px;">
@@ -2204,7 +2204,7 @@ var state = {
   activeTab: 'trip',
   activeCity: localStorage.getItem('lastCity') || '巴塞隆納',
   currency: 'EUR',
-  payment: '現金',
+  payment: '刷卡',
   category: '餐食',
   photoBase64: '',
   photoName: '',
@@ -2584,11 +2584,11 @@ function openModal() {
   document.getElementById('m-loc').value = '';
   document.getElementById('photo-label').style.display = '';
   document.getElementById('photo-preview').style.display = 'none';
-  document.getElementById('fee-notice').classList.remove('show');
   state.photoBase64 = ''; state.photoName = ''; state.photoMime = '';
-  state.currency = 'EUR'; state.payment = '現金';
+  state.currency = 'EUR'; state.payment = '刷卡';
   setActivePill('cur-toggle', 0);
-  setActivePill('pay-toggle', 0);
+  setActivePill('pay-toggle', 1);  /* 刷卡是第 2 個 (index 1) */
+  document.getElementById('fee-notice').classList.add('show');  /* 預設顯示手續費提醒 */
   document.getElementById('m-eur').placeholder = 'EUR';
   document.getElementById('m-ntd').placeholder = 'NTD';
   document.getElementById('modal').classList.add('open');
