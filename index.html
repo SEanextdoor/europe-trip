@@ -2577,8 +2577,17 @@ function deleteEntry(rowIndex, date) {
    Modal
 ════════════════════════════════════════ */
 function openModal() {
+  /* 取得「使用者裝置上的當地日期」— 不論時區，都是使用者眼前看到的日期 */
   var today = new Date();
-  document.getElementById('m-date').value = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+  /* 用 toLocaleDateString 強制本地時區，避免 UTC 偏移 */
+  var y = today.getFullYear();
+  var m = today.getMonth() + 1;
+  var d = today.getDate();
+  /* 如果你想固定用某時區，改成下面這樣（取消註解）：
+     var localStr = today.toLocaleDateString('en-CA', { timeZone: 'Europe/Madrid' });
+     // localStr 會是 'YYYY-MM-DD' 格式
+  */
+  document.getElementById('m-date').value = y + '-' + String(m).padStart(2, '0') + '-' + String(d).padStart(2, '0');
   var cr = document.getElementById('m-city-row');
   cr.innerHTML = '';
   CITIES.forEach(function(c) {
