@@ -2812,13 +2812,12 @@ function onLocInput() {
       var cityName = modalCity ? modalCity.textContent : state.activeCity;
       var bias = CITY_BIAS[cityName];
 
-      var req = { input: val, language: 'zh-TW', region: 'es' };
+      var req = { input: val, language: 'zh-TW' };
       if (bias) {
+        /* 新版 Places API 的 locationBias 格式：直接給 circle 物件 */
         req.locationBias = {
-          circle: {
-            center: { lat: bias.lat, lng: bias.lng },
-            radius: bias.radius
-          }
+          center: { lat: bias.lat, lng: bias.lng },
+          radius: bias.radius
         };
       }
 
