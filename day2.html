@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 2 | 跟著蠟筆小新玩巴塞隆納</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+    background: #faf7f2;
+    color: #2d2a26;
+    line-height: 1.85;
+    font-size: 17px;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    background: #fffdf9;
+    box-shadow: 0 0 60px rgba(0,0,0,0.04);
+    min-height: 100vh;
+  }
+  header {
+    text-align: center;
+    padding: 30px 0 50px;
+    border-bottom: 1px solid #e8e2d7;
+    margin-bottom: 50px;
+  }
+  .day-tag {
+    display: inline-block;
+    background: #c75d3f;
+    color: white;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #1a1815;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+  }
+  .subtitle {
+    font-size: 14px;
+    color: #8a8378;
+    letter-spacing: 3px;
+  }
+  h2 {
+    font-size: 22px;
+    color: #1a1815;
+    margin: 50px 0 24px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #c75d3f;
+    display: inline-block;
+  }
+  h3 {
+    font-size: 19px;
+    color: #c75d3f;
+    margin: 30px 0 14px;
+    font-weight: 600;
+  }
+  p {
+    margin-bottom: 18px;
+    color: #3a3530;
+  }
+  img {
+    width: 100%;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    display: block;
+  }
+  .photo-caption {
+    text-align: center;
+    font-size: 13px;
+    color: #8a8378;
+    margin-top: -10px;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+  blockquote {
+    background: #f5efe4;
+    border-left: 4px solid #c75d3f;
+    padding: 18px 22px;
+    margin: 24px 0;
+    border-radius: 6px;
+    color: #4a4540;
+  }
+  blockquote p {
+    margin-bottom: 10px;
+  }
+  blockquote p:last-child {
+    margin-bottom: 0;
+  }
+  blockquote.legend {
+    background: #fef6ed;
+    border-left-color: #d99563;
+    text-align: center;
+    font-style: italic;
+    font-size: 18px;
+  }
+  blockquote.knowledge {
+    background: #fef9ee;
+    border-left-color: #d99563;
+  }
+  blockquote.knowledge::before {
+    content: "📌 小知識";
+    display: block;
+    font-size: 13px;
+    color: #c75d3f;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  blockquote.lesson {
+    background: #fdf0e8;
+    border-left-color: #c75d3f;
+  }
+  blockquote.lesson::before {
+    content: "⚠️ 帶娃旅行教訓";
+    display: block;
+    font-size: 13px;
+    color: #c75d3f;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .highlight {
+    background: linear-gradient(transparent 60%, #ffe9a8 60%);
+    padding: 0 2px;
+    font-weight: 600;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 15px;
+  }
+  th, td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid #e8e2d7;
+  }
+  th {
+    background: #f5efe4;
+    color: #2d2a26;
+    font-weight: 600;
+  }
+  td:last-child, th:last-child {
+    text-align: right;
+  }
+  tr:last-child td {
+    font-weight: 700;
+    color: #c75d3f;
+    background: #fef6ed;
+  }
+  .closing-list {
+    background: #2d2a26;
+    color: #faf7f2;
+    padding: 30px;
+    border-radius: 12px;
+    margin: 30px 0;
+    text-align: center;
+    line-height: 2.4;
+  }
+  .closing-list p {
+    color: #faf7f2;
+    margin: 0;
+    font-size: 16px;
+  }
+  .closing-tag {
+    display: block;
+    margin-top: 24px;
+    font-size: 22px;
+    letter-spacing: 4px;
+    font-weight: 600;
+  }
+  hr.divider {
+    border: none;
+    text-align: center;
+    margin: 40px 0;
+    color: #c75d3f;
+    font-size: 20px;
+    letter-spacing: 12px;
+  }
+  hr.divider::before {
+    content: "✦ ✦ ✦";
+  }
+
+  /* === 蠟筆小新對比區 === */
+  .anime-compare {
+    background: #fef6ed;
+    border-radius: 12px;
+    padding: 24px 20px;
+    margin: 36px 0;
+    border: 1px dashed #d99563;
+  }
+  .anime-compare-title {
+    text-align: center;
+    font-size: 14px;
+    color: #c75d3f;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .anime-compare-sub {
+    text-align: center;
+    font-size: 16px;
+    color: #2d2a26;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+  .anime-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+  .anime-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .anime-grid-3 img,
+  .anime-grid-2 img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  .anime-grid-3 .label,
+  .anime-grid-2 .label {
+    text-align: center;
+    font-size: 11px;
+    color: #8a8378;
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+  .anime-grid-3 .anime-cell,
+  .anime-grid-2 .anime-cell {
+    display: flex;
+    flex-direction: column;
+  }
+  .anime-grid-3 .anime-cell.center img {
+    border: 2px solid #c75d3f;
+  }
+  .anime-grid-3 .anime-cell.center .label {
+    color: #c75d3f;
+    font-weight: 700;
+  }
+  .anime-compare-note {
+    text-align: center;
+    font-size: 13px;
+    color: #6a6258;
+    margin-top: 14px;
+    font-style: italic;
+  }
+
+  /* === 蠟筆小新引言區（單張） === */
+  .anime-intro {
+    background: #fef6ed;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 30px 0;
+    border: 1px dashed #d99563;
+    text-align: center;
+  }
+  .anime-intro img {
+    border-radius: 8px;
+    margin: 0 auto 12px;
+    max-width: 100%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  .anime-intro-caption {
+    font-size: 14px;
+    color: #c75d3f;
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  /* === 神奇方陣 === */
+  .magic-square {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    background: #2d2a26;
+    padding: 4px;
+    border-radius: 8px;
+    max-width: 280px;
+    margin: 24px auto;
+  }
+  .magic-square-cell {
+    background: #fef6ed;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: #2d2a26;
+    border-radius: 4px;
+  }
+  .magic-square-cell.repeat {
+    color: #c75d3f;
+  }
+  .magic-square-note {
+    text-align: center;
+    font-size: 13px;
+    color: #6a6258;
+    margin-top: -10px;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  /* 響應式 */
+  @media (max-width: 600px) {
+    .container { padding: 24px 16px 60px; }
+    h1 { font-size: 24px; }
+    h2 { font-size: 19px; }
+    h3 { font-size: 17px; }
+    body { font-size: 16px; }
+    .anime-grid-3 { gap: 6px; }
+    .anime-grid-3 .label,
+    .anime-grid-2 .label { font-size: 10px; }
+    .magic-square-cell { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <span class="day-tag">DAY 2</span>
+  <h1>跟著蠟筆小新玩巴塞隆納 🖍️</h1>
+  <p class="subtitle">PLAÇA · PARK GÜELL · SAGRADA FAMÍLIA</p>
+</header>
+
+<!-- ======== 開場 hero ======== -->
+<img src="images/hero_sagrada.jpg" alt="聖家堂前全家福">
+<p class="photo-caption">一起站在聖家堂前 · 米白色的我們</p>
+
+<blockquote class="legend">
+  <p>出發前,小米最愛看蠟筆小新巴塞隆納特輯。</p>
+  <p>那些動畫裡的場景——蘭布拉大道、聖家堂、桂爾公園的蜥蜴、海鮮燉飯、火腿——</p>
+  <p>今天通通要去一一蓋章 ✅</p>
+</blockquote>
+
+<!-- ======== 一、Macià 紀念碑 ======== -->
+<h2>一、加泰隆尼亞廣場的清晨</h2>
+<h3>跟「爺爺」打招呼</h3>
+
+<p>早晨從蘭布拉大道往北走,第一站來到 <strong>Plaça de Catalunya</strong> 旁的 <strong>Francesc Macià 紀念碑</strong>。倒梯形的階梯像一個巨大的「Z」,雕塑家是 <strong>Josep Maria Subirachs</strong>——這個名字先記下來,因為下午聖家堂受難立面也是他的作品 🎯</p>
+
+<blockquote class="knowledge">
+  <p>Francesc Macià 是加泰隆尼亞自治政府首任主席,加泰人暱稱他「<strong>L'Avi</strong>(爺爺)」。Subirachs 故意把雕塑做成「未完成」的樣子,象徵加泰隆尼亞的自治之路也還沒走完。</p>
+</blockquote>
+
+<p>廣場空蕩蕩,小米一身奶茶色風衣站在巨大紀念碑前——<span class="highlight">像一張電影海報</span>。</p>
+
+<img src="images/IMG_1482.jpg" alt="小米在 Macià 紀念碑前">
+<p class="photo-caption">奶茶色風衣 vs. 倒梯形紀念碑</p>
+
+<hr class="divider">
+
+<!-- ======== 二、Brunch & Cake ======== -->
+<h2>二、Brunch & Cake</h2>
+<h3>「In Grandmothers We Trust」</h3>
+
+<p>走到 <strong>C/ Laietana 54</strong> 的 <strong>Brunch &amp; Cake</strong>——這間 2010 年生於巴塞隆納的網美早午餐,現在已經開到全球。黃白條紋遮陽棚、奶油色貝殼鏡裝潢,門口寫著 <span class="highlight">「In Grandmothers We Trust」</span>——奶奶哲學。</p>
+
+<img src="images/IMG_1496.jpg" alt="Brunch & Cake 店門口母女">
+<p class="photo-caption">黃白條紋遮陽棚下,母女登場</p>
+
+<p>點餐前小米吵著要追鴿子,我們繞了一整個街廓。路上意外撞見:</p>
+<ul style="margin-left: 20px; margin-bottom: 18px; color: #3a3530;">
+  <li><strong>Carmela</strong> 雕塑(Jaume Plensa 作品,加泰隆尼亞音樂宮旁)</li>
+  <li><strong>Caixa de Pensions 大樓</strong>(Enric Sagnier 1914 設計)</li>
+</ul>
+
+<p>回來坐下,<strong>09:14</strong> 的早晨,點了:</p>
+
+<table>
+  <thead>
+    <tr><th>品項</th><th>西文</th><th>€</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Bagel</td><td>Bagel</td><td>12.90</td></tr>
+    <tr><td>酪梨班尼迪克蛋</td><td>Avocado Eggs Benny</td><td>13.50</td></tr>
+    <tr><td>拿鐵瑪奇朵</td><td>Latte Machiatto</td><td>3.30</td></tr>
+    <tr><td>熱可可</td><td>Xocolata Calenta</td><td>4.90</td></tr>
+    <tr><td><strong>含 IVA 10%</strong></td><td></td><td><strong>€34.60</strong></td></tr>
+  </tbody>
+</table>
+
+<img src="images/IMG_1493.jpg" alt="Brunch & Cake 餐點擺盤">
+<p class="photo-caption">藍色杯熱可可、金色拿鐵拉花、酪梨 Benny 上的花瓣</p>
+
+<blockquote>
+  <p>酪梨料理擺盤很美,但澱粉太多,我吃不完。</p>
+  <p>後來才知道——這是錯誤的決定,因為<strong>接下來我們會忘記吃午餐</strong>。</p>
+</blockquote>
+
+<hr class="divider">
+
+<!-- ======== 三、桂爾公園 ======== -->
+<h2>三、桂爾公園</h2>
+<h3>跟蜥蜴本尊相見歡 🦎</h3>
+
+<p>搭公車前往 <strong>Park Güell</strong>,路上經過 <strong>Arc de Triomf</strong>。車上小米睡著充電——<strong>走到皮克敏都收成好幾隻了,孩子也是會耗光的</strong>。</p>
+
+<img src="images/IMG_1502.jpg" alt="公車上小米睡著">
+<p class="photo-caption">充電中。下一站:桂爾公園</p>
+
+<p><strong>沒帶推車</strong>,全程人肉抱。進到公園,先完成「小新旋轉照」——模仿動畫片頭運鏡 🎬</p>
+
+<!-- 對比 01:洗衣婦門廊 -->
+<div class="anime-compare">
+  <div class="anime-compare-title">SCENE MATCH · 01</div>
+  <div class="anime-compare-sub">Pòrtic dels Llavadors · 洗衣婦門廊</div>
+  <div class="anime-grid-3">
+    <div class="anime-cell">
+      <img src="images/IMG_1552.jpg" alt="阿米在洗衣婦門廊">
+      <div class="label">— 阿米 —</div>
+    </div>
+    <div class="anime-cell center">
+      <img src="images/IMG_1466.jpg" alt="蠟筆小新洗衣婦門廊">
+      <div class="label">— 蠟筆小新 —</div>
+    </div>
+    <div class="anime-cell">
+      <img src="images/IMG_1553.jpg" alt="小米在洗衣婦門廊">
+      <div class="label">— 小米 —</div>
+    </div>
+  </div>
+  <p class="anime-compare-note">傾斜的石柱像森林 · 動畫場景一比一還原</p>
+</div>
+
+<p>景點一個接一個:<strong>Sala Hipóstila(百柱廳)</strong>用 86 根多立克柱撐起上方廣場、<strong>trencadís 蛇形長椅</strong>每一塊碎瓷都不一樣、<strong>藍白格子塔</strong>跟動畫第一張截圖一模一樣 ✅</p>
+
+<img src="images/IMG_1515.jpg" alt="桂爾公園 trencadís 拱廊前母女">
+<p class="photo-caption">trencadís 拱廊前 · 母女階梯合照</p>
+
+<img src="images/IMG_1539.jpg" alt="全家在公園較高處比愛心">
+<p class="photo-caption">高處眺望地中海 · 全家米白系比愛心</p>
+
+<img src="images/IMG_1560.jpg" alt="百柱廳天花板 trencadís 圓盤">
+<p class="photo-caption">百柱廳天花板的 trencadís 圓盤 vs. 小米的反墨鏡</p>
+
+<img src="images/IMG_1574.jpg" alt="小米在 trencadís 花磚牆前比拍照手勢">
+<p class="photo-caption">「擺拍小達人」誕生 · 雙手比起拍照手勢</p>
+
+<!-- 對比 02:蜥蜴 -->
+<div class="anime-compare">
+  <div class="anime-compare-title">SCENE MATCH · 02</div>
+  <div class="anime-compare-sub">El Drac · 蜥蜴本尊</div>
+  <div class="anime-grid-2">
+    <div class="anime-cell">
+      <img src="images/IMG_1467.jpg" alt="蠟筆小新蜥蜴">
+      <div class="label">— 蠟筆小新 —</div>
+    </div>
+    <div class="anime-cell">
+      <img src="images/IMG_1569.jpg" alt="母女在蜥蜴旁">
+      <div class="label">— 母女合照 —</div>
+    </div>
+  </div>
+  <p class="anime-compare-note">藍色 trencadís 鱗片本尊到位 ✓</p>
+</div>
+
+<blockquote class="knowledge">
+  <p><strong>小米的「蜥蜴對比」</strong></p>
+  <p>昨天在機場,小米第一次摸到複製品蜥蜴,<strong>整個臉超認真</strong>。今天看到本尊,在阿米懷裡<strong>笑得超開心</strong>——這就是旅行的魔法 ✨</p>
+</blockquote>
+
+<img src="images/IMG_1576.jpg" alt="桂爾公園出口全家福">
+<p class="photo-caption">百柱廳前階梯 · 蜥蜴噴泉 · 全家米白</p>
+
+<hr class="divider">
+
+<!-- ======== 四、Casa Vicens ======== -->
+<h2>四、Casa Vicens</h2>
+<h3>Gaudí 的處女作</h3>
+
+<p>下山途中,走到 <strong>Carrer de les Carolines</strong>,撞見一棟讓人挪不動腳的房子——<strong>Casa Vicens</strong>。</p>
+
+<blockquote class="knowledge">
+  <p>這是 <strong>Gaudí 設計的第一棟建築</strong>(1883–1885),他當年才 31 歲。業主是磁磚商人 Manel Vicens。整棟被綠橘色萬壽菊磁磚 + 紅磚條紋 + 摩爾風幾何窗格包覆——<strong>像一本立體繪本</strong>。</p>
+  <p>入口走廊用三語歡迎:<em>Benvinguts / Bienvenidos / Welcome to Gaudí's first house</em></p>
+</blockquote>
+
+<p><strong>鐵藝陽台</strong>——Gaudí 把鋼鐵打成像棕櫚葉一樣的捲曲,末端還有蝙蝠造型鉚釘。這是後來 Casa Batlló 鐵欄杆風格的雛形——<span class="highlight">他在這裡偷偷練功</span>。</p>
+
+<img src="images/IMG_1595.jpg" alt="Casa Vicens 立面與母女">
+<p class="photo-caption">綠橘磁磚 + 紅磚條紋 · 阿米抱著累趴的小米</p>
+
+<p>地上踩著 <strong>Panot 花磚</strong>(Puig i Cadafalch 1906 設計)——<strong>全巴塞隆納的人行道都是這個四瓣花圖案</strong>,等於踩在城市的 logo 上 🌼</p>
+
+<hr class="divider">
+
+<!-- ======== 五、忘記吃午餐 ======== -->
+<h2>五、忘記吃午餐的下午 😱</h2>
+
+<p>逛完 Casa Vicens 後,我們走進附近街區想找午餐。結果——被路邊的小店分心、進去逛紀念品、阿米買了一個白色黑貓托特包……</p>
+
+<img src="images/IMG_1586.jpg" alt="母女在花店前看花">
+<p class="photo-caption">花店前的 Panot 花磚地 · 一切元兇都在這張裡</p>
+
+<p><strong>等到回神,已經是兩點多。</strong>3:00 的聖家堂預約時間就在眼前 ⏰</p>
+
+<blockquote>
+  <p>「來不及了!直接去聖家堂!」</p>
+  <p>「那小米呢?」</p>
+  <p>「她剛剛吃了餅乾……應該可以撐!」</p>
+  <p><strong>——本日最大失誤達成 ❌</strong></p>
+</blockquote>
+
+<blockquote class="lesson">
+  <p>行程再怎麼趕,<strong>午餐絕對不能跳過</strong>。小米血糖直接歸零,我們的人品也要見底了。</p>
+</blockquote>
+
+<hr class="divider">
+
+<!-- ======== 六、聖家堂第一輪 ======== -->
+<h2>六、聖家堂第一輪</h2>
+<h3>光的森林 ⛪</h3>
+
+<!-- 蠟筆小新引言區(不對比) -->
+<div class="anime-intro">
+  <img src="images/IMG_1470.jpg" alt="蠟筆小新聖家堂">
+  <div class="anime-intro-caption">「這就是完全不知道何時才會完成的聖家堂」<br>—— 蠟筆小新巴塞隆納特輯</div>
+</div>
+
+<p>趕到 <strong>Sagrada Família</strong> 誕生立面時,剛好 3:00 整。</p>
+
+<p><strong>誕生立面(Façana del Naixement)</strong>——Gaudí <span class="highlight">生前唯一親自完成的立面</span>(1894–1930)。雕像密密麻麻、像被自然吞沒的故事書。</p>
+
+<img src="images/IMG_1610.jpg" alt="聖家堂誕生立面仰角">
+<p class="photo-caption">仰角的誕生立面 · 動畫字幕成真</p>
+
+<h3>烏龜柱基 🐢</h3>
+
+<p>立面下方有兩隻烏龜——<strong>一隻陸龜、一隻海龜</strong>——撐著兩根主柱。象徵「陸地與海洋的時間流動」。</p>
+
+<p>小米爬到烏龜身上笑得超開心——<strong>140 年歷史的 Gaudí 雕刻 vs 兩歲半小米</strong>,反差萌爆表。</p>
+
+<img src="images/IMG_1646.jpg" alt="小米爬烏龜柱基">
+<p class="photo-caption">阿米噘嘴比 1 · 小米霸佔烏龜本龜</p>
+
+<h3>Etsuro Sotoo 的常春藤葉牆 🌿</h3>
+
+<p>入口門廊有一面青銅葉牆,是日本雕刻家 <strong>外尾悅郎</strong>(1978 年加入聖家堂團隊至今)的作品。仔細看,葉子間還藏著<strong>瓢蟲、螞蟻、蜻蜓</strong>——Gaudí 自然主義的延續。</p>
+
+<img src="images/IMG_1642.jpg" alt="阿米在青銅葉牆前">
+<p class="photo-caption">綠葉中藏著瓢蟲、螞蟻、蜻蜓</p>
+
+<img src="images/IMG_1637.jpg" alt="全家米白系在青銅葉牆前">
+<p class="photo-caption">米白 vs. 葉牆綠 · 一張照片可以掛十年</p>
+
+<blockquote class="legend">
+  <p>爸爸:白 T + 米白褲,比 6 號手勢</p>
+  <p>阿米:白風衣裙擺飄起來,雙手舒展像跳舞</p>
+  <p>小米:奶茶風衣,雙手都比 1,呆萌站好</p>
+</blockquote>
+
+<hr class="divider">
+
+<!-- ======== 七、聖家堂內部 ======== -->
+<h2>七、聖家堂內部</h2>
+<h3>石頭森林 🌲</h3>
+
+<p>走進中殿,整個人會忘記怎麼呼吸。</p>
+
+<blockquote class="knowledge">
+  <p>Gaudí 把柱子設計成「<strong>樹</strong>」——下半直立、上半分岔成樹枝。整個中殿就是一座<strong>室內石頭森林</strong>。</p>
+  <p>左側冷色玻璃(藍綠紫)= 誕生立面那側,右側暖色玻璃(紅橙黃)= 受難立面那側。光會隨著一天的時間流動。</p>
+</blockquote>
+
+<p>下午 3 點多,<strong>受難立面的暖光正盛</strong>——整個空間被烤成金色。小米在這個瞬間突然甦醒,一身奶油色斗篷風衣<strong>從鏡頭前奔跑而過</strong>——<span class="highlight">像被火光點亮的小天使</span> 🔥</p>
+
+<img src="images/IMG_1627.jpg" alt="小米在聖家堂內紅光中奔跑">
+<p class="photo-caption">★ 封面候選 No.1 · 受難立面暖光中奔跑而過 🔥</p>
+
+<img src="images/IMG_1624.jpg" alt="爸爸與小米在聖家堂內自拍">
+<p class="photo-caption">爸爸視角 · 樹狀柱頂 + 藍色彩繪玻璃</p>
+
+<hr class="divider">
+
+<!-- ======== 八、上塔 ======== -->
+<h2>八、上塔</h2>
+<h3>Gaudí 的數學魔法</h3>
+
+<p>聖家堂上塔有年齡限制,小米無法上去。我們<strong>爸媽輪流上塔</strong>,另一個顧小米。</p>
+
+<h3>螺旋梯俯瞰 🐚</h3>
+
+<p>塔內有一個必拍構圖——<strong>螺旋樓梯往下看</strong>。形狀像鸚鵡螺貝殼的「<strong>對數螺線(logarithmic spiral)</strong>」——跟向日葵、銀河、貝殼是同一個數學公式。</p>
+
+<img src="images/IMG_1622.jpg" alt="聖家堂螺旋樓梯">
+<p class="photo-caption">對數螺線 · 跟向日葵、銀河、貝殼同公式</p>
+
+<blockquote class="legend">
+  <p>Gaudí 從自然界的數學中找靈感。<br>這個塔不只是塔,是一個<strong>立體的數學詩</strong>。</p>
+</blockquote>
+
+<h3>塔窗看城市</h3>
+
+<p>從鐵柵欄縫隙看出去——棋盤格的 <strong>Eixample 區</strong>整齊延伸,遠方是 <strong>Tibidabo 山</strong>。下方那條綠樹大道是 <strong>Avinguda de Gaudí</strong>,連到 <strong>Sant Pau 醫院</strong>。甚至還能看到 <strong>KFC 招牌</strong> 😆——神聖建築 vs 速食連鎖的反差萌。</p>
+
+<img src="images/IMG_1621.jpg" alt="塔上看 Eixample 棋盤格">
+<p class="photo-caption">雕塑剪影框出 Eixample 棋盤格</p>
+
+<hr class="divider">
+
+<!-- ======== 九、受難立面 ======== -->
+<h2>九、受難立面</h2>
+<h3>Subirachs 的數學謎題</h3>
+
+<p>從塔下來,繞到另一邊——<strong>受難立面(Façana de la Passió)</strong>。雕刻是 <strong>Josep Maria Subirachs</strong>——<strong>早上加泰隆尼亞廣場那個 Macià 紀念碑的同一位</strong> ✨</p>
+
+<blockquote class="legend">
+  <p>早上跟「爺爺」打招呼,下午又遇到他。<br>巴塞隆納就是這樣一座,<strong>藝術家會反覆出現的城市</strong>。</p>
+</blockquote>
+
+<h3>神奇方陣 🔢</h3>
+
+<p>立面上有一個 <strong>4×4 的數字方陣</strong>:<strong>每一行、每一列、每一條對角線、四角、四個 2×2 區塊——總和都是 33</strong>。</p>
+
+<div class="magic-square">
+  <div class="magic-square-cell">1</div>
+  <div class="magic-square-cell repeat">14</div>
+  <div class="magic-square-cell repeat">14</div>
+  <div class="magic-square-cell">4</div>
+  <div class="magic-square-cell">11</div>
+  <div class="magic-square-cell">7</div>
+  <div class="magic-square-cell">6</div>
+  <div class="magic-square-cell">9</div>
+  <div class="magic-square-cell">8</div>
+  <div class="magic-square-cell repeat">10</div>
+  <div class="magic-square-cell repeat">10</div>
+  <div class="magic-square-cell">5</div>
+  <div class="magic-square-cell">13</div>
+  <div class="magic-square-cell">2</div>
+  <div class="magic-square-cell">3</div>
+  <div class="magic-square-cell">15</div>
+</div>
+<p class="magic-square-note">紅字為刻意重複的 10 與 14 · 為了湊出 33 的設計</p>
+
+<blockquote class="knowledge">
+  <p><strong>33 = 耶穌被釘十字架時的年齡</strong> ✝️</p>
+  <p>這個方陣為了湊出 33,<strong>故意重複了兩次 10 和兩次 14</strong>——是一個刻意設計的「33 主題魔方」。<strong>信仰 + 數學的極致結合</strong>。</p>
+</blockquote>
+
+<img src="images/IMG_1663.jpg" alt="聖家堂方陣特寫">
+<p class="photo-caption">立面上的方陣本尊</p>
+
+<h3>青銅大門</h3>
+
+<p>門上刻滿《馬太福音 26–27 章》的耶穌受難記,加泰文 + 重點字突起浮雕(<strong>BENEDICCIÓ</strong> 祝福、<strong>DONA</strong> 女人、<strong>FRUIT</strong> 果實)。</p>
+
+<img src="images/IMG_1662.jpg" alt="小米在受難立面青銅大門前比 1">
+<p class="photo-caption">小米眉頭微皺比 1 · 對她來說,這只是一面黑黑刺刺的牆</p>
+
+<hr class="divider">
+
+<!-- ======== 十、聖家堂的全貌 ======== -->
+<h2>十、聖家堂的全貌</h2>
+<h3>Gaudí 心中的宇宙</h3>
+
+<p>博物館裡有一張 1982 年的手繪平面圖:<em>SIMBOLOGIA DEL TEMPLE EXPIATORI DE LA SAGRADA FAMÍLIA</em>。</p>
+
+<p>完整聖家堂的三個立面:</p>
+<ul style="margin-left: 20px; margin-bottom: 18px; color: #3a3530;">
+  <li><strong>Naixement(誕生)</strong> ✅ 已完成(Gaudí 親手)</li>
+  <li><strong>Passió(受難)</strong> ✅ 已完成(Subirachs 接手)</li>
+  <li><strong>Glòria(榮耀)</strong> ❌ 還沒蓋好(未來的主入口)</li>
+</ul>
+
+<p>加上中央 <strong>耶穌、聖母、12 使徒</strong> 的塔位、四季花園——這才是 Gaudí 心中<strong>完整的聖家堂</strong>。</p>
+
+<img src="images/IMG_1653.jpg" alt="聖家堂博物館主禱文牆">
+<p class="photo-caption">博物館中的主禱文牆 + 桌面倒影</p>
+
+<blockquote class="legend">
+  <p>蠟筆小新名場景達成 ✅<br>但今年(2026)剛剛宣布——<strong>主塔耶穌塔即將完工</strong>。<br>我們是見證歷史的<strong>最後一代「未完成版」</strong>遊客。</p>
+</blockquote>
+
+<img src="images/IMG_1682.jpg" alt="聖家堂水池前全家福">
+<p class="photo-caption">告別聖家堂 · 直拍水池倒影</p>
+
+<hr class="divider">
+
+<!-- ======== 今日總結 ======== -->
+<h2>今日總結</h2>
+
+<div class="closing-list">
+  <p>🍳 早餐:Brunch &amp; Cake 的酪梨澱粉太多</p>
+  <p>😫 午餐:因為逛街忘記吃 → 小米崩潰</p>
+  <p>✅ 加泰隆尼亞廣場、Casa Vicens、桂爾公園、聖家堂全蓋章</p>
+  <p>🎯 跟 Subirachs 在 Day 2 早晚各遇一次</p>
+  <p>🦎 蜥蜴本尊相見歡 · 紅光奔跑名場景</p>
+  <p>⛪ 聖家堂上塔成功(爸媽輪流,小米下面顧)</p>
+  <p>👕 全家米白穿搭意外搭上聖家堂主題色</p>
+  <p>📌 慘痛教訓:<strong>逛街可以再來,午餐不能省</strong></p>
+  <span class="closing-tag">🌙 待續,巴塞隆納</span>
+</div>
+
+<p style="text-align: center; color: #8a8378; font-style: italic; margin-top: 40px;">
+晚餐還沒寫進去——因為還沒吃。<br>
+但——<strong>晚餐絕對不會忘記</strong>。
+</p>
+
+</div>
+
+</body>
+</html>
