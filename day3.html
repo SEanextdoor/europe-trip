@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 3 | Gaudí 大滿貫 · 從早餐到鴨肉 Bikini</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+TC:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f1ea;
+    --paper:#faf7f1;
+    --ink:#2a2622;
+    --ink-soft:#5a544c;
+    --rule:#d9d2c5;
+    --accent:#a3623a;
+    --accent-soft:#c8956b;
+    --quote-bg:#ede6d6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Noto Serif TC','Cormorant Garamond',Georgia,serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  /* paper texture */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+    background-image:
+      radial-gradient(circle at 20% 30%,rgba(163,98,58,.04) 0,transparent 50%),
+      radial-gradient(circle at 80% 70%,rgba(42,38,34,.03) 0,transparent 50%);
+  }
+  .container{max-width:780px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+
+  /* ── HERO ── */
+  .hero{padding:80px 24px 60px;text-align:center;border-bottom:1px solid var(--rule)}
+  .hero .day-label{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:14px;
+    letter-spacing:.4em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:24px;
+  }
+  .hero h1{
+    font-family:'Cormorant Garamond','Noto Serif TC',serif;
+    font-weight:500;
+    font-size:clamp(38px,6vw,58px);
+    line-height:1.15;
+    letter-spacing:-.01em;
+    margin-bottom:20px;
+    max-width:680px;
+    margin-left:auto;margin-right:auto;
+  }
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .subtitle{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:15px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:50px;
+  }
+  .hero .subtitle span{margin:0 12px;color:var(--accent-soft)}
+
+  .hero-image{margin:0 -24px 30px}
+  .hero-image img{width:100%;display:block}
+  .hero-caption{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:15px;
+    color:var(--ink-soft);
+    margin-bottom:40px;
+  }
+
+  .hero-quote{
+    border-left:2px solid var(--accent);
+    padding:6px 0 6px 24px;
+    text-align:left;
+    max-width:560px;
+    margin:0 auto;
+    font-family:'Cormorant Garamond','Noto Serif TC',serif;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:17px;
+  }
+  .hero-quote p{margin-bottom:14px}
+  .hero-quote p:last-child{margin-bottom:0}
+
+  /* ── SECTION ── */
+  section{padding:70px 0 30px;border-bottom:1px solid var(--rule)}
+  section:last-of-type{border-bottom:none}
+  .section-num{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:13px;
+    letter-spacing:.4em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:14px;
+    text-align:center;
+  }
+  h2{
+    font-family:'Cormorant Garamond','Noto Serif TC',serif;
+    font-weight:500;
+    font-size:clamp(28px,4vw,38px);
+    line-height:1.25;
+    text-align:center;
+    margin-bottom:10px;
+    letter-spacing:-.005em;
+  }
+  h3{
+    font-family:'Cormorant Garamond','Noto Serif TC',serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:21px;
+    color:var(--accent);
+    text-align:center;
+    margin-bottom:40px;
+    letter-spacing:.02em;
+  }
+  h4{
+    font-family:'Noto Serif TC',serif;
+    font-weight:600;
+    font-size:18px;
+    margin:40px 0 16px;
+    color:var(--ink);
+  }
+  h4::before{
+    content:"※ ";color:var(--accent);font-weight:400;
+  }
+
+  p{margin-bottom:20px;color:var(--ink)}
+  p strong{font-weight:600;color:var(--ink);background:linear-gradient(transparent 65%,rgba(200,149,107,.25) 65%);padding:0 1px}
+  p em{font-family:'Cormorant Garamond',serif;font-style:italic}
+
+  /* drop cap on first paragraph of each section */
+  section > p:first-of-type::first-letter,
+  section > h4 + p::first-letter{}
+
+  /* ── IMAGE FIGURE ── */
+  figure{margin:36px 0;text-align:center}
+  figure img{
+    width:100%;
+    display:block;
+    box-shadow:0 8px 30px rgba(42,38,34,.12);
+  }
+  figure.bleed{margin-left:-24px;margin-right:-24px}
+  figcaption{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:14px;
+    color:var(--ink-soft);
+    margin-top:14px;
+    line-height:1.5;
+  }
+
+  /* ── PULLQUOTE / BLOCKQUOTE ── */
+  blockquote{
+    background:var(--quote-bg);
+    border-left:3px solid var(--accent);
+    padding:24px 28px;
+    margin:30px 0;
+    font-family:'Noto Serif TC','Cormorant Garamond',serif;
+    color:var(--ink-soft);
+    font-size:16px;
+    line-height:1.85;
+    position:relative;
+  }
+  blockquote::before{
+    content:"\201C";
+    position:absolute;
+    top:-10px;left:14px;
+    font-family:'Cormorant Garamond',serif;
+    font-size:60px;
+    color:var(--accent);
+    opacity:.3;
+    line-height:1;
+  }
+  blockquote p{margin-bottom:12px;color:var(--ink-soft)}
+  blockquote p:last-child{margin-bottom:0}
+  blockquote strong{background:none;color:var(--ink)}
+
+  /* ── SCENE MATCH ── */
+  .scene-match{
+    margin:50px -24px;
+    background:var(--paper);
+    padding:36px 24px;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+  }
+  .scene-match-label{
+    text-align:center;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:13px;
+    letter-spacing:.4em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:8px;
+  }
+  .scene-match-title{
+    text-align:center;
+    font-family:'Cormorant Garamond','Noto Serif TC',serif;
+    font-weight:500;
+    font-size:22px;
+    margin-bottom:30px;
+    color:var(--ink);
+  }
+  .scene-match-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-bottom:14px;
+  }
+  .scene-match-grid figure{margin:0}
+  .scene-match-grid img{
+    aspect-ratio:1/1;
+    object-fit:cover;
+    width:100%;
+  }
+  .scene-match-grid figcaption{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:13px;
+    text-align:center;
+    margin-top:8px;
+    letter-spacing:.05em;
+  }
+  .scene-match-confirm{
+    text-align:center;
+    font-family:'Noto Serif TC',serif;
+    font-size:14px;
+    color:var(--ink-soft);
+    margin-top:16px;
+    padding-top:16px;
+    border-top:1px dashed var(--rule);
+  }
+
+  /* ── TABLE ── */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:30px 0;
+    font-size:15px;
+    background:var(--paper);
+  }
+  th,td{
+    padding:12px 14px;
+    text-align:left;
+    border-bottom:1px solid var(--rule);
+  }
+  th{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    font-size:14px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--accent);
+    background:var(--quote-bg);
+  }
+  td:nth-child(2){font-style:italic;color:var(--ink-soft);font-size:14px}
+  td:nth-child(3){text-align:right;font-family:'Cormorant Garamond',serif;font-size:16px}
+  tr:last-child td{border-bottom:2px solid var(--ink);font-weight:600}
+  tr:last-child td:first-child{font-weight:700}
+
+  /* ── COVER CANDIDATE BADGE ── */
+  .cover-badge{
+    display:inline-block;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:13px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--accent);
+    background:var(--quote-bg);
+    padding:4px 12px;
+    margin-right:8px;
+    border:1px solid var(--accent-soft);
+  }
+
+  /* ── SUMMARY ── */
+  .summary{
+    margin-top:60px;
+    padding:50px 32px;
+    background:var(--paper);
+    border:1px solid var(--rule);
+  }
+  .summary h2{margin-bottom:30px}
+  .summary ul{list-style:none;padding:0}
+  .summary li{
+    padding:12px 0;
+    border-bottom:1px dashed var(--rule);
+    font-size:15px;
+    line-height:1.6;
+  }
+  .summary li:last-child{border-bottom:none}
+  .summary li strong{font-weight:600}
+
+  /* ── FOOTER ── */
+  footer{
+    text-align:center;
+    padding:50px 24px 80px;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:16px;
+    letter-spacing:.1em;
+  }
+  footer .moon{font-size:24px;display:block;margin-bottom:14px;color:var(--accent)}
+
+  /* ── DECORATIVE DIVIDER ── */
+  .divider{
+    text-align:center;
+    margin:30px 0;
+    color:var(--accent-soft);
+    font-size:18px;
+    letter-spacing:1em;
+  }
+
+  /* responsive */
+  @media (max-width:600px){
+    body{font-size:16px;line-height:1.8}
+    .hero{padding:50px 20px 40px}
+    .container{padding:0 20px}
+    .scene-match{margin-left:-20px;margin-right:-20px;padding:30px 20px}
+    figure.bleed{margin-left:-20px;margin-right:-20px}
+    table{font-size:14px}
+    th,td{padding:10px}
+  }
+
+  /* fade-in on load */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .hero,section,footer{animation:fadeUp .8s ease both}
+  section{animation-delay:.1s}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<header class="hero">
+  <div class="container">
+    <div class="day-label">Day · Three</div>
+    <h1>Gaudí 大滿貫<br><em>從早餐到鴨肉 Bikini</em> 🦆</h1>
+    <div class="subtitle">La Papa<span>·</span>Casa Batlló<span>·</span>Casa Milà<span>·</span>Tosca del Carme</div>
+  </div>
+
+  <div class="hero-image">
+    <img src="images/IMG_1830.jpg" alt="Casa Milà 屋頂全家福">
+  </div>
+
+  <div class="container">
+    <p class="hero-caption">Casa Milà 屋頂拱門合照 · 背景隱約是聖家堂</p>
+    <div class="hero-quote">
+      <p>Day 2 的教訓很深:<strong>午餐絕對不能忘</strong>。</p>
+      <p>所以 Day 3 第一件事 —— 好好吃早餐。</p>
+      <p>然後接下來,我們要把 Gaudí 五大作品全部收集完。</p>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ §1 LA PAPA ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ One</div>
+    <h2>La Papa Barcelona</h2>
+    <h3>鹹的早餐 · 救贖之味</h3>
+
+    <p>從飯店走了一段路,到了 <strong>La Papa Barcelona</strong> —— 一間芥末黃牆面 + 開放式吧台的 takeaway 風格小店。咖啡師全身刺青、認真打奶泡的樣子,配上後面的暖黃牆面,像一張街拍電影海報。</p>
+
+    <figure>
+      <img src="images/IMG_1701.jpg" alt="La Papa 店面">
+      <figcaption>芥末黃牆 · 咖啡師打奶泡的瞬間</figcaption>
+    </figure>
+
+    <p>櫃子裡的麵包擺得跟博物館一樣:<strong>可頌、巧克力可頌、Kouign-amann、開心果可頌、肉桂捲、杏仁磅蛋糕、布朗尼、海鹽巧克力餅乾</strong> —— 一字排開的烘焙天堂。</p>
+
+    <figure>
+      <img src="images/IMG_1702.jpg" alt="La Papa 麵包櫃">
+      <figcaption>麵包博物館 · 從可頌到肉桂捲一字排開</figcaption>
+    </figure>
+
+    <h4>Parisienne DDL</h4>
+    <p>最吸睛的是這款 <strong>Parisienne DDL</strong>:<strong>圓筒狀千層可頌</strong>中央灌滿 <em>dulce de leche</em>(拉美牛奶醬)。外層酥脆千層,中間是流心的牛奶焦糖醬 —— 光看就覺得熱量超標,但很想吃。</p>
+
+    <figure>
+      <img src="images/IMG_1705.jpg" alt="Parisienne DDL 特寫">
+      <figcaption>中央那窪閃亮的 = dulce de leche · 焦糖牛奶醬流心</figcaption>
+    </figure>
+
+    <h4>凱撒雞肉三明治</h4>
+    <p>但我們<strong>這次決定吃鹹的</strong> —— 點了<strong>凱撒雞肉三明治</strong>:<strong>brioche 麵包</strong>烤到金黃焦痕、奶油香氣四溢、夾著烤雞胸 + 雞絲 + 蘿蔓生菜 + 凱撒醬。<strong>brioche 蛋奶比例高</strong>,熱壓後外酥內軟,跟一般吐司不是同一個等級。</p>
+
+    <figure>
+      <img src="images/IMG_1712.jpg" alt="凱撒雞肉三明治切面">
+      <figcaption>brioche 烤色 · 烤雞胸 + 雞絲 + 蘿蔓 · 鹹香蛋白質</figcaption>
+    </figure>
+
+    <blockquote>
+      <p>鹹的、有蛋白質、份量剛好 ——</p>
+      <p>Day 2 酪梨澱粉的陰影 ✅ 解除。</p>
+      <p>今天人品穩了,午餐絕對不會忘。</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §2 PASSEIG DE GRACIA ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Two</div>
+    <h2>上午散步 · Passeig de Gràcia</h2>
+    <h3>從 Casa Milà 走到 Rambla de Catalunya</h3>
+
+    <p>吃飽往南走,先經過 <strong>Casa Milà(La Pedrera)</strong> 的側面 —— 倒 S 型波浪外牆 + 屋頂戰士煙囪在藍天下整個發亮。等一下會回來認真參觀,先打個招呼。</p>
+
+    <figure>
+      <img src="images/IMG_1715.jpg" alt="Casa Milà 側面">
+      <figcaption>藍天 + 波浪石牆 · Gaudí 的見面禮</figcaption>
+    </figure>
+
+    <p>走進 <strong>Rambla de Catalunya</strong> —— 巴塞最在地的「林蔭散步道」。兩排梧桐樹的綠蔭、19 世紀 Eixample 的奶油色立面、左右兩側咖啡座 + Estrella Damm 啤酒招牌 —— 整張就是「巴塞隆納的早晨」教科書照。</p>
+
+    <figure>
+      <img src="images/IMG_1718.jpg" alt="Rambla de Catalunya">
+      <figcaption>兩排梧桐 + La Bodegueta 1942 老店 · 在地人的 Rambla</figcaption>
+    </figure>
+  </div>
+
+  <div class="scene-match">
+    <div class="scene-match-label">Scene Match · 03</div>
+    <div class="scene-match-title">Rambla de Catalunya · 蘭布拉散步道</div>
+    <div class="scene-match-grid">
+      <figure>
+        <img src="images/IMG_1460.png" alt="蠟筆小新散步道">
+        <figcaption>— 蠟筆小新 —</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_1718.jpg" alt="阿米拍的散步道">
+        <figcaption>— 我們的視角 —</figcaption>
+      </figure>
+    </div>
+    <div class="scene-match-confirm">兩排梧桐 + 露天咖啡座 + 中央散步道 ✅</div>
+  </div>
+
+  <div class="container">
+    <blockquote>
+      <p>蠟筆小新製作組真的有來巴塞做田調。</p>
+      <p>連地磚的方格感都還原了。</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §3 CASA BATLLÓ ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Three</div>
+    <h2>Casa Batlló</h2>
+    <h3>龍背 · 龍鱗 · 聖喬治的劍 🐉</h3>
+
+    <p>走進 <strong>Casa Batlló</strong> —— Gaudí 1904–1906 改建的房子。整棟建築是<strong>聖喬治屠龍</strong>的故事:<strong>屋頂就是龍背</strong>(綠藍陶瓷球 = 脊椎)、<strong>陽台像骷髏</strong>(被龍吃掉的人骨)、<strong>白色尖塔上的十字劍</strong> = 聖喬治插進龍身的劍。</p>
+
+    <figure>
+      <img src="images/IMG_1760.jpg" alt="Casa Batlló 屋頂龍背">
+      <figcaption>龍脊 + 龍鱗 + 聖喬治的劍 · 阿米一身藍站在傳說中</figcaption>
+    </figure>
+
+    <h4>Noble Floor 的有機木窗</h4>
+    <p>走到二樓 <strong>Noble Floor</strong>(主樓層),看到 Gaudí 最有名的設計之一 —— <strong>有機曲線的木雕窗框</strong>。整面窗戶沒有一條直線、像被海水沖刷過的浮木,連窗扣都做成貝殼造型。</p>
+
+    <figure>
+      <img src="images/IMG_1731.jpg" alt="阿米在 Casa Batlló 木窗前">
+      <figcaption>有機曲線木窗 · 小米厭世臉亂入</figcaption>
+    </figure>
+
+    <h4>後院露台 · 都市秘境</h4>
+    <p>爬到頂樓前的後院露台 —— 藍白磁磚 + 藤編遮陽棚 + 馬賽克花園,被稱為「巴塞最美的都市秘境」。</p>
+
+    <blockquote>
+      <p><strong>小米的厭世臉登場 😂</strong></p>
+      <p>她想睡覺但被我們應是抓起來拍照 ——</p>
+      <p>眼睛瞇成一條線、眉頭皺起來、嘴角下垂。</p>
+      <p>這張照片十年後再看會超好笑。</p>
+    </blockquote>
+
+    <figure>
+      <img src="images/IMG_1748.jpg" alt="小米在 Casa Batlló 露台厭世臉">
+      <figcaption>Vogue 級表情管理 · 小貴族本人</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/IMG_1750.jpg" alt="阿米在 Casa Batlló 露台">
+      <figcaption>藍白磁磚 + 藤編棚下的下午</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/IMG_1744.jpg" alt="Casa Batlló 拱頂壁龕全家福">
+      <figcaption>破涕為笑的小米 + 揮手的阿米 + 拱頂磁磚壁龕</figcaption>
+    </figure>
+
+    <blockquote>
+      <p>雖然有點對不起小米 ——</p>
+      <p>但這個構圖太美,<strong>做了正確的決定</strong> ✅</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §4 VINITUS ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Four</div>
+    <h2>午餐 · Vinitus</h2>
+    <h3>終於沒忘記吃午餐 ✅</h3>
+
+    <p>走到 <strong>Vinitus</strong>(Consell de Cent 333)—— 巴塞超有名的 tapas 連鎖,2014 年開到現在,<strong>CP 值高 + 道地 + 海鮮新鮮</strong>。</p>
+
+    <figure>
+      <img src="images/IMG_1766.jpg" alt="Vinitus 門口">
+      <figcaption>黃色遮陽棚 · 木地板 · 排隊人潮</figcaption>
+    </figure>
+
+    <p>冷藏櫃像博物館 —— 紅蝦、章魚、淡菜、竹蟶、鯷魚、鯖魚都新鮮到發亮。今日特餐黑板上 <strong>Croqueta de Pernil Ibèric €2.75</strong> —— 伊比利火腿可樂餅,<strong>必點</strong>。</p>
+
+    <figure>
+      <img src="images/IMG_1762.jpg" alt="Vinitus 海鮮櫃">
+      <figcaption>海鮮博物館 · 那串蝦 + 番茄 + 蘑菇竹籤太美</figcaption>
+    </figure>
+
+    <p>阿米在藍色 Chesterfield 沙發前等菜上桌 —— 背景整面酒牆,每個 tapas bar 都像精品店。</p>
+
+    <figure>
+      <img src="images/IMG_1767.jpg" alt="阿米在 Vinitus 等餐">
+      <figcaption>藍色 Chesterfield + 整面酒牆 · 怎麼拍怎麼好看</figcaption>
+    </figure>
+
+    <table>
+      <thead>
+        <tr><th>品項</th><th>西文</th><th>€</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>鐵板蛤蜊</td><td>Almejas Plancha</td><td>13.55</td></tr>
+        <tr><td>「生氣的蛋」(辣椒炒蛋薯條)</td><td>Huevos Cabreados</td><td>7.75</td></tr>
+        <tr><td>今日天婦羅</td><td>Tempura del día</td><td>7.75</td></tr>
+        <tr><td>鳕魚配蜂蜜蒜醬</td><td>Bacalao Allioli Mel</td><td>14.15</td></tr>
+        <tr><td>烤蝦 montadito 4 號</td><td>Mont. Dia N.4</td><td>5.65</td></tr>
+        <tr><td>庇里牛斯氣泡水</td><td>Agua Pirinea</td><td>2.30</td></tr>
+        <tr><td>Nestea</td><td>Nestea</td><td>3.40</td></tr>
+        <tr><td>TOTAL</td><td>含 IVA</td><td>€54.55</td></tr>
+      </tbody>
+    </table>
+
+    <figure>
+      <img src="images/IMG_1763.jpg" alt="Vinitus 餐桌全景">
+      <figcaption>蛤蜊 + 生氣的蛋 + 蔬菜天婦羅 + 小米的史努比圍兜</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/IMG_1769.jpg" alt="montadito 特寫">
+      <figcaption>烤蝦 + 番茄莎莎 + 紅綠椒 + 一顆櫻桃番茄</figcaption>
+    </figure>
+
+    <blockquote>
+      <p><strong>小米的食慾觀察</strong></p>
+      <p>試了好幾道,基本上都不太吃。</p>
+      <p>出國帶小孩最大的謎題 —— 「<strong>明明你在家吃這個的啊?!</strong>」</p>
+      <p>旅行中的味蕾警戒系統全開,別逼她,水跟奶有喝就好。</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §5 GAUDI MCDONALDS ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Five</div>
+    <h2>下午 · Gaudí 的麥當勞 🍟</h2>
+    <h3>全世界最美的金拱門</h3>
+
+    <p>從 Vinitus 走出來,看到一間「奇怪的麥當勞」—— <strong>M 字 logo 用 trencadís 拼貼</strong>、地板是蜂巢花磚、門口曲線連 La Pedrera 都被致敬。<strong>全世界最 Gaudí 的麥當勞</strong> 👑</p>
+
+    <figure>
+      <img src="images/IMG_1790.jpg" alt="Gaudí 風麥當勞">
+      <figcaption>trencadís M 字 + 蜂巢地磚 · 巴塞市政府的招牌規定救贖</figcaption>
+    </figure>
+
+    <blockquote>
+      <p>巴塞對 Eixample 區的招牌有嚴格規定,</p>
+      <p>連麥當勞都得入境隨俗 → 全球最美麥當勞誕生。</p>
+      <p>純拍照沒進去 —— 熱量零增加 ✅</p>
+    </blockquote>
+
+    <p>走幾步路就到了下午的主場:<strong>Casa Milà(La Pedrera)</strong> 正門。</p>
+
+    <figure>
+      <img src="images/IMG_1795.jpg" alt="Casa Milà 正面">
+      <figcaption>整棟沒有一條直線 · 黑色鍛鐵陽台像海藻</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════ §6 CASA MILA ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Six</div>
+    <h2>Casa Milà · La Pedrera</h2>
+    <h3>Gaudí 60 歲的晚期作品</h3>
+
+    <p><strong>Casa Milà</strong>(1906–1912)是 Gaudí 完全擺脫直線的作品。當年人們笑它是「<em>採石場(La Pedrera)</em>」,現在是世界遺產。</p>
+
+    <h4>內庭 · 流動的天井</h4>
+    <p>進門先看內庭 —— <strong>橢圓形天井</strong>,黃藍漸層牆面,Gaudí 把整棟設計成<strong>讓自然光從中央灑下</strong>,每層每戶都能採光。<strong>百年前的綠建築先驅</strong>。</p>
+
+    <figure>
+      <img src="images/IMG_1799.jpg" alt="Casa Milà 內庭仰望">
+      <figcaption>橢圓天井 · 黃藍漸層 · 自然光從中央灑下</figcaption>
+    </figure>
+
+    <h4>閣樓 · 拋物線拱廊</h4>
+    <p>爬到頂樓前的閣樓 —— <strong>270 道紅磚拋物線拱</strong>,模仿動物肋骨/鯨魚骨結構,Gaudí 從大自然偷學的。</p>
+
+    <figure>
+      <img src="images/IMG_1808.jpg" alt="阿米抱小米在拱廊">
+      <figcaption>紅磚拋物線拱 · 鐵手抱娃成就達成 💪</figcaption>
+    </figure>
+
+    <blockquote>
+      <p><strong>小米睡死了</strong> —— 一整天的奔波,終於在這個拱廊裡靠在阿米肩上熟睡。</p>
+      <p>媽媽一身藍裙、小米奶茶風衣、拱廊紅磚 —— 溫柔到不行。</p>
+    </blockquote>
+
+    <h4>屋頂 · 戰士煙囪</h4>
+    <p>爬到屋頂 —— 這才是 La Pedrera 的精華。<strong>像太空船基地</strong>的奇形怪狀煙囪,啟發了《星際大戰》達斯維達的造型。</p>
+
+    <figure>
+      <img src="images/IMG_1817.jpg" alt="小米靠著大煙囪">
+      <figcaption>兩歲半 vs 十米高戰士 · 比例反差萌</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/IMG_1820.jpg" alt="白色貝殼煙囪">
+      <figcaption>trencadís 包覆的白色煙囪 · 百年前的回收材料設計</figcaption>
+    </figure>
+
+    <h4>拱門合照 · 框住聖家堂</h4>
+    <p>屋頂有一個必拍構圖 —— <strong>拱門框出整座城市</strong>,還能看到遠方 <strong>Sagrada Família 的尖塔</strong>。</p>
+
+    <figure>
+      <img src="images/IMG_1830.jpg" alt="Casa Milà 拱門全家福">
+      <figcaption><span class="cover-badge">Cover No.2</span>拱門框住聖家堂 + 全家入鏡</figcaption>
+    </figure>
+
+    <blockquote>
+      <p><strong>早上跟 Casa Milà 打招呼,下午正式拜訪。</strong></p>
+      <p>同一棟建築看兩次,角度完全不同 ——</p>
+      <p>巴塞值得這樣慢慢逛。</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §7 OLD TOWN STROLL ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Seven</div>
+    <h2>午後散步 · 哥德區小巷</h2>
+    <h3>Caganer · JonCake · Palau Güell</h3>
+
+    <h4>Caganer · 蹲著的紀念品</h4>
+    <p>從 Casa Milà 往南走進老城區,撞見一間 <strong>Caganer 專賣店</strong> ——「<em>most typical Catalan souvenir</em>」。</p>
+
+    <blockquote>
+      <p><strong>Caganer = 蹲著大便的小人</strong>。</p>
+      <p>加泰隆尼亞獨有的聖誕傳統:每個 Nativity Scene(耶穌誕生場景)都會藏一個正在大便的人偶,象徵「<strong>肥沃土地、來年豐收</strong>」🌾</p>
+      <p>從政治人物、明星到名畫家,<strong>全部都有 caganer 版本</strong>。</p>
+    </blockquote>
+
+    <figure>
+      <img src="images/IMG_1846.jpg" alt="Caganer 店">
+      <figcaption>「Spread Joy」門墊 · 阿米進門打卡 · 巨大女版 caganer 鎮店</figcaption>
+    </figure>
+
+    <h4>JonCake & Coffee</h4>
+    <p>繼續走,經過巴斯克起司蛋糕專門店 <strong>JonCake & Coffee</strong> —— <strong>巴塞最近超紅的 burnt cheesecake</strong>。</p>
+
+    <figure>
+      <img src="images/IMG_1856.jpg" alt="JonCake 門口">
+      <figcaption>「Don't wait here」標示 · 大排隊店家 · 阿米外帶一個</figcaption>
+    </figure>
+
+    <h4>馬賽克拼貼牆</h4>
+    <p>走進一個小廣場,遇到一面<strong>用上千張小照片拼出大圖案的馬賽克牆</strong> —— 夫妻比愛心、小米在嬰兒車裡睡到天荒地老。</p>
+
+    <figure>
+      <img src="images/IMG_1868.jpg" alt="馬賽克牆全家福">
+      <figcaption>愛心手勢 + 嬰兒車 · 育兒旅行宣傳照</figcaption>
+    </figure>
+
+    <h4>Palau Güell</h4>
+    <p>最後散步到 <strong>Palau Güell(古埃爾宮)</strong> —— Gaudí 1886–1888 的早期作品,為金主 Eusebi Güell 設計的豪宅。<strong>新哥德式風格</strong>,雖然還沒有後期 Casa Batlló、Milà 那麼瘋狂,但<strong>鍛鐵拱門 + 鳳凰 + 加泰隆尼亞紋章</strong>已經看得出 Gaudí 的細節控功力。</p>
+
+    <figure>
+      <img src="images/IMG_1883.jpg" alt="Palau Güell 立面">
+      <figcaption>新哥德式 + 鍛鐵拱門 · Gaudí 30 出頭的處女作之一</figcaption>
+    </figure>
+
+    <blockquote>
+      <p><strong>Day 3 的 Gaudí 蓋章本:</strong></p>
+      <p>✅ Casa Batlló · 屠龍故事</p>
+      <p>✅ Casa Milà · 海浪採石場</p>
+      <p>✅ Palau Güell · 早期豪宅</p>
+      <p>加上 Day 1 的 Sagrada Família + Day 2 的 Casa Vicens ——</p>
+      <p><strong>5 大 Gaudí 作品全收集</strong> 🏆</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §8 COLUMBUS ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Eight</div>
+    <h2>傍晚 · 哥倫布之塔</h2>
+    <h3>蠟筆小新蓋章 · 第三次</h3>
+
+    <p>走到海邊,<strong>Mirador de Colón / Monument a Colom</strong> 在夕陽下染成蜂蜜金色。1888 年巴塞世博會時建的,<strong>60 公尺高</strong>,頂端的哥倫布雕像手指向「新大陸」方向(雖然考據上指錯方向了 😅)。</p>
+
+    <figure>
+      <img src="images/IMG_1884.jpg" alt="哥倫布塔全景">
+      <figcaption>夕陽 + 60 公尺哥倫布塔 + 底座青銅獅子</figcaption>
+    </figure>
+  </div>
+
+  <div class="scene-match">
+    <div class="scene-match-label">Scene Match · 04</div>
+    <div class="scene-match-title">Monument a Colom · 哥倫布之塔</div>
+    <div class="scene-match-grid">
+      <figure>
+        <img src="images/IMG_1468.png" alt="蠟筆小新哥倫布塔">
+        <figcaption>— 蠟筆小新 —</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_1886.jpg" alt="阿米推車在哥倫布塔下">
+        <figcaption>— 我們的視角 —</figcaption>
+      </figure>
+    </div>
+    <div class="scene-match-confirm">中央八角形底座 + 兩側青銅獅子 + 浮雕人像 ✅</div>
+  </div>
+
+  <div class="container">
+    <blockquote>
+      <p><strong>蠟筆小新巴塞蓋章本最終版:</strong></p>
+      <p>✅ 桂爾公園洗衣婦門廊(Day 2)</p>
+      <p>✅ 桂爾公園蜥蜴(Day 2)</p>
+      <p>✅ 聖家堂(Day 2)</p>
+      <p>✅ Rambla de Catalunya(Day 3 早)</p>
+      <p>✅ 哥倫布之塔(Day 3 傍晚)</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §9 TOSCA ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Nine</div>
+    <h2>晚餐 · Tosca del Carme</h2>
+    <h3>鴨肉 Bikini 救援小米食慾 🦆</h3>
+
+    <p>走進 <strong>Tosca del Carme</strong>(Carrer del Carme 40)—— Raval 區的 tapas + brunch + cocktail bar 三合一,4.5 顆星。</p>
+
+    <table>
+      <thead>
+        <tr><th>品項</th><th>西文</th><th>€</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>火腿小麵包</td><td>Montadito de Jamón</td><td>2.50</td></tr>
+        <tr><td>牛肉蒜頭燉鍋</td><td>Cazuela de Ternera</td><td>11.90</td></tr>
+        <tr><td>鴨肉 Bikini</td><td>Bikini de Pato</td><td>11.80</td></tr>
+        <tr><td>帕德龍辣椒</td><td>Pimientos del Padrón</td><td>5.90</td></tr>
+        <tr><td>無酒精雞尾酒</td><td>Cocktail Sin</td><td>5.50</td></tr>
+        <tr><td>大瓶氣泡水</td><td>Agua Grande</td><td>4.70</td></tr>
+        <tr><td>TOTAL</td><td>含服務</td><td>€42.30</td></tr>
+      </tbody>
+    </table>
+
+    <figure>
+      <img src="images/IMG_1906.jpg" alt="帕德龍辣椒">
+      <figcaption>海鹽 + 橄欖油烤過 · 俄羅斯輪盤式辣椒 🌶️</figcaption>
+    </figure>
+
+    <blockquote>
+      <p><strong>Pimientos del Padrón</strong> = 西班牙下酒菜經典。</p>
+      <p>大部分不辣,但<strong>十顆裡面會有一顆突然辣到你</strong> —— 隨機驚喜。</p>
+    </blockquote>
+
+    <h4>Bikini de Pato 登場</h4>
+    <p><strong>Bikini</strong> 是巴塞當地的熱壓三明治(類似法式 croque-monsieur),這家用<strong>手撕鴨肉 + 布利起司 + 焦糖洋蔥</strong>升級 —— 金黃焦痕、爆漿起司。</p>
+
+    <figure>
+      <img src="images/IMG_1902.jpg" alt="小米張嘴等吃">
+      <figcaption><span class="cover-badge">Cover No.3</span>小米張嘴等下一口的瞬間</figcaption>
+    </figure>
+
+    <blockquote>
+      <p><strong>小米終於開吃了!!</strong> 🎉</p>
+      <p>一整天試了無數東西都不太吃 ——</p>
+      <p>Bikini de Pato 是冠軍救援投手 🏆</p>
+      <p>麵包香、起司鹹、洋蔥甜、鴨肉嫩 —— 零辣味、純粹爆好吃。</p>
+    </blockquote>
+
+    <figure>
+      <img src="images/FullSizeRender.jpg" alt="阿米跟小米共飲">
+      <figcaption>阿米的紅色 mocktail · 小米自己倒水喝 · 街景反射在玻璃上</figcaption>
+    </figure>
+
+    <blockquote>
+      <p><strong>CP 值勝出</strong></p>
+      <p>比中午的 Vinitus 多吃一道、含調酒、還便宜 €12 ——</p>
+      <p>而且<strong>小米終於有開吃</strong>!</p>
+      <p>這種收尾,老天爺都在幫忙寫劇本。</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ SUMMARY ══════════ -->
+<section>
+  <div class="container">
+    <div class="summary">
+      <h2>今日總結</h2>
+      <ul>
+        <li>🥐 <strong>早餐</strong>:La Papa 凱撒 brioche 三明治 · 鹹的、有蛋白質 · 完美</li>
+        <li>🐉 <strong>上午</strong>:Casa Batlló 屠龍傳說 · 龍背 + 木窗 + 後院露台</li>
+        <li>🦞 <strong>午餐</strong>:Vinitus 海鮮 tapas · €54 兩人份 · 終於沒忘記吃 ✅</li>
+        <li>🍟 <strong>下午</strong>:Gaudí 風麥當勞 + Casa Milà 全攻略 + 屋頂戰士煙囪</li>
+        <li>🚶 <strong>傍晚</strong>:Caganer 店 + JonCake + Palau Güell + 哥倫布之塔</li>
+        <li>🦆 <strong>晚餐</strong>:Tosca del Carme · Bikini de Pato 救援小米食慾</li>
+        <li>🏆 <strong>Gaudí 5 大作品全收集</strong> · Casa Batlló / Milà / Vicens / Palau Güell / Sagrada Família</li>
+        <li>🖍️ <strong>蠟筆小新蓋章 +2</strong> · Rambla de Catalunya + 哥倫布之塔</li>
+        <li>📌 <strong>學到的事</strong>:一天可以走 20 個點,但只要午餐有吃,就贏了一半</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="moon">☾</span>
+  待續 · 巴塞隆納 Day 4
+</footer>
+
+</body>
+</html>
