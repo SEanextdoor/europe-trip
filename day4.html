@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 4 | 紅色子彈到馬德里 · 肋眼、火腿、孔雀與夕陽</title>
+<style>
+  :root {
+    --bg: #faf7f2;
+    --ink: #1a1a1a;
+    --accent: #c8553d;
+    --muted: #6b6b6b;
+    --rule: #e5dcc8;
+    --quote-bg: #f3ede0;
+    --tag-bg: #1a1a1a;
+    --tag-ink: #faf7f2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Noto Serif TC", "Source Han Serif TC", Georgia, serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.85;
+    font-size: 17px;
+    padding: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 24px 120px;
+  }
+  .day-tag {
+    display: inline-block;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ink);
+  }
+  h1 {
+    font-family: "Noto Serif TC", Georgia, serif;
+    font-size: 2.6rem;
+    line-height: 1.25;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .subtitle {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 40px;
+  }
+  .hero-img {
+    width: 100%;
+    margin: 24px 0 8px;
+    border-radius: 2px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+  .caption {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .lede {
+    font-size: 1.05rem;
+    margin-bottom: 16px;
+  }
+  .lede strong { font-weight: 700; }
+  .section-tag {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-top: 80px;
+    margin-bottom: 16px;
+    text-align: center;
+    display: block;
+  }
+  h2 {
+    font-size: 2rem;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    text-align: center;
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 1.1rem;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 32px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+  h4 {
+    font-size: 1.2rem;
+    margin: 36px 0 12px;
+    border-left: 4px solid var(--accent);
+    padding-left: 14px;
+    font-weight: 700;
+  }
+  p { margin-bottom: 18px; }
+  p strong { font-weight: 700; }
+  img.inline {
+    width: 100%;
+    margin: 24px 0 4px;
+    border-radius: 2px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  }
+  video.inline {
+    width: 100%;
+    margin: 24px 0 4px;
+    border-radius: 2px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    background: #000;
+    display: block;
+  }
+  blockquote {
+    background: var(--quote-bg);
+    border-left: 4px solid var(--ink);
+    padding: 20px 24px;
+    margin: 28px 0;
+    font-size: 0.97rem;
+    line-height: 1.8;
+  }
+  blockquote p { margin-bottom: 10px; }
+  blockquote p:last-child { margin-bottom: 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-size: 0.95rem;
+  }
+  th, td {
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  th {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 2px solid var(--ink);
+  }
+  td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+  ul.summary {
+    list-style: none;
+    margin: 24px 0;
+  }
+  ul.summary li {
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--rule);
+    font-size: 0.97rem;
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 80px 0 40px;
+  }
+  .ending {
+    font-family: "Helvetica Neue", sans-serif;
+    text-align: center;
+    color: var(--muted);
+    letter-spacing: 0.3em;
+    font-size: 12px;
+    margin-top: 48px;
+  }
+  .summary-title {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 60px;
+    margin-bottom: 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 12px;
+  }
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.6rem; }
+    .container { padding: 40px 18px 80px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <span class="day-tag">Day · Four</span>
+  <h1>紅色子彈到馬德里 <em>肋眼、火腿、孔雀與夕陽</em> 🚄</h1>
+  <p class="subtitle">叢林咖啡 · iryo · Barceló · La Mi Venta · 巨人 · Chotis · 青蛙 · 皇宮 · Almudena</p>
+
+  <img class="hero-img" src="images/IMG_1974.jpg" alt="Almudena 圓頂觀景台 · 馬德里全景">
+  <p class="caption">馬德里黃金時刻 · 海拔 667 公尺的歐洲最高首都</p>
+
+  <p class="lede">Day 3 完美收尾,Gaudí 五大全收集。</p>
+  <p class="lede">Day 4 沒有要在巴塞繼續逛 —— <strong>早上 check-out、火車到馬德里</strong>。</p>
+  <p class="lede">但是離開前,還有一頓重要的早午餐要吃。</p>
+
+  <!-- § One -->
+  <span class="section-tag">§ One</span>
+  <h2>巴塞最後一頓 · 叢林咖啡館</h2>
+  <h3>都市叢林裡的長頸鹿 🦒</h3>
+
+  <p>退房前找了一間滿牆綠植的咖啡館,<strong>整面葉子瀑布 + 紅鶴 + 樹幹造型 + 藤編椅</strong> —— 走進去像走進都市叢林。中央矗立一隻<strong>接近天花板的長頸鹿雕像</strong>,從吧台後面探出長脖子,氣場全開。</p>
+
+  <img class="inline" src="images/IMG_1917.jpg" alt="小米跟長頸鹿合照">
+  <p class="caption">1 歲 11 個月 vs 三米長頸鹿 · 雙手合十的小動作太可愛</p>
+
+  <blockquote>
+    <p><strong>小米的反應:</strong> 站在長頸鹿腳邊,雙手合十、認真抬頭看 ——</p>
+    <p>「<strong>媽媽你看這個好高</strong>」的小驚嘆。</p>
+    <p>巴塞最後一張照片,被她抓到主角了。</p>
+  </blockquote>
+
+  <h4>Lotus Biscoff 焦糖餅乾拿鐵</h4>
+  <p>媽媽點了一杯<strong>焦糖餅乾拿鐵</strong>:玻璃杯 + 滿滿鮮奶油 + 焦糖醬 + Lotus 餅乾插旗,上桌就先讓人嘟嘴 ——「<strong>這個甜度⋯⋯OK 嗎</strong>」😅</p>
+
+  <img class="inline" src="images/IMG_1920.jpg" alt="焦糖餅乾拿鐵">
+  <p class="caption">Lotus Biscoff 拿鐵 · 媽媽試喝中的嘟嘴表情</p>
+
+  <h4>Avocado Egg Benedict</h4>
+  <p>主餐是<strong>酪梨班尼迪克蛋 + 紫羅蘭可食用花 + 藍色醬汁 + 烤馬鈴薯</strong>——擺盤豪華到像美術館展品。</p>
+
+  <img class="inline" src="images/IMG_1922.jpg" alt="酪梨班尼迪克蛋">
+  <p class="caption">藍色醬汁 + 紫羅蘭花 + 烤馬鈴薯 · 小米從藤椅後面探頭研究</p>
+
+  <blockquote>
+    <p><strong>Day 2 的酪梨陰影:</strong> 「酪梨澱粉組合」這個詞,從第二天起變成這趟旅程的內部笑話。</p>
+    <p>Day 4 早午餐 ——</p>
+    <p>又是酪梨,又是澱粉。</p>
+    <p><strong>陰影沒解除,只是換了一間更厲害的店</strong> 😂</p>
+  </blockquote>
+
+  <!-- § Two -->
+  <span class="section-tag">§ Two</span>
+  <h2>iryo · 紅色子彈</h2>
+  <h3>Barcelona Sants → Madrid Atocha</h3>
+
+  <p>收行李、退房、推車、抱小米、過安檢 —— 出國帶娃版的「機場奇幻漂流」上演完,終於坐進 <strong>Barcelona Sants</strong> 的月台。</p>
+
+  <p>今天的座駕:<strong>iryo</strong> —— 西班牙的私營高鐵,2022 年才開通,<strong>紅黑配色 + Frecciarossa 1000 車體</strong>,跟 Renfe 的 AVE 在同一條 LAV 高速線上對打。最高 350 km/h,<strong>Sants → Atocha 大概 2 小時 30 分</strong>搞定 600 公里。</p>
+
+  <img class="inline" src="images/IMG_1926.jpg" alt="iryo 二車車廂">
+  <p class="caption">棕色座椅 + Club YO 標籤 · 頭頂行李架透明設計</p>
+
+  <h4>為什麼選 2 車?</h4>
+  <p>訂票時做了一個育兒旅人才懂的決定 —— <strong>故意買 2 車的位子</strong>。</p>
+  <p>iryo 的 <strong>2 號車廂是「行李車」</strong>(coche con espacio equipaje),車廂中央有一整排<strong>大型行李架</strong> —— 28 吋行李箱可以直接卡進去、不用塞頭頂、不用搶座位旁邊的小縫。</p>
+
+  <blockquote>
+    <p><strong>帶娃出門的隱藏攻略</strong></p>
+    <p>一家三口 + 嬰兒推車 + 兩個大行李 + 一個登機箱 + 媽媽包 ——</p>
+    <p>普通車廂塞不下、走道擋路、推車卡死。</p>
+    <p>2 車多花一點錢,<strong>省下整段車程的焦慮值</strong> ✅</p>
+  </blockquote>
+
+  <h4>隧道裡的同步摸耳朵</h4>
+  <p>火車駛入第一個隧道,氣壓變化 —— 小米一手摸耳朵、回頭看媽媽。媽媽<strong>也下意識做一樣的動作</strong>安慰她。</p>
+
+  <img class="inline" src="images/IMG_1927.jpg" alt="母女同步摸耳朵">
+  <p class="caption">紫光 · 隧道倒影 · 同步摸耳朵母女組</p>
+
+  <blockquote>
+    <p>沒有講好,但兩個人<strong>完美同步</strong>。</p>
+    <p>這就是被刻在 DNA 裡的母女默契。</p>
+  </blockquote>
+
+  <h4>西班牙中部平原 · 全員放空</h4>
+  <p>出隧道後,窗外是一望無際的<strong>西班牙中部平原</strong> —— 藍天、白雲、麥田、橄欖樹。火車穩穩地以 300 公里時速滑過,車廂幾乎沒有晃動,只有空調的低頻嗡嗡聲。</p>
+  <p>小米<strong>整個人趴在小桌板上睡死</strong>,藍色洋裝皺成一團;媽媽在旁邊滑手機顧場。</p>
+
+  <img class="inline" src="images/IMG_1930.jpg" alt="小米火車上熟睡">
+  <p class="caption">窗外平原 + 趴桌板熟睡 · 媽媽的單手育兒術</p>
+
+  <h4>阿米的火車時光</h4>
+  <p>阿米手裡是一本繁體中文小說 —— <strong>泥人、葛斯納、布拉格、神祕力量</strong> —— 看起來是歐洲懸疑類型,趁小米熟睡的兩個小時,難得的個人時光。</p>
+
+  <img class="inline" src="images/IMG_1932.jpg" alt="阿米看書">
+  <p class="caption">繁體中文小說 + iryo 走道 · 爸爸的安靜兩小時</p>
+
+  <blockquote>
+    <p><strong>這就是好火車的價值:</strong></p>
+    <p>飛機要穿脫鞋、機艙乾燥、起降緊張;</p>
+    <p>高鐵市區到市區、座位寬、推車不用收、隨時可上廁所、看書喝咖啡睡覺都行。</p>
+    <p><strong>帶娃跨城,火車永遠贏</strong>。</p>
+  </blockquote>
+
+  <!-- § Three -->
+  <span class="section-tag">§ Three</span>
+  <h2>抵達馬德里 · Barceló Torre de Madrid</h2>
+  <h3>飯店「升級」事件 🏨</h3>
+
+  <p>下車地點 <strong>Atocha</strong> 是馬德里的玻璃溫室火車站(站內真的有熱帶植物園),搭計程車 15 分鐘到飯店 —— <strong>Barceló Torre de Madrid</strong>,<strong>Plaza de España 廣場旁、唐吉訶德雕像對面</strong>。</p>
+
+  <p>Check-in 時櫃台說:「為您升級了房型 ✨」</p>
+  <p>進房一看 —— ⋯⋯<strong>好像沒感覺?</strong> 😂</p>
+
+  <blockquote>
+    <p><strong>「升級」的標準解讀:</strong></p>
+    <p>「面積多 2 平方米」</p>
+    <p>「窗戶多 5 公分」</p>
+    <p>「衣櫃多一個」</p>
+    <p>反正就是<strong>心意收下,場景沒變</strong>。</p>
+    <p>但能升級總比沒升級好,謝謝櫃台的好意 🙏</p>
+  </blockquote>
+
+  <h4>大廳 = 設計博物館</h4>
+  <p>放完行李下樓散步,發現大廳本身才是<strong>主秀</strong>。整個 lobby 走 <strong>Jaime Hayón 設計師風</strong> —— 鵝黃色大地毯、藍絨布沙發、Fritz Hansen Fri 椅、粉紅單椅、超大鬥牛士肖像。<strong>飯店本身就是一座當代設計博物館</strong>。</p>
+
+  <img class="inline" src="images/IMG_1938.jpg" alt="小米爬藍絨沙發">
+  <p class="caption">藍絨布沙發 + 鵝黃地毯 · 「媽媽你看我多會爬」</p>
+
+  <img class="inline" src="images/IMG_1939.jpg" alt="黃色設計沙發 + 廣場景">
+  <p class="caption">北歐家具型錄等級的午後 · 落地窗外是西班牙廣場</p>
+
+  <img class="inline" src="images/IMG_1942.jpg" alt="小米在粉紅椅上睡死">
+  <p class="caption">鬥牛士肖像 + 粉紅單椅 · 累壞的小公主</p>
+
+  <blockquote>
+    <p><strong>小米的能量曲線:</strong></p>
+    <p>早上叢林咖啡館 ✅ 滿電</p>
+    <p>iryo 火車上 ✅ 趴桌睡兩小時</p>
+    <p>飯店大廳探險 → <strong>再次耗盡</strong> 🔋</p>
+    <p>米色風衣 + 小白鞋 + 腳交疊 + 在粉紅椅上熟睡 ——</p>
+    <p><strong>像一位累壞的小公主在等下午茶</strong> 👑</p>
+  </blockquote>
+
+  <!-- § Four -->
+  <span class="section-tag">§ Four</span>
+  <h2>La Mi Venta · 馬德里第一頓</h2>
+  <h3>1962 老店的肋眼與火腿 🥩</h3>
+
+  <p>休息一下、洗個澡、餵完小米,傍晚 7 點出門找晚餐。從飯店出發<strong>走 4 分鐘</strong>就到 —— <strong>La Mi Venta</strong>,1962 年開業的老字號,藏在 Plaza de la Marina Española 旁邊的小路上。</p>
+
+  <img class="inline" src="images/IMG_1958.jpg" alt="La Mi Venta 招牌">
+  <p class="caption">MADRID 1962 藍色磁磚招牌 · 媽媽白洋裝立正合照</p>
+
+  <p>正門上的<strong>「LA MI VENTA · MADRID 1962」</strong>藍白磁磚招牌、鐵窗格、紅酒展示櫃、復古吊燈 —— 這是一家<strong>還沒進門就先愛上的店</strong>。</p>
+
+  <h4>炭烤台 · 厚切肋眼</h4>
+  <p>進門最先看到的是<strong>炭烤台</strong>,玻璃後面整排厚切<strong>肋眼(Entrecot)</strong>正在炭火上滋滋作響,旁邊還有 T-bone 跟豬里肌備料。</p>
+
+  <img class="inline" src="images/IMG_1960.jpg" alt="炭烤台肋眼">
+  <p class="caption">紫光烤台 + 厚切肋眼正在燒 · 肉控的天堂</p>
+
+  <h4>火腿吊架儀式感</h4>
+  <p>往內走,整面牆吊滿 <strong>Jamón de Autor · Bellota 100% Ibérico</strong> —— 頂級的「<strong>橡實餵養純種伊比利火腿</strong>」,藍色標籤代表黑標等級。底下有專業切片台,師傅用長刀<strong>手切薄片</strong>,粉紅色油花漂亮到像藝術品。</p>
+
+  <img class="inline" src="images/IMG_1961.jpg" alt="火腿吊架">
+  <p class="caption">整面 Jamón de Autor · 100% Ibérico Bellota</p>
+
+  <img class="inline" src="images/IMG_1962.jpg" alt="伊比利火腿切片盤">
+  <p class="caption">粉紅油花 + 切片儀式 · 馬德里第一盤</p>
+
+  <h4>點餐紀錄</h4>
+  <table>
+    <thead>
+      <tr><th>品項</th><th>西文</th><th>重點</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>肋眼牛排</td><td>Entrecot</td><td>主菜 · 帶骨</td></tr>
+      <tr><td>鱈魚</td><td>Bacalao</td><td>軟嫩 · 小米可吃</td></tr>
+      <tr><td>伊比利火腿拼盤</td><td>Jamón Ibérico</td><td>100% Bellota 黑標</td></tr>
+      <tr><td>烤蔬菜</td><td>Verduras a la parrilla</td><td>解膩</td></tr>
+      <tr><td>麵包 + 橄欖油</td><td>Pan + Aceite</td><td>小米的好朋友</td></tr>
+      <tr><td>桑格利亞</td><td>Sangría</td><td>一壺 · 比例完美</td></tr>
+    </tbody>
+  </table>
+
+  <h4>帳單刺客組合 💸</h4>
+  <p>吃完上帳單 —— <strong>比預期超出一個量級</strong>。</p>
+  <p>事後檢查:<strong>Jamón de Autor Bellota 100% Ibérico 一盤 €30–40 起跳</strong>,加上厚切 chuletón 等級的肋眼一份 €40–50,<strong>全店最貴的兩個招牌一起點 = 帳單刺客</strong>。</p>
+
+  <blockquote>
+    <p><strong>馬德里第一頓的反思:</strong></p>
+    <p>「貴一點但好吃」 &gt; 「便宜但踩雷」</p>
+    <p>1962 年開業的老字號 + 自家炭烤台 + 整套伊比利火腿吊架展示 ——</p>
+    <p>這種錢花得<strong>值得記住一輩子</strong> ✅</p>
+    <p>Day 4 該有的開場,沒有比這更對的選擇。</p>
+  </blockquote>
+
+  <!-- § Five -->
+  <span class="section-tag">§ Five</span>
+  <h2>飯後散步 · 馬德里在跳舞</h2>
+  <h3>撞上 San Isidro 慶典熱身週 🎭</h3>
+
+  <p>吃完飯不到 8 點,馬德里 5 月的天空還亮著。走出 La Mi Venta,本來只是想隨意散步消化一下,沒想到——<strong>整條 Calle Mayor 都在開派對</strong>。</p>
+
+  <p>原來,5/15 是<strong>馬德里的主保聖人 San Isidro Labrador 紀念日</strong>,整個 5 月第二週起,舊城區會有連串的傳統慶典熱身。我們 5/8 抵達,完全是<strong>沒有計畫卻撞上最對的時間</strong>。</p>
+
+  <h4>巨人 Gigantes · 6 尊列隊 🎭</h4>
+  <p>第一站走到 <strong>Plaza de la Villa</strong>(舊市政廳廣場),陽台掛滿馬德里市徽布幔(紅金底 + 王冠),廣場前架起音響台,前方一字排開 <strong>6 尊接近 4 公尺高的巨人玩偶</strong>——這就是西班牙北部 + 中部的招牌傳統 <strong>Gigantes y Cabezudos</strong>(巨人與大頭娃娃)。</p>
+
+  <img class="inline" src="images/IMG_1985.jpg" alt="6 尊巨人列隊">
+  <p class="caption">Plaza de la Villa · 馬德里市徽布幔 + 6 尊巨人</p>
+
+  <p>仔細認:從左到右——</p>
+  <p>👗 <strong>Manola</strong>(綠衣黃裙,手拿剪刀)<br>
+  🎩 <strong>Chulapo 大叔</strong>(咖啡披風 + 黑帽,氣派抽雪茄)<br>
+  👑 <strong>Reina Isabel</strong>(紅金長袍,卡斯提亞女王)<br>
+  ⚜️ <strong>Rey Alfonso</strong>(綠袍紅披風 + 金冠,披風上是卡斯提亞獅子)<br>
+  💃 <strong>Chulapa</strong>(藍底白點 + 紅扇 + 白頭巾,馬德里靈魂女性)<br>
+  🌹 <strong>Chulapo</strong>(灰西裝 + 格紋帽 + 紅康乃馨,時尚馬德里男)</p>
+
+  <blockquote>
+    <p><strong>巨人怎麼運作?</strong></p>
+    <p>每尊巨人裡面都<strong>藏一個人</strong>,把整尊扛在身上邊走邊轉圈跳舞,像穿了一套 4 公尺高的戲服 😂</p>
+    <p>遊行時樂隊在前、巨人在後,跟著鼓聲轉啊轉——</p>
+    <p>每個西班牙城市都有<strong>自己的巨人家族</strong>,馬德里這幾尊就代表這座城市的歷史與靈魂。</p>
+  </blockquote>
+
+  <h4>Chotis 街舞 · 在一塊磚上轉圈 💃</h4>
+  <p>沿著 Calle Mayor 繼續走,撞見<strong>更熱鬧的場面</strong>:整條街被警察圍起來、攤販關門、馬路中央一群穿傳統服飾的舞者正在跳<strong>馬德里的靈魂舞蹈 —— Chotis</strong>。</p>
+
+  <img class="inline" src="images/IMG_1984.jpg" alt="Chotis 街舞">
+  <p class="caption">紫色披肩轉圈 + 路人圍觀 + 警車後方戒護</p>
+
+  <p>女舞者(<strong>Chulapas</strong>)穿著:</p>
+  <p>✦ <strong>Mantón de Manila</strong>(馬尼拉繡花披肩)—— 紫色、粉色、米白條紋繡花、長流蘇,<strong>每條都是手工繡的,單條價值幾百到上千歐元</strong> 💰<br>
+  ✦ <strong>白色頭巾 + 紅康乃馨</strong>(San Isidro 的標誌花)<br>
+  ✦ 長花裙 + 緊身上衣</p>
+
+  <p>男舞者(<strong>Chulapos</strong>)穿:鴨舌帽 + 白襯衫 + 背心 + 紅領巾。</p>
+
+  <blockquote>
+    <p><strong>Chotis 的靈魂規則:</strong></p>
+    <p>「<strong>El chotis se baila en una baldosa</strong>」 —— Chotis 是在一塊磚上跳的</p>
+    <p>男生站在<strong>一塊瓷磚上</strong>,腳不能離開,只能原地轉、原地踏;</p>
+    <p>女生繞著男生跳、揮舞披肩。</p>
+    <p>馬德里玩笑話:「真正的馬德里男人,跳 chotis 不需要太多空間,<strong>一塊磚就夠了</strong>」😎</p>
+    <p>還有更冷的——Chotis 其實源自 19 世紀<strong>蘇格蘭/中歐</strong>(schottische),1850 年從德國傳到馬德里,然後馬德里人把它<strong>改造成自己的版本</strong>。</p>
+  </blockquote>
+
+  <h4>教堂門前 · 街頭表演 🎬</h4>
+  <p>走到一座教堂門前,看到一群<strong>街頭表演者</strong>正在演奏歡快的傳統音樂——這就是 San Isidro 期間整個馬德里的氣氛。</p>
+
+  <img class="inline" src="images/IMG_1975_poster.jpg" alt="教堂前街頭表演">
+  <p class="caption">教堂前街頭表演 · 7 秒紀錄馬德里傍晚的歡樂氛圍</p>
+
+  <blockquote>
+    <p><strong>沒想到的彩蛋:</strong></p>
+    <p>原本只是想出來消化晚餐,結果走 10 分鐘看到 3 場傳統表演——</p>
+    <p>巨人 → Chotis → 街頭樂隊。</p>
+    <p>這種「<strong>沒計劃卻撞上的旅行運</strong>」,
+    比所有寫好的行程都珍貴 ✨</p>
+  </blockquote>
+
+  <h4>義大利文化中心 · 爬牆青蛙 🐸</h4>
+  <p>離開慶典區,沿著 Calle Mayor 往飯店方向走,經過一棟漂亮的義式建築(<strong>Istituto Italiano di Cultura</strong> · 義大利文化中心),整面牆爬滿——</p>
+
+  <img class="inline" src="images/IMG_1978.jpg" alt="義大利文化中心爬牆青蛙">
+  <p class="caption">紅綠白國旗 + 多彩巨型青蛙 + 紅色 Fiat 小車 · Wes Anderson 風</p>
+
+  <p>整片<strong>彩色巨型青蛙</strong>!這是義大利藝術團體 <strong>Cracking Art</strong> 的裝置——他們 1993 年成立,招牌就是用<strong>回收塑膠</strong>做亮色巨型動物(青蛙、烏龜、蝸牛、企鵝),把城市古蹟變成色彩遊樂場 🎨</p>
+
+  <blockquote>
+    <p><strong>Cracking Art 的理念:</strong></p>
+    <p>用塑膠動物提醒大家環保 ♻️</p>
+    <p>用藝術讓老城市重新「活過來」。</p>
+    <p>馬德里這次配合<strong>義大利當代藝術週</strong>(看建築上的海報 "Festival della Poesia Italiana / Semana del Arte Italiano Contemporáneo"),把整棟新古典主義建築變成大型藝術裝置。</p>
+    <p>紅綠白義大利國旗 + 古典立面 + 多彩青蛙 + 路邊紅色 Fiat —— </p>
+    <p>整張照片像 <strong>Wes Anderson 電影截圖</strong> 🎬</p>
+  </blockquote>
+
+  <!-- § Six -->
+  <span class="section-tag">§ Six</span>
+  <h2>皇宮邊上 · 孔雀與主教座堂</h2>
+  <h3>從 Plaza de Oriente 走到 Almudena</h3>
+
+  <p>沿著皇宮東側的 <strong>Calle de Bailén</strong> 繼續往西走,黃昏的光把整條街染成蜂蜜金色。</p>
+
+  <img class="inline" src="images/IMG_1970.jpg" alt="皇宮東側散步">
+  <p class="caption">Calle de Bailén · 米色洋裝 + 米色皇宮 · 整張同色系</p>
+
+  <h4>神祕的孔雀客 🦚</h4>
+  <p>走到 <strong>Plaza de Oriente</strong>(東方廣場)邊邊,意外撞見一隻 <strong>真正的孔雀</strong> 在剛下過雨的石板路上散步 —— 逆光剪影 + 水窪倒影 + 孔雀尾羽。</p>
+
+  <img class="inline" src="images/IMG_1968.jpg" alt="孔雀剪影">
+  <p class="caption">金色時刻 + 濕石板 + 孔雀剪影 · 皇宮裡跑出來放風的</p>
+
+  <blockquote>
+    <p><strong>馬德里冷知識:</strong></p>
+    <p>皇宮御花園(Campo del Moro)裡<strong>有一群放養的孔雀</strong>,</p>
+    <p>偶爾會晃出來逛大街、踩水窪、跟觀光客對看。</p>
+    <p>一隻孔雀 = 馬德里給的隱藏限定彩蛋 🎁</p>
+  </blockquote>
+
+  <h4>Almudena 主教座堂</h4>
+  <p>繼續往南走 50 公尺,就是<strong>馬德里的主教座堂 —— Catedral de la Almudena</strong>。</p>
+
+  <img class="inline" src="images/IMG_1971.jpg" alt="Almudena 主教座堂">
+  <p class="caption">藍灰圓頂 + 兩座白色鐘塔 · 教堂北側</p>
+
+  <img class="inline" src="images/IMG_1972.jpg" alt="Almudena 正面立面">
+  <p class="caption">正門 + 聖母 La Almudena 雕像 + 西班牙王室紋章</p>
+
+  <blockquote>
+    <p><strong>這座教堂的冷知識:</strong></p>
+    <p>✦ <strong>蓋了 110 年才完工</strong> —— 1879 動工,1993 才由教宗若望保祿二世祝聖</p>
+    <p>✦ 雖然外觀古典,<strong>實際上比 101 大樓還新</strong> 😱</p>
+    <p>✦ <strong>2004 年國王 Felipe VI 跟 Letizia 王后就是在這裡結婚的</strong> 👰🤵</p>
+    <p>馬德里當首都當了 400 多年才有自己的大教堂 ——</p>
+    <p>西班牙人,你們是不是不太著急?</p>
+  </blockquote>
+
+  <!-- § Seven -->
+  <span class="section-tag">§ Seven</span>
+  <h2>Cúpula Almudena · 圓頂觀景台</h2>
+  <h3>海拔 667 公尺的歐洲最高首都 🌆</h3>
+
+  <p>教堂北側有一個<strong>容易被忽略的隱藏景點</strong>——「Museo Catedral · Cúpula →」的指示牌,順著爬上去就是<strong>主教座堂圓頂觀景台</strong>。買票進去,電梯 + 一段樓梯,就上到屋頂。</p>
+
+  <h4>整個馬德里在腳下</h4>
+  <p>往西看,遠處綠色那一大片 = <strong>Casa de Campo</strong> —— 馬德里最大的城市公園,<strong>比紐約中央公園大五倍</strong>!原本是西班牙王室的狩獵場 🌳</p>
+
+  <img class="inline" src="images/IMG_1973.jpg" alt="馬德里西側天際線">
+  <p class="caption">Casa de Campo 綠帶 + 遠方天際線 · 馬德里最大公園</p>
+
+  <p>正下方延伸出去的綠帶 = <strong>Campo del Moro 御花園</strong>(剛才那隻孔雀的家 🦚 從上面看就懂了)。</p>
+
+  <h4>黃金時刻 · Cover Shot</h4>
+  <p>媽媽白色長洋裝,長髮在風裡,夕陽從右側打進來,影子斜斜落在水泥圍牆上,馬德里全景在腳下 ——</p>
+
+  <img class="inline" src="images/IMG_1974.jpg" alt="媽媽看夕陽">
+  <p class="caption">白洋裝 + 長髮 + 夕陽 + 馬德里全景 · Day 4 完美收尾</p>
+
+  <blockquote>
+    <p><strong>馬德里冷知識 No.2:</strong></p>
+    <p>馬德里海拔 <strong>667 公尺</strong>,是<strong>歐洲首都裡海拔最高的</strong>!</p>
+    <p>所以天際線特別清晰、夕陽特別乾淨 ——</p>
+    <p>不是 IG 濾鏡,是<strong>真的地理優勢</strong> ☀️</p>
+  </blockquote>
+
+  <!-- § Eight -->
+  <span class="section-tag">§ Eight</span>
+  <h2>廣場 · 唐吉訶德與飯店家門口</h2>
+  <h3>Plaza de España 黃昏</h3>
+
+  <p>從 Almudena 走回飯店,正好穿過 <strong>Plaza de España</strong>(西班牙廣場)—— 飯店就在廣場邊。</p>
+
+  <img class="inline" src="images/IMG_1989.jpg" alt="Plaza de España + 塞萬提斯紀念碑">
+  <p class="caption">塞萬提斯紀念碑 + 唐吉訶德 + 桑丘 · 飯店家門口</p>
+
+  <p>中央就是 <strong>Monumento a Cervantes</strong>(塞萬提斯紀念碑),致敬西班牙文學之神 <strong>Miguel de Cervantes</strong>(1547–1616),《<strong>唐吉訶德</strong>》的作者。</p>
+
+  <p>下方青銅雕像:<br>
+  🛡️ <strong>騎瘦馬、舉長矛的瘦騎士</strong> = <strong>Don Quijote</strong><br>
+  🐴 <strong>騎驢、矮矮胖胖的隨從</strong> = <strong>Sancho Panza</strong><br>
+  👩‍🌾 兩側白色石像 = <strong>Dulcinea</strong>(唐吉訶德幻想中的「公主」)+ <strong>Aldonza</strong>(現實版農婦)</p>
+
+  <p>頂端那個地球儀象徵《唐吉訶德》被翻譯成全世界語言 —— <strong>史上印量第二的書</strong>,僅次於聖經 📚🌍</p>
+
+  <blockquote>
+    <p><strong>我們等於是「住在唐吉訶德旁邊」</strong> 🛡️📖</p>
+    <p>飯店那棟超高樓 = <strong>Torre de Madrid</strong>(1957 年蓋的,當時歐洲最高樓之一)。</p>
+    <p>後面的白色巨型建築 = <strong>Edificio España</strong>(現在的 RIU 飯店)。</p>
+    <p>Plaza de España = 我們這四天的私人後花園。</p>
+  </blockquote>
+
+  <h4>玻璃溫室咖啡館</h4>
+  <p>廣場一角還有一間<strong>玻璃溫室造型的咖啡館</strong> —— <strong>Café de Cervantes</strong>(當然是致敬塞萬提斯)。整圈攀爬植物 + 戶外白色座椅,<strong>馬德里 2021 年廣場大改造後的新地標</strong> ☕</p>
+
+  <img class="inline" src="images/IMG_1990.jpg" alt="Café de Cervantes 玻璃溫室">
+  <p class="caption">玻璃溫室 + 攀爬植物 · 飯店後方的 Torre de Madrid</p>
+
+  <!-- § Nine -->
+  <span class="section-tag">§ Nine</span>
+  <h2>回到飯店 · 小米的覆盆子</h2>
+  <h3>收尾的儀式 🍓</h3>
+
+  <p>回到房間,洗澡、換尿布、開箱超市買的水果。小米光著小腳丫站在地板上,<strong>捧起一整盒覆盆子</strong>(西班牙文 frambuesas),開始認真挑哪一顆要吃。</p>
+
+  <img class="inline" src="images/IMG_1991.jpg" alt="小米跟覆盆子">
+  <p class="caption">光屁股小公主 + 一整盒覆盆子 · Day 4 的收尾</p>
+
+  <blockquote>
+    <p><strong>西班牙覆盆子的小驚喜:</strong></p>
+    <p>一盒 €2–3,在台灣同樣大小要 NT$150–300 😅</p>
+    <p><strong>5 月當季最甜</strong>,西班牙是歐洲主要產地之一。</p>
+    <p>小米對這一盒愛不釋手,</p>
+    <p>整晚的火車奔波 + 飯店探險 + 設計椅放電 ——</p>
+    <p>最後<strong>收尾在一盒覆盆子的滿足感裡</strong> ✨</p>
+  </blockquote>
+
+  <!-- 今日總結 -->
+  <h2 class="summary-title">今日總結</h2>
+  <ul class="summary">
+    <li>🦒 <strong>早午餐</strong>:巴塞叢林咖啡館 · 長頸鹿合照 + 焦糖餅乾拿鐵 + 酪梨班尼迪克</li>
+    <li>🚄 <strong>火車</strong>:iryo 二車 · Barcelona Sants → Madrid Atocha · 2.5 小時 600 公里</li>
+    <li>👂 <strong>車廂彩蛋</strong>:隧道裡同步摸耳朵母女組</li>
+    <li>🏨 <strong>飯店</strong>:Barceló Torre de Madrid · 「升級」沒感覺 · 大廳設計師家具博物館</li>
+    <li>🥩 <strong>晚餐</strong>:La Mi Venta 1962 · 肋眼 + 鱈魚 + 伊比利火腿 + 烤蔬菜 · 帳單刺客</li>
+    <li>🎭 <strong>巨人 Gigantes</strong>:Plaza de la Villa · 6 尊馬德里巨人列隊</li>
+    <li>💃 <strong>Chotis 街舞</strong>:紫色披肩 + 一塊磚的男人哲學</li>
+    <li>🎬 <strong>街頭表演</strong>:教堂門前的傳統樂隊現場</li>
+    <li>🐸 <strong>爬牆青蛙</strong>:義大利文化中心 + Cracking Art 裝置藝術</li>
+    <li>🦚 <strong>皇宮孔雀</strong>:Plaza de Oriente 黃金時刻偶遇</li>
+    <li>⛪ <strong>主教座堂</strong>:Almudena · 蓋了 110 年的王室結婚教堂</li>
+    <li>🌆 <strong>隱藏景點</strong>:Cúpula 圓頂觀景台 · 海拔 667 公尺夕陽</li>
+    <li>🛡️ <strong>家門口</strong>:Plaza de España + 唐吉訶德雕像</li>
+    <li>🍓 <strong>收尾</strong>:飯店裡的覆盆子小公主</li>
+    <li>📌 <strong>學到的事</strong>:1. 帶娃跨城,iryo 二車是隱藏神器 / 2. 馬德里 5 月 8 日剛好撞上 San Isidro 慶典熱身週,沒計畫的旅行運最珍貴 ✨</li>
+  </ul>
+
+  <p class="ending">☾ 待續 · 馬德里 Day 5</p>
+
+</div>
+</body>
+</html>
