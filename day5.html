@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 5 | 馬德里慢散步 · 火腿、躲雨與 Churros</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+TC:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f1ea;
+    --paper:#faf7f1;
+    --ink:#2a2622;
+    --ink-soft:#5a544c;
+    --rule:#d9d2c5;
+    --accent:#a3623a;
+    --accent-soft:#c8956b;
+    --quote-bg:#ede6d6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Noto Serif TC','Cormorant Garamond',Georgia,serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+    background-image:
+      radial-gradient(circle at 20% 30%,rgba(163,98,58,.04) 0,transparent 50%),
+      radial-gradient(circle at 80% 70%,rgba(42,38,34,.03) 0,transparent 50%);
+  }
+  .container{max-width:780px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+
+  /* ── HERO ── */
+  .hero{padding:80px 24px 60px;text-align:center;border-bottom:1px solid var(--rule)}
+  .hero .day-label{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:14px;
+    letter-spacing:.4em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:24px;
+  }
+  .hero h1{
+    font-family:'Cormorant Garamond','Noto Serif TC',serif;
+    font-weight:500;
+    font-size:clamp(38px,6vw,58px);
+    line-height:1.15;
+    letter-spacing:-.01em;
+    margin-bottom:20px;
+    max-width:680px;
+    margin-left:auto;margin-right:auto;
+  }
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .subtitle{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:15px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:50px;
+  }
+  .hero .subtitle span{margin:0 12px;color:var(--accent-soft)}
+
+  .hero-image{margin:0 -24px 30px}
+  .hero-image img{width:100%;display:block}
+  .hero-caption{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:15px;
+    color:var(--ink-soft);
+    margin-bottom:40px;
+  }
+
+  .hero-quote{
+    border-left:2px solid var(--accent);
+    padding:6px 0 6px 24px;
+    text-align:left;
+    max-width:560px;
+    margin:0 auto;
+    font-family:'Cormorant Garamond','Noto Serif TC',serif;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:17px;
+  }
+  .hero-quote p{margin-bottom:14px}
+  .hero-quote p:last-child{margin-bottom:0}
+
+  /* ── SECTION ── */
+  section{padding:70px 0 30px;border-bottom:1px solid var(--rule)}
+  section:last-of-type{border-bottom:none}
+  .section-num{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:13px;
+    letter-spacing:.4em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:14px;
+    text-align:center;
+  }
+  h2{
+    font-family:'Cormorant Garamond','Noto Serif TC',serif;
+    font-weight:500;
+    font-size:clamp(28px,4vw,38px);
+    line-height:1.25;
+    text-align:center;
+    margin-bottom:10px;
+    letter-spacing:-.005em;
+  }
+  h3{
+    font-family:'Cormorant Garamond','Noto Serif TC',serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:21px;
+    color:var(--accent);
+    text-align:center;
+    margin-bottom:40px;
+    letter-spacing:.02em;
+  }
+  h4{
+    font-family:'Noto Serif TC',serif;
+    font-weight:600;
+    font-size:18px;
+    margin:40px 0 16px;
+    color:var(--ink);
+  }
+  h4::before{
+    content:"※ ";color:var(--accent);font-weight:400;
+  }
+
+  p{margin-bottom:20px;color:var(--ink)}
+  p strong{font-weight:600;color:var(--ink);background:linear-gradient(transparent 65%,rgba(200,149,107,.25) 65%);padding:0 1px}
+  p em{font-family:'Cormorant Garamond',serif;font-style:italic}
+
+  /* ── IMAGE FIGURE ── */
+  figure{margin:36px 0;text-align:center}
+  figure img{
+    width:100%;
+    display:block;
+    box-shadow:0 8px 30px rgba(42,38,34,.12);
+  }
+  figure.bleed{margin-left:-24px;margin-right:-24px}
+  figcaption{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:14px;
+    color:var(--ink-soft);
+    margin-top:14px;
+    line-height:1.5;
+  }
+
+  /* receipt: default not rotated; .flip rotates 180 */
+  figure.receipt img{
+    max-width:60%;
+    margin:0 auto;
+  }
+  figure.receipt.flip img{
+    transform:rotate(180deg);
+  }
+
+  /* 9-grid for market stalls */
+  .grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin:30px 0;
+  }
+  .grid-3 figure{margin:0}
+  .grid-3 img{
+    aspect-ratio:1/1;
+    object-fit:cover;
+    width:100%;
+  }
+  .grid-3 figcaption{
+    font-size:11px;
+    margin-top:6px;
+    line-height:1.3;
+  }
+
+  /* 2x2 grid with empty cells */
+  .grid-2x2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin:30px 0;
+  }
+  .grid-2x2 figure{margin:0}
+  .grid-2x2 .empty{visibility:hidden}
+  .grid-2x2 img{
+    aspect-ratio:3/4;
+    object-fit:cover;
+    width:100%;
+  }
+  .grid-2x2 figcaption{font-size:13px;margin-top:8px}
+
+  /* ── PULLQUOTE / BLOCKQUOTE ── */
+  blockquote{
+    background:var(--quote-bg);
+    border-left:3px solid var(--accent);
+    padding:24px 28px;
+    margin:30px 0;
+    font-family:'Noto Serif TC','Cormorant Garamond',serif;
+    color:var(--ink-soft);
+    font-size:16px;
+    line-height:1.85;
+    position:relative;
+  }
+  blockquote::before{
+    content:"\201C";
+    position:absolute;
+    top:-10px;left:14px;
+    font-family:'Cormorant Garamond',serif;
+    font-size:60px;
+    color:var(--accent);
+    opacity:.3;
+    line-height:1;
+  }
+  blockquote p{margin-bottom:12px;color:var(--ink-soft)}
+  blockquote p:last-child{margin-bottom:0}
+  blockquote strong{background:none;color:var(--ink)}
+
+  /* ── TABLE ── */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:30px 0;
+    font-size:15px;
+    background:var(--paper);
+  }
+  th,td{
+    padding:12px 14px;
+    text-align:left;
+    border-bottom:1px solid var(--rule);
+  }
+  th{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    font-size:14px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--accent);
+    background:var(--quote-bg);
+  }
+  td:nth-child(2){font-style:italic;color:var(--ink-soft);font-size:14px}
+  td:nth-child(3){text-align:right;font-family:'Cormorant Garamond',serif;font-size:16px}
+  tr:last-child td{border-bottom:2px solid var(--ink);font-weight:600}
+  tr:last-child td:first-child{font-weight:700}
+
+  /* image grid 2-col */
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin:30px 0;
+  }
+  .grid-2 figure{margin:0}
+  .grid-2 img{
+    aspect-ratio:1/1;
+    object-fit:cover;
+    width:100%;
+  }
+  .grid-2 figcaption{font-size:13px;margin-top:8px}
+
+  /* ── SUMMARY ── */
+  .summary{
+    margin-top:60px;
+    padding:50px 32px;
+    background:var(--paper);
+    border:1px solid var(--rule);
+  }
+  .summary h2{margin-bottom:30px}
+  .summary ul{list-style:none;padding:0}
+  .summary li{
+    padding:12px 0;
+    border-bottom:1px dashed var(--rule);
+    font-size:15px;
+    line-height:1.6;
+  }
+  .summary li:last-child{border-bottom:none}
+  .summary li strong{font-weight:600}
+
+  /* ── FOOTER ── */
+  footer{
+    text-align:center;
+    padding:50px 24px 80px;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:16px;
+    letter-spacing:.1em;
+  }
+  footer .moon{font-size:24px;display:block;margin-bottom:14px;color:var(--accent)}
+
+  /* ── DECORATIVE DIVIDER ── */
+  .divider{
+    text-align:center;
+    margin:30px 0;
+    color:var(--accent-soft);
+    font-size:18px;
+    letter-spacing:1em;
+  }
+
+  /* responsive */
+  @media (max-width:600px){
+    body{font-size:16px;line-height:1.8}
+    .hero{padding:50px 20px 40px}
+    .container{padding:0 20px}
+    figure.bleed{margin-left:-20px;margin-right:-20px}
+    table{font-size:14px}
+    th,td{padding:10px}
+    figure.receipt img{max-width:80%}
+  }
+
+  /* fade-in on load */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .hero,section,footer{animation:fadeUp .8s ease both}
+  section{animation-delay:.1s}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<header class="hero">
+  <div class="container">
+    <div class="day-label">Day · Five</div>
+    <h1>馬德里慢散步<br><em>火腿、躲雨與 Churros</em> 🍫</h1>
+    <div class="subtitle">The Fix<span>·</span>Sol<span>·</span>San Miguel<span>·</span>Plaza Mayor<span>·</span>San Ginés</div>
+  </div>
+
+  <div class="hero-image">
+    <img src="images/IMG_2032.jpg" alt="太陽門廣場 · 熊與草莓樹">
+  </div>
+
+  <div class="container">
+    <p class="hero-caption">El Oso y el Madroño · 馬德里市徽 · 熊與草莓樹 50 週年</p>
+    <div class="hero-quote">
+      <p>Day 4 用 Almudena 圓頂的夕陽收尾,馬德里第一夜<strong>有夠美</strong>。</p>
+      <p>Day 5 沒有趕行程的壓力 —— 慢慢走、慢慢吃、慢慢被雨追。</p>
+      <p>結果走出一條教科書級的馬德里經典路線。</p>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ §1 THE FIX ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ One</div>
+    <h2>The Fix Specialty Coffee</h2>
+    <h3>母女白風衣 · Mont Blanc Cold Brew</h3>
+
+    <p>第一站是飯店附近的 <strong>The Fix Specialty Coffee</strong> —— 黑色圓招牌、手寫字體、白牆配灰色基座,門口立著黑色小黑板寫著「<em>The Daily Fix · All day Brunch until 18:30h</em>」。</p>
+
+    <p>路上經過一面整片的<strong>彩虹刷漆塗鴉牆</strong>,黑底配藍綠紅紫黃,中間掛著「<em>Cuenca Club · 0% Prejuicios · 100% Diversión</em>」的招牌 —— 馬德里街頭的隨機禮物。</p>
+
+    <figure>
+      <img src="images/IMG_1994.jpg" alt="彩虹塗鴉牆">
+      <figcaption>0% Prejuicios · 100% Diversión · 馬德里街頭塗鴉</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/IMG_2001.jpg" alt="The Fix 咖啡店門口母女合照">
+      <figcaption>母女款米白色風衣 · 默契值滿分</figcaption>
+    </figure>
+
+    <h4>Mont Blanc Cold Brew</h4>
+    <p>桌上一杯<strong>Mont Blanc Cold Brew</strong>:底層深褐色冷萃 + 上層綿密奶蓋 + 撒一層橙皮屑 + 木匙插在杯口。視覺像「<em>白朗峰山頂的雪</em>」—— 名字取得有夠應景。</p>
+
+    <figure>
+      <img src="images/IMG_1997.jpg" alt="Mont Blanc Cold Brew">
+      <figcaption>Mont Blanc Cold Brew · 冷萃 + 奶蓋 + 橙皮屑</figcaption>
+    </figure>
+
+    <h4>Gofre Salado · 鹹口味鬆餅</h4>
+    <p>主餐是<strong>鹹口味比利時鬆餅</strong> —— 金黃格紋鬆餅 + 半隻心型酪梨 + 培根條 + 半熟水波蛋 + 撒粉。<strong>早午餐界的鋼鐵組合</strong>:蛋白質 + 好油脂 + 碳水一次到位。</p>
+
+    <figure>
+      <img src="images/IMG_1998.jpg" alt="鹹口味鬆餅 + 培根酪梨蛋">
+      <figcaption>Gofre Salado · 培根 · 酪梨 · 半熟蛋 · 馬德里早餐冠軍</figcaption>
+    </figure>
+
+    <table>
+      <thead>
+        <tr><th>品項</th><th>備註</th><th>價格</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Gofre Salado</td><td>鹹口味鬆餅</td><td>10,00 €</td></tr>
+        <tr><td>Cappuccino</td><td>—</td><td>3,50 €</td></tr>
+        <tr><td>Mont Blanc Cold Brew</td><td>—</td><td>4,50 €</td></tr>
+        <tr><td>+ 小費 Propina</td><td>—</td><td>1,64 €</td></tr>
+        <tr><td>Total</td><td>—</td><td>19,64 €</td></tr>
+      </tbody>
+    </table>
+
+    <figure class="receipt">
+      <img src="images/IMG_1999.jpg" alt="The Fix 收據">
+      <figcaption>The Fix Coffee Company · 8 de mayo de 2026 · 11:24</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════ §2 IBERICOS ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Two</div>
+    <h2>轉角的火腿店 · dibéricos</h2>
+    <h3>順手帶一包橡實飼養伊比利</h3>
+
+    <p>吃完 brunch 走到轉角,看到一間<strong>黑底紅白字的 dibéricos Carnicería</strong> —— 旁邊還有一塊小豬剪影招牌,專賣伊比利豬。兩個西班牙阿姨剛好站在門口聊天,在地感十足。</p>
+
+    <figure>
+      <img src="images/IMG_2002.jpg" alt="dibéricos 火腿店門口">
+      <figcaption>dibéricos · 馬德里街角的伊比利豬專賣店</figcaption>
+    </figure>
+
+    <p>進去買了一包<strong>Jamón de Bellota Ibérico 50% 純度 · 100g</strong>,品牌「El Lujo」—— 紅金色標籤、寫著「Sin Lactosa · 高蛋白」、底下還有 Calicer 認證編號。橡實飼養的伊比利火腿,油花分布像大理石紋。</p>
+
+    <figure>
+      <img src="images/IMG_2003.jpg" alt="Jamón de Bellota Ibérico 包裝">
+      <figcaption>El Lujo · Jamón de Bellota Ibérico · 50% Raza Ibérica · 100g</figcaption>
+    </figure>
+
+    <blockquote>
+      <p>路邊隨機買的火腿,</p>
+      <p>等等中午直接配義大利麵 ——</p>
+      <p>這個搭配後來變成神來一筆。</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §3 RAIN + EL CORTE INGLES ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Three</div>
+    <h2>下雨了 · 躲進 El Corte Inglés</h2>
+    <h3>百貨公司閃避賽 · Billieblush 失守</h3>
+
+    <p>走到 Sol 附近開始下雨,直接閃進 <strong>El Corte Inglés</strong> —— 西班牙最大的連鎖百貨公司,在馬德里幾乎是地標等級存在,手寫字體 logo 全國都認得。</p>
+
+    <figure>
+      <img src="images/IMG_2009.jpg" alt="El Corte Inglés KIDS 招牌">
+      <figcaption>El Corte Inglés KIDS · 米白條紋牆 + 手寫字招牌</figcaption>
+    </figure>
+
+    <p>小米一進童裝區眼睛就亮了 —— 法國品牌 <strong>Billieblush</strong> 的<strong>粉紅色亮片牛仔外套 + 粉紅 Crocs + 整面夢幻紗裙牆</strong>,直接被命中。重點還打 <em>-20% off</em>,難怪會失守。</p>
+
+    <div class="grid-2">
+      <figure>
+        <img src="images/IMG_2007.jpg" alt="小米看著粉紅貓咪 mannequin">
+        <figcaption>命中目標</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_2006.jpg" alt="小米觸碰粉紅外套">
+        <figcaption>必須擁有</figcaption>
+      </figure>
+    </div>
+
+    <blockquote>
+      <p><strong>劇情急轉:</strong>下雨 → 躲百貨 → 童裝區 → -20% → 失守。</p>
+      <p>這個劇本太經典,全世界爸媽都演過。</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §4 NUBES ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Four</div>
+    <h2>百貨美食街 · NUBES Market</h2>
+    <h3>植物牆 · 寬扁麵 · 自帶火腿</h3>
+
+    <p>逛完 shopping 直接在百貨公司頂樓的 <strong>NUBES Market</strong> 解決午餐 —— 整片<strong>植物牆 + 藤編沙發 + 暖色燈光</strong>,根本不像百貨美食街。</p>
+
+    <figure>
+      <img src="images/IMG_2013.jpg" alt="NUBES 美食街展示櫃">
+      <figcaption>Tortilla de Patata · Bacalao 鱈魚款 · Chorizo 香腸款 · Calabacín 櫛瓜款 · 各 5,75 €</figcaption>
+    </figure>
+
+    <p>前台展示櫃排了一整列<strong>馬鈴薯烘蛋(Tortilla de Patata)</strong>:鱈魚款、香腸款、櫛瓜款,每片 <em>5,75 €</em>;旁邊還有炸花枝(Rabas de Calamar) <em>9,95 €</em>、火腿可樂餅、炸雞塊。</p>
+
+    <h4>現點現煮的奶油寬扁麵</h4>
+    <p>另一邊有義大利麵現煮台 —— 平底鍋裡是<strong>奶白色 cream sauce 在沸騰冒泡 + 一坨黃色 tagliatelle</strong>。煮完撒上滿滿 parmesan,起司奶油醬濃郁到犯規。</p>
+
+    <figure>
+      <img src="images/IMG_2014.jpg" alt="現煮的奶油寬扁麵">
+      <figcaption>火上的 Queso Tagliatelle · 奶油起司現煮中</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/IMG_2017.jpg" alt="餐桌上的 tagliatelle 與小米">
+      <figcaption>小米看到麵條眼睛都亮了 · 旁邊還有施洛曦水壺撐場</figcaption>
+    </figure>
+
+    <h4>Plot Twist · 自己拆火腿配麵</h4>
+    <p>吃到一半把<strong>剛剛買的伊比利火腿直接拆封</strong> —— 起司奶油寬扁麵 + 撕幾片帶橡實香氣的 Bellota Ibérico,鹹香油脂跟起司互相加分。<strong>路邊買的火腿瞬間升級</strong>,這才是西班牙人的吃法。</p>
+
+    <figure>
+      <img src="images/IMG_2018.jpg" alt="自帶火腿配 tagliatelle">
+      <figcaption>BYO Jamón · 餐廳 + 火腿店的 collab · 神來一筆</figcaption>
+    </figure>
+
+    <table>
+      <thead>
+        <tr><th>品項</th><th>備註</th><th>價格</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Cebolla Tortilla</td><td>洋蔥馬鈴薯烘蛋</td><td>5,75 €</td></tr>
+        <tr><td>Queso Tagliatelle</td><td>起司寬扁麵</td><td>11,95 €</td></tr>
+        <tr><td>Total</td><td>(含 IVA 10%)</td><td>17,70 €</td></tr>
+      </tbody>
+    </table>
+
+    <figure class="receipt flip">
+      <img src="images/IMG_2016.jpg" alt="El Corte Inglés 收據">
+      <figcaption>El Corte Inglés Cafetería · 08/may/26 · 13:14</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════ §5 PUERTA DEL SOL ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Five</div>
+    <h2>Puerta del Sol</h2>
+    <h3>太陽門廣場 · Km 0 · 跨年葡萄塔</h3>
+
+    <p>雨停了,藍天回來了,從 NUBES 走出來直接進<strong>太陽門廣場(Puerta del Sol)</strong> —— 馬德里的心臟。</p>
+
+    <figure>
+      <img src="images/IMG_2024.jpg" alt="Carlos III 騎馬像 + 噴泉">
+      <figcaption>Carlos III 騎馬像 · 「馬德里最佳市長」· 鋪路、設路燈、蓋醫院的人</figcaption>
+    </figure>
+
+    <p>中間矗立著<strong>Carlos III(卡洛斯三世)騎馬像</strong>,這位國王被稱為「<em>馬德里最佳市長</em>」—— 18 世紀把馬德里從髒亂變成現代化首都。後面噴泉灑著水柱,藍天白雲,媽媽張開雙手轉一圈,元氣滿分。</p>
+
+    <h4>Kilómetro Cero · 全西班牙的零公里</h4>
+    <p>地上那塊<strong>金色銅牌「Origen de las Carreteras Radiales · Km.0」</strong>是<strong>西班牙國道的起點</strong> —— 全國公路里程都從這個點開始算。每個來馬德里的人都會踩一下打卡,象徵「<em>我從這裡出發過</em>」。</p>
+
+    <figure>
+      <img src="images/IMG_2025.jpg" alt="媽媽站在 Km 0 上比 yeah · 全身照">
+      <figcaption>Km 0 打卡 · 站在西班牙國道起點上 · 比 yeah</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/IMG_2029.jpg" alt="俯視 Km 0 銅牌">
+      <figcaption>金色銅牌 · 中央是西班牙地圖 · 寫著 Origen de las Carreteras Radiales</figcaption>
+    </figure>
+
+    <p>左邊那棟<strong>橘紅相間、有時鐘塔的就是 Real Casa de Correos(皇家郵政大樓)</strong>,現在是馬德里自治區政府辦公廳。每年<strong>跨年夜全西班牙人都盯著這個鐘樓看</strong>,跟著鐘聲吃 12 顆葡萄迎接新年。</p>
+
+    <figure>
+      <img src="images/IMG_2031.jpg" alt="Real Casa de Correos + 廣場全景">
+      <figcaption>Real Casa de Correos · 跨年夜的「葡萄塔」· 全國電視轉播的鐘</figcaption>
+    </figure>
+
+    <h4>El Oso y el Madroño · 熊與草莓樹</h4>
+    <p>廣場另一邊就是大名鼎鼎的<strong>「熊與草莓樹」</strong>—— 馬德里的市徽。熊抱著樹幹的圖案印在<strong>市旗、警徽、計程車標誌甚至下水道蓋</strong>上,中世紀這裡有很多熊跟 madroño(野草莓樹),所以變成城市象徵。</p>
+
+    <p>底座寫著「<strong>50 AÑOS EN SOL</strong>」—— 慶祝這座雕像 1967 年立到現在剛好半世紀,是馬德里人最愛的合照地標。</p>
+
+    <figure>
+      <img src="images/IMG_2032.jpg" alt="El Oso y el Madroño 熊與草莓樹">
+      <figcaption>熊與草莓樹 · 50 AÑOS EN SOL · 馬德里身份證</figcaption>
+    </figure>
+
+    <blockquote>
+      <p><strong>冷知識:</strong>那不是橡樹,是 <em>madroño</em>(野草莓樹)。</p>
+      <p>會結紅色像草莓的小漿果,雖然跟草莓沒關係。</p>
+      <p>馬德里還有一種用 madroño 做的紅色利口酒 —— Licor de Madroño。</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §6 STREET ART ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Six</div>
+    <h2>Calle Mayor 漫步</h2>
+    <h3>壁龕 · 小精靈門 · 街頭彩蛋</h3>
+
+    <p>從 Sol 沿著 <strong>Calle Mayor</strong> 往西走 —— 這條路是馬德里老城最有歷史的街道之一,兩邊紅白色公寓 + 古典陽台 + 路邊紅花盆栽,經典馬德里風情。</p>
+
+    <figure>
+      <img src="images/IMG_2041.jpg" alt="Calle Mayor 馬德里經典街景">
+      <figcaption>Calle Mayor · 紅花盆栽 + 經典 Eixample 風建築</figcaption>
+    </figure>
+
+    <h4>牆上的迷你神龕</h4>
+    <p>路邊牆上發現一個小小的<strong>壁龕(hornacina)</strong>—— 這是馬德里老城常見的中世紀遺跡,裡面通常擺聖母或聖人像,是民間信仰的角落,現在被當成街頭彩蛋。</p>
+
+    <figure>
+      <img src="images/IMG_2036.jpg" alt="街頭壁龕 + 媽媽戴墨鏡">
+      <figcaption>RSF 墨鏡 + 牆上的小神龕 · 老馬德里的角落</figcaption>
+    </figure>
+
+    <h4>Ratoncito Pérez · 西班牙版牙仙</h4>
+    <p>還在街角發現了一個<strong>迷你小門</strong> —— 這是<strong>「Ratoncito Pérez(佩雷斯老鼠)」</strong>的家。傳說中小老鼠 Pérez 會收集小朋友掉的乳牙、留下禮物,是西班牙版的牙仙。馬德里很多店家會在門口裝這種迷你門。</p>
+
+    <figure>
+      <img src="images/IMG_2049.jpg" alt="一家三口蹲在 Ratoncito Pérez 小門旁">
+      <figcaption>Ratoncito Pérez 的家 · 一家三口蹲下來合照</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════ §7 SAN MIGUEL ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Seven</div>
+    <h2>Mercado de San Miguel</h2>
+    <h3>1916 年的鐵架玻璃市場 · Tapas 天堂</h3>
+
+    <p>走進<strong>聖米格爾市場(Mercado de San Miguel)</strong>—— 1916 年蓋的鐵架玻璃建築,馬德里最有名的美食市場,也是西班牙僅存少數的歷史鐵造市場之一。</p>
+
+    <figure>
+      <img src="images/IMG_2052.jpg" alt="San Miguel 市場外觀">
+      <figcaption>Mercado de San Miguel · 1916 · 鐵架玻璃 + 紅瓦屋頂</figcaption>
+    </figure>
+
+    <p>裡面人潮洶湧,根本擠不太動 —— 但這就是 San Miguel 的氛圍:全市場攤販輪番叫賣,空氣裡飄著火腿、起司、海鮮、紅酒的混合香氣。</p>
+
+    <h4>九宮格 · 攤位巡禮</h4>
+    <p>從<strong>甜點區、藍鰭鮪魚、炸魚、煙燻鮭魚、法式生蠔、龍蝦、鮮魚、伊比利火腿</strong> —— 一路逛到小米在 1916 銅牌上打卡。</p>
+
+    <div class="grid-3">
+      <figure>
+        <img src="images/IMG_2055.jpg" alt="Pastelería 甜點區">
+        <figcaption>Pastelería · 甜點區</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_2057.jpg" alt="Tatun 鮪魚">
+        <figcaption>Tatun · 藍鰭鮪魚</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_2058.jpg" alt="Pescaito Frito 炸魚">
+        <figcaption>El Señor Martín · 炸魚</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_2059.jpg" alt="Ahumados Domínguez 煙燻鮭魚">
+        <figcaption>Ahumados · 煙燻鮭魚</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_2060.jpg" alt="Daniel Sorlut 生蠔">
+        <figcaption>Daniel Sorlut · 法式生蠔</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_2061.jpg" alt="Martín Tenazas 龍蝦">
+        <figcaption>Martín Tenazas · 龍蝦</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_2062.jpg" alt="鮮魚攤 + 鋸鰩">
+        <figcaption>鮮魚攤 · 鋸鰩吻部</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_2063.jpg" alt="Carrasco 伊比利火腿">
+        <figcaption>Carrasco · 整面火腿牆</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_2065.jpg" alt="小米踩在 1916 銅牌上">
+        <figcaption>小米 · DESDE 1916 打卡</figcaption>
+      </figure>
+    </div>
+
+    <figure>
+      <img src="images/IMG_2066.jpg" alt="廣場上小米跑回來">
+      <figcaption>市場外 Plaza de San Miguel · 地上 MADRID 字樣的地畫 · 小米拿著小娃娃自己走回來</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════ §8 PLAZA MAYOR ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Eight</div>
+    <h2>Plaza Mayor</h2>
+    <h3>主廣場 · 17 世紀的封閉式廣場</h3>
+
+    <p>從 San Miguel 走過幾條巷子就到了<strong>主廣場(Plaza Mayor)</strong>—— 這是 17 世紀的封閉式廣場,馬德里最經典的廣場之一,曾經是<strong>市集、鬥牛、皇家慶典甚至宗教審判</strong>的舞台。</p>
+
+    <figure>
+      <img src="images/IMG_2068.jpg" alt="Plaza Mayor 全景">
+      <figcaption>Plaza Mayor · 紅色磚牆 · 中央是 Felipe III 騎馬像</figcaption>
+    </figure>
+
+    <p>中間是<strong>Felipe III(菲利普三世)騎馬像</strong>,主建築 Casa de la Panadería 立面甚至有彩繪壁畫。廣場正在搭舞台(那些黑色鋼架),感覺有活動要辦。</p>
+
+    <figure>
+      <img src="images/IMG_2073.jpg" alt="一家三口在 Plaza Mayor 合照">
+      <figcaption>一家三口 · Plaza Mayor · 推著 gb 推車的標準觀光照</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════ §9 OLD STREETS ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Nine</div>
+    <h2>老城巷弄漫步</h2>
+    <h3>Teatro Eslava · 小米的後背身影</h3>
+
+    <p>離開 Plaza Mayor 之後沿著小巷走 —— 這一帶是馬德里老城最迷人的部分:<strong>橘黃色的牆、鑄鐵陽台、老式吊燈、19 世紀劇院的金釘大門</strong>。</p>
+
+    <figure>
+      <img src="images/IMG_2078.jpg" alt="老城巷弄 + 媽媽轉頭">
+      <figcaption>La Rollerie 早午餐街 · 露天咖啡座 · 老城日常</figcaption>
+    </figure>
+
+    <p>右邊那扇<strong>金釘大門</strong>是 <strong>Teatro Eslava</strong> —— 1872 年的老劇院,現在變成傳奇夜店 Joy Eslava。</p>
+
+    <div class="grid-2">
+      <figure>
+        <img src="images/IMG_2079.jpg" alt="小米巷弄背影">
+        <figcaption>小米的背影</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_2080.jpg" alt="小米跑回來">
+        <figcaption>小米跑回來笑</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ §10 SAN GINES ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Ten</div>
+    <h2>Chocolatería San Ginés</h2>
+    <h3>1894 年百年老店 · Churros 沾濃巧克力</h3>
+
+    <p>下午茶必選 —— <strong>Chocolatería San Ginés</strong>,1894 年開業的<strong>馬德里百年吉拿棒老店</strong>,經典吃法就是把熱現炸的 churros 沾濃稠熱巧克力。那杯巧克力濃到<strong>可以當醬</strong>,吉拿棒一根根酥脆現炸 —— 沾下去那一刻整個人都被融化。小米雖然小一個但戰鬥力滿格,直接趴在桌上盯著空巧克力杯,「<em>還想要</em>」的眼神超明顯。</p>
+
+    <div class="grid-2">
+      <figure>
+        <img src="images/IMG_2088.jpg" alt="San Ginés 露天座 + 一盤 churros">
+        <figcaption>金黃酥炸 churros + 濃巧克力 · 130 年儀式</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_2090.jpg" alt="小米趴在桌上看空巧克力杯">
+        <figcaption>小米的最後留戀 · 杯子被舔乾淨了</figcaption>
+      </figure>
+    </div>
+
+    <blockquote>
+      <p>1894 年到 2026 年 ——</p>
+      <p>整整 132 年,這家店就只賣兩樣東西:</p>
+      <p><strong>churros + chocolate</strong>。</p>
+      <p>能屹立這麼久,代表它們真的把這兩樣做到極致。</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §11 GRAN VIA ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Eleven</div>
+    <h2>Gran Vía 大道</h2>
+    <h3>馬德里的百老匯 · 街頭裝置藝術</h3>
+
+    <p>吃飽往北走進<strong>Gran Vía</strong> —— 馬德里最熱鬧的大道,號稱「<em>馬德里的百老匯</em>」,兩邊全是 20 世紀初的劇院、電影院、百貨公司。</p>
+
+    <figure>
+      <img src="images/IMG_2093.jpg" alt="Gran Vía 街景 + 一家三口">
+      <figcaption>Gran Vía · 遠方是 Capitol 大樓的 Schweppes 招牌 · 小米從媽媽腿縫探出來</figcaption>
+    </figure>
+
+    <h4>「Todo Está en Madrid」書本長椅</h4>
+    <p>路邊有個<strong>白色彎曲書本造型的公共座椅</strong> —— 這是<strong>「Todo Está en Madrid(馬德里應有盡有)」</strong>閱讀推廣計畫的裝置藝術,Penguin Random House + 馬德里市立圖書館合作。座椅本身就是一本翻開的書,掃 QR code 還可以開始讀電子書。</p>
+
+    <figure>
+      <img src="images/IMG_2106.jpg" alt="書本長椅 + 母女背影">
+      <figcaption>todoestaenmadrid.com · 馬德里的閱讀裝置藝術</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════ §12 HOTEL + POOL ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Twelve</div>
+    <h2>飯店 · 頂樓泳池</h2>
+    <h3>Hotel Riu Plaza España · 馬德里 360°</h3>
+
+    <p>回到飯店 —— <strong>Hotel Riu Plaza España</strong>,從窗戶看出去就是<strong>Plaza de España(西班牙廣場)</strong>,可以看到塞萬提斯紀念碑(堂吉訶德跟桑丘的雕像)。Lobby 牆上掛著<strong>Manolo Blahnik 風格的西班牙古典繡花裙子+鞋的攝影</strong>,整個 lobby 走時尚博物館路線。</p>
+
+    <div class="grid-2">
+      <figure>
+        <img src="images/IMG_2111.jpg" alt="飯店 lobby + 母女看雜誌">
+        <figcaption>Lobby · 米色沙發 · 媽媽看雜誌</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_2115.jpg" alt="飯店 lobby + 大窗景">
+        <figcaption>窗外 = Plaza de España + 塞萬提斯紀念碑</figcaption>
+      </figure>
+    </div>
+
+    <h4>頂樓泳池 · 馬德里 city view</h4>
+    <p>小米換上<strong>粉紅條紋荷葉邊泳衣</strong>,直奔頂樓泳池。整面落地窗看出去是<strong>馬德里 360 度城市天際線</strong> —— 海拔 667 公尺的歐洲最高首都,雲飄得很慢、很慢。</p>
+
+    <div class="grid-2x2">
+      <figure>
+        <img src="images/IMG_2118.jpg" alt="小米泡在泳池">
+        <figcaption>小米泡在泳池 · 馬德里街景背景</figcaption>
+      </figure>
+      <figure class="empty"><img src="images/IMG_2118.jpg" alt=""></figure>
+      <figure class="empty"><img src="images/IMG_2118.jpg" alt=""></figure>
+      <figure>
+        <img src="images/IMG_2122.jpg" alt="小米坐在泳池邊踢水">
+        <figcaption>夕陽前的最後一場踢水 · perfect ending</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ §13 LAUNDRY ACHIEVEMENT ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Thirteen</div>
+    <h2>解鎖成就 · 自助洗衣</h2>
+    <h3>LavaZum · 旅行的真實一面</h3>
+
+    <p>晚上的 bonus 行程 —— <strong>LavaZum 自助洗衣店</strong>。歐洲長途旅行不可避免的儀式,衣服都穿過了,只能靠自助洗衣續命。</p>
+
+    <figure>
+      <img src="images/IMG_2128.jpg" alt="LavaZum 自助洗衣機">
+      <figcaption>LavaZum · 13kg/6 € · 17kg/8 € · 接受 Bizum、Visa、現金</figcaption>
+    </figure>
+
+    <p>機器很現代化:<strong>觸控螢幕、QR code、Bizum、Apple Pay、Google Pay 全收</strong>。<em>洗衣精、柔軟精、活氧劑機器自動加</em>,只要選程式 → 付款 → 按 START。牆上還有 5 步驟圖解,連觀光客都能輕鬆上手。</p>
+
+    <blockquote>
+      <p><strong>Day 5 的真實面:</strong></p>
+      <p>百年咖啡店、米其林等級市場、頂樓泳池 ——</p>
+      <p>但晚上還是要乖乖去自助洗衣店洗髒衣服。</p>
+      <p>旅行,就是這樣立體的。</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ SUMMARY ══════════ -->
+<section>
+  <div class="container">
+    <div class="summary">
+      <h2>Day 5 · 馬德里慢散步路線</h2>
+      <ul>
+        <li>☕ <strong>The Fix Specialty Coffee</strong> · Mont Blanc Cold Brew + 鹹鬆餅 · 19,64 €</li>
+        <li>🥓 <strong>dibéricos</strong> · 隨手帶一包 Jamón de Bellota Ibérico</li>
+        <li>🛍️ <strong>El Corte Inglés</strong> · 下雨躲百貨 · Billieblush 失守</li>
+        <li>🍝 <strong>NUBES Market</strong> · 寬扁麵 + 烘蛋 + 自帶火腿 · 17,70 €</li>
+        <li>☀️ <strong>Puerta del Sol</strong> · Km 0 + 跨年葡萄塔 + 熊與草莓樹</li>
+        <li>🏛️ <strong>Calle Mayor</strong> · 壁龕 + Ratoncito Pérez 小門</li>
+        <li>🐟 <strong>Mercado de San Miguel</strong> · 1916 鐵架玻璃市場 · Tapas 天堂</li>
+        <li>🐴 <strong>Plaza Mayor</strong> · Felipe III + 17 世紀廣場</li>
+        <li>🍫 <strong>Chocolatería San Ginés</strong> · 1894 年的 churros + chocolate</li>
+        <li>🎭 <strong>Gran Vía</strong> · 馬德里的百老匯 + Penguin 書本長椅</li>
+        <li>🏊 <strong>Riu Plaza España</strong> · 頂樓泳池 city view</li>
+        <li>🧺 <strong>LavaZum</strong> · 解鎖自助洗衣成就</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="moon">✦</span>
+  Day 5 · Madrid · La Sobremesa<br>
+  慢慢吃 · 慢慢走 · 慢慢被雨追
+</footer>
+
+</body>
+</html>
