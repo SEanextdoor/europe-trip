@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 6 | 馬德里的雨追著我們 · 旗艦店、雙王冠與雞翅之夜</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+TC:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f1ea;
+    --paper:#faf7f1;
+    --ink:#2a2622;
+    --ink-soft:#5a544c;
+    --rule:#d9d2c5;
+    --accent:#a3623a;
+    --accent-soft:#c8956b;
+    --quote-bg:#ede6d6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Noto Serif TC','Cormorant Garamond',Georgia,serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+    background-image:
+      radial-gradient(circle at 20% 30%,rgba(163,98,58,.04) 0,transparent 50%),
+      radial-gradient(circle at 80% 70%,rgba(42,38,34,.03) 0,transparent 50%);
+  }
+  .container{max-width:780px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+
+  /* ── HERO ── */
+  .hero{padding:80px 24px 60px;text-align:center;border-bottom:1px solid var(--rule)}
+  .hero .day-label{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:14px;
+    letter-spacing:.4em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:24px;
+  }
+  .hero h1{
+    font-family:'Cormorant Garamond','Noto Serif TC',serif;
+    font-weight:500;
+    font-size:clamp(38px,6vw,58px);
+    line-height:1.15;
+    letter-spacing:-.01em;
+    margin-bottom:20px;
+    max-width:680px;
+    margin-left:auto;margin-right:auto;
+  }
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .subtitle{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:15px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:50px;
+  }
+  .hero .subtitle span{margin:0 12px;color:var(--accent-soft)}
+
+  .hero-image{margin:0 -24px 30px}
+  .hero-image img{width:100%;display:block}
+  .hero-caption{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:15px;
+    color:var(--ink-soft);
+    margin-bottom:40px;
+  }
+
+  .hero-quote{
+    border-left:2px solid var(--accent);
+    padding:6px 0 6px 24px;
+    text-align:left;
+    max-width:560px;
+    margin:0 auto;
+    font-family:'Cormorant Garamond','Noto Serif TC',serif;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:17px;
+  }
+  .hero-quote p{margin-bottom:14px}
+  .hero-quote p:last-child{margin-bottom:0}
+
+  /* ── SECTION ── */
+  section{padding:70px 0 30px;border-bottom:1px solid var(--rule)}
+  section:last-of-type{border-bottom:none}
+  .section-num{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:13px;
+    letter-spacing:.4em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:14px;
+    text-align:center;
+  }
+  h2{
+    font-family:'Cormorant Garamond','Noto Serif TC',serif;
+    font-weight:500;
+    font-size:clamp(28px,4vw,38px);
+    line-height:1.25;
+    text-align:center;
+    margin-bottom:10px;
+    letter-spacing:-.005em;
+  }
+  h3{
+    font-family:'Cormorant Garamond','Noto Serif TC',serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:21px;
+    color:var(--accent);
+    text-align:center;
+    margin-bottom:40px;
+    letter-spacing:.02em;
+  }
+  h4{
+    font-family:'Noto Serif TC',serif;
+    font-weight:600;
+    font-size:18px;
+    margin:40px 0 16px;
+    color:var(--ink);
+  }
+  h4::before{
+    content:"※ ";color:var(--accent);font-weight:400;
+  }
+
+  p{margin-bottom:20px;color:var(--ink)}
+  p strong{font-weight:600;color:var(--ink);background:linear-gradient(transparent 65%,rgba(200,149,107,.25) 65%);padding:0 1px}
+  p em{font-family:'Cormorant Garamond',serif;font-style:italic}
+
+  /* ── IMAGE FIGURE ── */
+  figure{margin:36px 0;text-align:center}
+  figure img{
+    width:100%;
+    display:block;
+    box-shadow:0 8px 30px rgba(42,38,34,.12);
+  }
+  figure.bleed{margin-left:-24px;margin-right:-24px}
+  figcaption{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:14px;
+    color:var(--ink-soft);
+    margin-top:14px;
+    line-height:1.5;
+  }
+
+  /* receipt: default not rotated; .flip rotates 180 */
+  figure.receipt img{
+    max-width:60%;
+    margin:0 auto;
+  }
+  figure.receipt.flip img{
+    transform:rotate(180deg);
+  }
+
+  /* 9-grid for market stalls */
+  .grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+    margin:30px 0;
+  }
+  .grid-3 figure{margin:0}
+  .grid-3 img{
+    aspect-ratio:1/1;
+    object-fit:cover;
+    width:100%;
+  }
+  .grid-3 figcaption{
+    font-size:11px;
+    margin-top:6px;
+    line-height:1.3;
+  }
+
+  /* 2x2 grid with empty cells */
+  .grid-2x2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin:30px 0;
+  }
+  .grid-2x2 figure{margin:0}
+  .grid-2x2 .empty{visibility:hidden}
+  .grid-2x2 img{
+    aspect-ratio:3/4;
+    object-fit:cover;
+    width:100%;
+  }
+  .grid-2x2 figcaption{font-size:13px;margin-top:8px}
+
+  /* ── PULLQUOTE / BLOCKQUOTE ── */
+  blockquote{
+    background:var(--quote-bg);
+    border-left:3px solid var(--accent);
+    padding:24px 28px;
+    margin:30px 0;
+    font-family:'Noto Serif TC','Cormorant Garamond',serif;
+    color:var(--ink-soft);
+    font-size:16px;
+    line-height:1.85;
+    position:relative;
+  }
+  blockquote::before{
+    content:"\201C";
+    position:absolute;
+    top:-10px;left:14px;
+    font-family:'Cormorant Garamond',serif;
+    font-size:60px;
+    color:var(--accent);
+    opacity:.3;
+    line-height:1;
+  }
+  blockquote p{margin-bottom:12px;color:var(--ink-soft)}
+  blockquote p:last-child{margin-bottom:0}
+  blockquote strong{background:none;color:var(--ink)}
+
+  /* ── TABLE ── */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:30px 0;
+    font-size:15px;
+    background:var(--paper);
+  }
+  th,td{
+    padding:12px 14px;
+    text-align:left;
+    border-bottom:1px solid var(--rule);
+  }
+  th{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    font-size:14px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--accent);
+    background:var(--quote-bg);
+  }
+  td:nth-child(2){font-style:italic;color:var(--ink-soft);font-size:14px}
+  td:nth-child(3){text-align:right;font-family:'Cormorant Garamond',serif;font-size:16px}
+  tr:last-child td{border-bottom:2px solid var(--ink);font-weight:600}
+  tr:last-child td:first-child{font-weight:700}
+
+  /* image grid 2-col */
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin:30px 0;
+  }
+  .grid-2 figure{margin:0}
+  .grid-2 img{
+    aspect-ratio:1/1;
+    object-fit:cover;
+    width:100%;
+  }
+  .grid-2 figcaption{font-size:13px;margin-top:8px}
+
+  /* ── SUMMARY ── */
+  .summary{
+    margin-top:60px;
+    padding:50px 32px;
+    background:var(--paper);
+    border:1px solid var(--rule);
+  }
+  .summary h2{margin-bottom:30px}
+  .summary ul{list-style:none;padding:0}
+  .summary li{
+    padding:12px 0;
+    border-bottom:1px dashed var(--rule);
+    font-size:15px;
+    line-height:1.6;
+  }
+  .summary li:last-child{border-bottom:none}
+  .summary li strong{font-weight:600}
+
+  /* ── FOOTER ── */
+  footer{
+    text-align:center;
+    padding:50px 24px 80px;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:16px;
+    letter-spacing:.1em;
+  }
+  footer .moon{font-size:24px;display:block;margin-bottom:14px;color:var(--accent)}
+
+  /* ── DECORATIVE DIVIDER ── */
+  .divider{
+    text-align:center;
+    margin:30px 0;
+    color:var(--accent-soft);
+    font-size:18px;
+    letter-spacing:1em;
+  }
+
+  /* responsive */
+  @media (max-width:600px){
+    body{font-size:16px;line-height:1.8}
+    .hero{padding:50px 20px 40px}
+    .container{padding:0 20px}
+    figure.bleed{margin-left:-20px;margin-right:-20px}
+    table{font-size:14px}
+    th,td{padding:10px}
+    figure.receipt img{max-width:80%}
+  }
+
+  /* fade-in on load */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .hero,section,footer{animation:fadeUp .8s ease both}
+  section{animation-delay:.1s}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<header class="hero">
+  <div class="container">
+    <div class="day-label">Day · Six</div>
+    <h1>馬德里的雨追著我們<br><em>旗艦店、雙王冠與雞翅之夜</em> ☔</h1>
+    <div class="subtitle">Billy Brunch<span>·</span>Canalejas<span>·</span>Vinitus<span>·</span>Alcalá<span>·</span>La Mucca</div>
+  </div>
+
+  <div class="hero-image">
+    <img src="images/IMG_2249.jpg" alt="阿卡拉門 · 雨後的雲彩虹">
+  </div>
+
+  <div class="container">
+    <p class="hero-caption">Puerta de Alcalá · 雨停的瞬間 · 雲彩虹剛好出現</p>
+    <div class="hero-quote">
+      <p>Day 5 是慢散步,Day 6 是 <strong>被雨追著走</strong>。</p>
+      <p>但每次雨停,都剛好站在馬德里的地標前 ——</p>
+      <p>從 Galería Canalejas 的旋轉樓梯,到阿卡拉門上方的雲彩虹。</p>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ §1 BILLY BRUNCH ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ One</div>
+    <h2>Billy Brunch</h2>
+    <h3>Malasaña 巷弄 · 黑色小雞 · 鬆餅與小米的雞蛋盒</h3>
+
+    <p>早晨從 Malasaña 區出發,走進 <strong>Calle del Acuerdo</strong> —— 整條街是奶油黃色的老公寓配藍色路名牌,<em>Frutería Vitaminas Noviciado 9</em> 的西瓜招牌掛在轉角,門口擺著番茄、朝鮮薊、蘑菇 —— 馬德里巷弄的標準早晨。</p>
+
+    <figure>
+      <img src="images/IMG_2189.jpg" alt="Frutería Vitaminas 西瓜招牌街景">
+      <figcaption>Frutería Vitaminas Noviciado 9 · 馬德里巷弄的早晨</figcaption>
+    </figure>
+
+    <p>目的地是 <strong>Billy Brunch</strong> —— Fuencarral 街上的人氣早午餐,招牌是<strong>黑色小雞 logo</strong>(取名自雞,品牌標語 *Breakfast All Day Every Day*),門口立著菜單牌、紅色木門、米色遮陽棚 —— 北歐感 + 西班牙骨架。</p>
+
+    <figure>
+      <img src="images/IMG_2190.jpg" alt="Billy Brunch 門口">
+      <figcaption>Billy Brunch · Fuencarral 82 · 黑色小雞 logo</figcaption>
+    </figure>
+
+    <h4>Pancake Sirope · 草莓糖漿鬆餅</h4>
+    <p>主餐是<strong>厚切美式鬆餅塔 + 草莓 + 糖粉 + 楓糖漿</strong>,旁邊一杯<strong>橘黃色 Zahraa' Smoothie</strong> 插著小紙傘,還配了一碗<strong>烤馬鈴薯塊 + 一坨酪梨醬</strong>。一桌都是視覺戰力,小米直接伸手抓鬆餅 —— 動作比眼神還誠實。</p>
+
+    <figure>
+      <img src="images/IMG_2193.jpg" alt="鬆餅與小米伸手">
+      <figcaption>Pancake Sirope · 小米的早晨宣戰</figcaption>
+    </figure>
+
+    <h4>小雞蛋盒 · 童心彩蛋</h4>
+    <p>店家用<strong>黃色小雞貼紙 + 紙漿雞蛋盒</strong>當外帶包裝,小米一看到整個眼睛發亮,伸手過去搶 —— <em>連大人也想拿來收藏</em>。Billy Brunch 把品牌做進每一個細節,難怪西班牙小孩都愛。</p>
+
+    <figure>
+      <img src="images/IMG_2196.jpg" alt="小米伸手抓小雞蛋盒">
+      <figcaption>小雞蛋盒 · 童心彩蛋 · 阿米笑場</figcaption>
+    </figure>
+
+    <table>
+      <thead>
+        <tr><th>品項</th><th>備註</th><th>價格</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Con Leche + Sirope Caramelo</td><td>焦糖拿鐵</td><td>4,00 €</td></tr>
+        <tr><td>Zahraa' Smoothie</td><td>招牌奶昔</td><td>5,30 €</td></tr>
+        <tr><td>Pancake Sirope</td><td>草莓糖漿鬆餅</td><td>10,90 €</td></tr>
+        <tr><td>Extra Patatas</td><td>烤馬鈴薯</td><td>3,90 €</td></tr>
+        <tr><td>Extra Avocado</td><td>酪梨醬</td><td>3,90 €</td></tr>
+        <tr><td>Total</td><td>(含 IVA 10%)</td><td>28,00 €</td></tr>
+      </tbody>
+    </table>
+
+    <figure class="receipt">
+      <img src="images/IMG_2197.jpg" alt="Billy Brunch 收據">
+      <figcaption>Billy Brunch · 09/05/2026 · 11:12 · Mesa 45</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════ §2 RAIN ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Two</div>
+    <h2>下雨了</h2>
+    <h3>Gran Vía 大雨 · Big Bus 觀光巴士 · 雨追著我們跑</h3>
+
+    <p>吃完 brunch 走出來,<strong>馬德里的天空開始下雨</strong>。Day 5 也是這樣 —— 馬德里 5 月的雨,說來就來。</p>
+
+    <p>沿著 Gran Vía 走,<strong>SAN ISIDRO 2026</strong> 旗幟掛在路燈上(馬德里守護神節,5/15 開始);Big Bus Madrid 雙層觀光巴士濕漉漉地停在站牌邊,撐著彩虹半透明傘的媽媽站在反光路面正中間 —— 雨後 Gran Vía 的色票:<em>濕亮路面 + 米黃古蹟 + 赭紅雙層巴士</em>。</p>
+
+    <figure class="bleed">
+      <img src="images/IMG_2203.jpg" alt="Gran Vía 雨中 + 雙層觀光巴士">
+      <figcaption>Gran Vía · 大雨 · Big Bus Madrid · SAN ISIDRO 2026</figcaption>
+    </figure>
+
+    <p>Calle de Alcalá 方向則是另一個畫面:<strong>整條大道被雨清空,中央一根古典燈柱對著鉛灰色的雲</strong>,遠方依稀看到 Cibeles 廣場 + Banco de España 的圓頂。</p>
+
+    <figure>
+      <img src="images/IMG_2205.jpg" alt="Calle de Alcalá 雨後空景">
+      <figcaption>Calle de Alcalá · 整條被雨清空</figcaption>
+    </figure>
+
+    <blockquote>
+      <p>5 月的馬德里,<strong>雨從不打招呼</strong>。</p>
+      <p>但雨帶你進去的地方,通常是雨天才會發現的好地方。</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §3 GALERIA CANALEJAS ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Three</div>
+    <h2>躲雨躲到 Four Seasons</h2>
+    <h3>Galería Canalejas · 西班牙最貴的不動產</h3>
+
+    <p>下大雨,直接閃進最近的建築 —— 結果是 <strong>Galería Canalejas</strong>,馬德里 2021 年才開幕的<strong>頂級購物藝廊</strong>。整棟是 7 棟 19–20 世紀古蹟銀行大樓合體改建,工程花了將近 10 年 + 6 億歐元,是<strong>西班牙史上最貴的不動產開發案</strong>。</p>
+
+    <p>同一棟樓裡是 <strong>Four Seasons Hotel Madrid</strong> + Hermès 旗艦店 + LV + Cartier + Rolex。我們從「躲個雨吧」秒升級成「躲到全西班牙最頂飯店」。</p>
+
+    <h4>La Pajarita · 1852 年的紙鶴糖果店</h4>
+    <p>藝廊中庭懸掛著整片<strong>薄荷綠紙鶴 + 旋轉木造樓梯</strong>,中央就是 <strong>La Pajarita Madrid 1852</strong> 快閃櫃 —— 馬德里最古老的糖果店,<em>174 年歷史,比可口可樂還老</em>。Tiffany 綠 + 金字 + 紙鶴是品牌視覺三件套,「Pajarita」西文意思就是「紙鶴 / 領結」。</p>
+
+    <figure>
+      <img src="images/IMG_2208.jpg" alt="La Pajarita 糖果櫃 + 旋轉樓梯">
+      <figcaption>La Pajarita · MADRID 1852 · 紙鶴美學滿分</figcaption>
+    </figure>
+
+    <blockquote>
+      <p><strong>Plot Twist:</strong>1852 年的傳奇 + 紙鶴美學滿分 ——</p>
+      <p>試吃了長條草莓跟椰子糖,</p>
+      <p>老實說...<strong>買不下去</strong>。</p>
+      <p>顏值跟味道,有時候是兩條平行線。</p>
+    </blockquote>
+
+    <h4>Louis Vuitton · 玩具行李工人櫥窗</h4>
+    <p>LV 馬德里旗艦店的櫥窗是「<em>Louis Vuitton Jouets(玩具系列)</em>」主題:<strong>Monogram 牆 + 6 層架 + 全部都是『搬 LV 行李的小玩具』</strong> —— 黃衣推車工人、紅色復古車、藍制服 bellboy 推紅色行李推車、摩托車邊車、Vespa、Citroën HY 廂型車。</p>
+
+    <p>整面牆講同一個故事:LV 從 1854 年起家做的就是<strong>硬殼旅行箱</strong>,給歐洲皇室搬家用 —— 這面櫥窗是品牌史濃縮版。</p>
+
+    <figure>
+      <img src="images/IMG_2206.jpg" alt="LV 玩具行李工人櫥窗">
+      <figcaption>Louis Vuitton Jouets · 6 層 monogram 牆 · 從 1854 講到 2026</figcaption>
+    </figure>
+
+    <h4>Centro Canalejas · Four Seasons 大樓</h4>
+    <p>走出藝廊往轉角看,<strong>整棟大樓本身就是建築傑作</strong>。<em>Edificio La Equitativa</em>(1891) —— 洋蔥頭塔頂 + 金色雕像 + 大時鐘。一樓那些<strong>大象石雕頭</strong> 🐘 是建築原始裝飾,因為原本的銀行(<em>Banco Hispano Americano</em>)logo 就是大象,代表力量與長壽。</p>
+
+    <figure>
+      <img src="images/IMG_2215.jpg" alt="Centro Canalejas Four Seasons + 母女合照">
+      <figcaption>Four Seasons Madrid · 米白風衣母女檔 · 站在塔尖正下方</figcaption>
+    </figure>
+
+    <blockquote>
+      <p>不是「找個騎樓避一下」的躲雨 ——</p>
+      <p>是「<strong>走進西班牙最貴的不動產 + 全城最頂飯店</strong>」的躲雨。</p>
+      <p>馬德里的雨,有時候會把你推向最意外的地方。</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §4 METROPOLIS & PRECINCT ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Four</div>
+    <h2>馬德里的雙王冠</h2>
+    <h3>Edificio Metropolis · 沿路精品蒐集</h3>
+
+    <p>從 Galería Canalejas 沿 Calle de Alcalá 往北走 5 分鐘,就到了馬德里<strong>最常被拍的建築</strong> —— <em>Edificio Metropolis</em>(梅特羅波利斯大樓)。</p>
+
+    <p>1907–1911 年由法國建築師兄弟 Février 設計,<strong>布雜藝術風格 + 科林斯式列柱 + 寓言雕像</strong>。原本是 La Unión y el Fénix 保險公司總部,1972 年被 Metropolis 保險公司買下,所以才叫這個名字。</p>
+
+    <p>頂端那座黑色雕像是 <strong>Victoria Alada(勝利女神)</strong>,1975 年才換上去的;之前是隻鳳凰 + 一個男人(舊保險公司的 logo)。<em>馬德里人把它當成 Gran Vía 的守護神</em>。</p>
+
+    <figure>
+      <img src="images/IMG_2219.jpg" alt="Edificio Metropolis 仰拍 + 媽媽">
+      <figcaption>Edificio Metropolis · 勝利女神 · 馬德里取景點 Top 3</figcaption>
+    </figure>
+
+    <p>跟 Centro Canalejas 的洋蔥頭塔尖合稱 <strong>"Las Dos Coronas de Madrid"(馬德里的雙王冠)</strong> —— 一棟午餐前拍,一棟午餐後拍,<em>今天等於蒐集了一對</em>。👑👑</p>
+
+    <h4>Vinitus · 午餐就吃這家</h4>
+    <p>沿路經過 <strong>Vinitus Gran Vía 4</strong> —— 黑白極簡 logo + 米石老建築,Metropolis 的倒影剛好映在玻璃上。Vinitus 是巴塞隆納起家的 tapas 名店,馬德里這間是分店,位置就是<strong>「Gran Vía 的第一棟」</strong>,等等就在這裡解決午餐。</p>
+
+    <figure>
+      <img src="images/IMG_2220.jpg" alt="Vinitus 門口 + 黑色 logo">
+      <figcaption>Vinitus · Gran Vía 4 · 黑白極簡 + 米石老建築</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════ §5 VINITUS ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Five</div>
+    <h2>Vinitus Gran Vía</h2>
+    <h3>蕁麻疹友善菜單 · 兩座城市的鱈魚對照組</h3>
+
+    <p>昨天連吃了好幾天的 <em>Jamón Ibérico</em>,晚上爆出嚴重蕁麻疹 —— <strong>火腿、香腸、紅酒、起司全部跳過</strong>(都是高組織胺地雷)。所以今天 Vinitus 的點菜邏輯是:<em>沒火腿、沒蝦蟹、沒酒、沒暴怒蛋</em>。</p>
+
+    <h4>朝鮮薊 + 炙燒酪梨 + 鐵板竹蟶</h4>
+    <p>第一輪三道:<strong>炸朝鮮薊(Alcachofas Fritas)</strong> 5 月當季,輕酥不膩;<strong>炙燒酪梨(Guacamole a la Brasa)</strong> 整顆酪梨炙烤後挖肉拌 pico de gallo,留外殼當盛器,Vinitus 招牌之一;<strong>鐵板竹蟶(Navajas a la Plancha)</strong> 鮮甜彈牙 + 巴西利醬 + 檸檬,小米可以吃。</p>
+
+    <figure>
+      <img src="images/IMG_2224.jpg" alt="炙燒酪梨 + 朝鮮薊 + 竹蟶 + 小米吃飯">
+      <figcaption>第一輪三道 · 阿米抓頭髮 · 小米自己拿叉子</figcaption>
+    </figure>
+
+    <h4>迷你漢堡 · 小米的最愛</h4>
+    <p>第二輪:<strong>2 個 Mini Hamburgues 迷你牛肉漢堡(3,65 €/個)</strong>,麵包夾肉排 + 起司,旁邊番茄醬擠成兩個小愛心 —— <em>小米眼睛盯著漢堡那張根本是全桌最有戲</em>。</p>
+
+    <figure>
+      <img src="images/IMG_2225.jpg" alt="迷你漢堡 + 小米盯著">
+      <figcaption>Mini Hamburgues · 小米的目標鎖定</figcaption>
+    </figure>
+
+    <h4>Bacalao con Miel · 兩座城市的鱈魚對照組</h4>
+    <p>整桌的 hero dish 是 <strong>Bacalao Allioli con Miel(蜂蜜鱈魚)</strong> 14,10 € —— Day 3 在巴塞 Vinitus 本店點過(14,15 €),Day 6 在馬德里再點一次做<strong>城市對照組</strong>。</p>
+
+    <p>結論:<strong>巴塞的比較好吃</strong>。海港城市新鮮度的優勢,內陸首都複製不了。但馬德里這版也不差,一樣甜鹹平衡入口即化。</p>
+
+    <div class="grid-2">
+      <figure>
+        <img src="images/IMG_1768.jpg" alt="Day 3 巴塞 Vinitus 蛤蜊 + 天婦羅">
+        <figcaption>Day 3 · Barcelona · Consell de Cent 333</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_1772.jpg" alt="Day 3 巴塞 Vinitus 收據">
+        <figcaption>Day 3 · 鱈魚 14,15 € · 對照組</figcaption>
+      </figure>
+    </div>
+
+    <h4>Churros con Chocolate · 連兩天</h4>
+    <p>結尾甜點是 <strong>Churros con Chocolate</strong> 3,95 € —— Day 5 在 San Ginés 吃過,Day 6 在 Vinitus 又一份。<em>母女同時把吉拿棒沾進巧克力</em>那張根本是 Day 6 的 hero shot。</p>
+
+    <figure>
+      <img src="images/IMG_2227.jpg" alt="母女沾巧克力吉拿棒">
+      <figcaption>Churros con Chocolate · 連兩天 · 西班牙人 approved</figcaption>
+    </figure>
+
+    <table>
+      <thead>
+        <tr><th>品項</th><th>備註</th><th>價格</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2× Mini Hamburgues</td><td>迷你牛肉漢堡</td><td>7,30 €</td></tr>
+        <tr><td>Alcachofas Fritas</td><td>炸朝鮮薊</td><td>7,60 €</td></tr>
+        <tr><td>Guacamole a la Brasa</td><td>炙燒酪梨</td><td>5,60 €</td></tr>
+        <tr><td>Navajas</td><td>鐵板竹蟶</td><td>11,85 €</td></tr>
+        <tr><td>M Solomillo Ternera</td><td>迷你牛菲力</td><td>5,90 €</td></tr>
+        <tr><td>Bacalao Allioli Mel</td><td>蜂蜜鱈魚 ⭐</td><td>14,10 €</td></tr>
+        <tr><td>Churros con Chocolate</td><td>巧克力吉拿棒</td><td>3,95 €</td></tr>
+        <tr><td>Nestea</td><td>冰紅茶</td><td>3,50 €</td></tr>
+        <tr><td>Total</td><td>(含 IVA 10%)</td><td>59,80 €</td></tr>
+      </tbody>
+    </table>
+
+    <figure class="receipt flip">
+      <img src="images/IMG_2228.jpg" alt="Vinitus Madrid 收據">
+      <figcaption>Vinitus Gran Vía · Sábado 09/05/2026 · 15:03 · Mesa 21</figcaption>
+    </figure>
+
+    <blockquote>
+      <p>Day 3 巴塞 · Vinitus 本店 · 14,15 €</p>
+      <p>Day 6 馬德里 · Vinitus 分店 · 14,10 €</p>
+      <p>同一道鱈魚,兩座城市,<strong>價格差 5 cents,味道差一截</strong>。</p>
+      <p>連鎖店「老家比較好吃」是萬國共通的真理。</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §6 LIBRARY STREET ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Six</div>
+    <h2>Cuesta de Moyano</h2>
+    <h3>百年舊書街 · Retiro 公園邊的露天書市</h3>
+
+    <p>吃飽往南走,雨剛好停,我們進了馬德里<strong>最有名的露天舊書街</strong> —— <em>Cuesta de Claudio Moyano</em>。位置在 Retiro 公園南邊的緩坡上,<strong>1925 年開業至今 101 年</strong>。</p>
+
+    <p>整排<strong>紅白條紋木造小書攤 ×30 間</strong>,賣絕版書、初版書、舊海報、漫畫。西班牙文豪們(Lorca、Hemingway、Borges)都來逛過,我們拍到的招牌是「<em>GALAXIA DEL LIBRO</em>」。</p>
+
+    <figure>
+      <img src="images/IMG_2230.jpg" alt="Cuesta de Moyano 舊書街 + 母女">
+      <figcaption>Cuesta de Moyano · 1925 年的露天書街 · 小米舉手致敬</figcaption>
+    </figure>
+
+    <p>左邊那排階梯式水池是 Retiro 公園邊緣的 <strong>Cascada del Parterre</strong>,雨後反光在地面 —— 整個畫面像 Sofia Coppola 的歐洲電影開場。</p>
+  </div>
+</section>
+
+<!-- ══════════ §7 LUXURY DISTRICT ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Seven</div>
+    <h2>La Milla de Oro</h2>
+    <h3>馬德里黃金哩 · Miu Miu · Chanel · LV 駐店畫家</h3>
+
+    <p>從書街折返,沿著 <strong>Calle de Alfonso XII</strong> 那條空蕩蕩的林蔭大道 —— 雨後出大太陽,藍天白雲,遠方拱門就是 Puerta de Alcalá。一邊散步一邊穿過 La Milla de Oro(黃金哩),馬德里最頂的精品大道。</p>
+
+    <figure>
+      <img src="images/IMG_2232.jpg" alt="Calle de Alfonso XII 林蔭大道">
+      <figcaption>Calle de Alfonso XII · 遠方是阿卡拉門</figcaption>
+    </figure>
+
+    <h4>Miu Miu · 構不到的兒童系列</h4>
+    <p><strong>深藍丹寧棒球帽 + 灰色 logo cap</strong>,Miu Miu 童裝系列。小米仰頭抱著架子那個動作 —— <em>「我構不到但我想要」的視覺敘事</em>,跟 Day 5 在 Billieblush 失守是同一條 DNA。</p>
+
+    <figure>
+      <img src="images/IMG_2233.jpg" alt="小米抱住 Miu Miu 帽架">
+      <figcaption>Miu Miu Kids · 小米的攀爬挑戰</figcaption>
+    </figure>
+
+    <h4>Chanel · 顏料桌與鞋牆</h4>
+    <p>Chanel 馬德里旗艦店,經典的「<em>藝術家工作室</em>」陳列概念 —— 桌面下是<strong>整排 Aquatec 牌壓克力顏料管被壓在玻璃下</strong>,象徵 Chanel 跟現代藝術的連結。<em>Coco Chanel 一直把品牌定位成「現代藝術運動的一部分」</em>,這個顏料桌是全球 Chanel 旗艦店的固定裝飾。</p>
+
+    <div class="grid-2">
+      <figure>
+        <img src="images/IMG_2236.jpg" alt="Chanel 顏料桌">
+        <figcaption>Aquatec 顏料桌 · Chanel × 藝術</figcaption>
+      </figure>
+      <figure>
+        <img src="images/IMG_2237.jpg" alt="小米站在 Chanel 鞋牆前">
+        <figcaption>Chanel 鞋牆 · 兩歲版 model</figcaption>
+      </figure>
+    </div>
+
+    <h4>Louis Vuitton · 24 歲的駐店畫家</h4>
+    <p>整天最高級的素材 —— LV 旗艦店的 <strong>Heritage Hot Stamping & Personalisation</strong> 服務。<em>專業職人現場手繪在 LV monogram 帆布上</em>,我們親眼看到字母「LOUIS、X.K、Q.T、H、W、P、Y、O、R」+ 櫻花 + 繡球花 + 撲克牌 + 高爾夫球桿 + 萬神殿 —— 全部都是手繪。</p>
+
+    <figure>
+      <img src="images/IMG_2238.jpg" alt="LV monogram 客製手繪作品">
+      <figcaption>Louis Vuitton Jouets · 全球只有頂級旗艦店才有的客製服務</figcaption>
+    </figure>
+
+    <p>那塊<strong>沾滿顏料的調色盤 + 整排 Louis Vuitton 專用顏料瓶</strong>(瓶身真的印 LOUIS) = 真實工作中的職人桌。</p>
+
+    <figure>
+      <img src="images/IMG_2239.jpg" alt="LV 顏料調色盤">
+      <figcaption>LOUIS 顏料瓶 + 沾滿色彩的調色盤 · 真實的職人桌</figcaption>
+    </figure>
+
+    <p>我跟駐店畫家直接聊起來 —— 她 24 歲、長得很漂亮、英文好、技術好,跟我介紹工作流程,<strong>還讓小米坐在工作台旁邊塗鴉</strong>。同時老婆趁機把想買的全部拿到櫃台,完成了 <em>distraction shopping</em> 的完美三角分工。</p>
+
+    <blockquote>
+      <p><strong>LV 旗艦店的隱藏玩法:</strong></p>
+      <p>老公:跟 24 歲駐店畫家聊到忘我</p>
+      <p>小米:被請去工作台旁邊塗鴉</p>
+      <p><strong>老婆:趁機把想買的全部拿到櫃台</strong></p>
+      <p>這個三角分工,連 Louis Vuitton 自己都沒想到。</p>
+    </blockquote>
+
+    <p>順帶一提,我也偷瞄到 <strong>Swatch × Audemars Piguet Bioceramic Royal Oak</strong> 聯名 —— 2025 年底 Swatch 集團繼 MoonSwatch 之後的第三波 hype 表,售價約 400 €,比真 AP 便宜 250 倍 😂。<em>5/16 在巴黎完全有機會</em> —— Champs-Élysées 那間 Swatch 旗艦店配額最大。</p>
+  </div>
+</section>
+
+<!-- ══════════ §8 ALCALA ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Eight</div>
+    <h2>Puerta de Alcalá</h2>
+    <h3>1778 年的凱旋門 · 雨後雲彩虹</h3>
+
+    <p>逛完精品街往南走,到了 <strong>阿卡拉門(Puerta de Alcalá)</strong> —— 1778 年的<strong>新古典主義凱旋門</strong>,卡洛斯三世為了紀念自己進城而建,<em>比巴黎凱旋門還早 50 年</em>。</p>
+
+    <p>門上拉丁文寫著「<em>REGE CAROLO III · ANNO MDCCLXXVIII</em>」(卡洛斯三世國王 · 1778 年)。一家三口合照,小米推車裡睡死,大人在地標前微笑 —— <strong>最完美的對比畫面</strong>。</p>
+
+    <figure>
+      <img src="images/IMG_2244.jpg" alt="一家三口在阿卡拉門前合照">
+      <figcaption>Puerta de Alcalá · 一家三口 · 小米推車裡 unbothered</figcaption>
+    </figure>
+
+    <h4>Fuente de los Galápagos · 烏龜噴泉</h4>
+    <p>進到 Retiro 公園邊上,有一座 <strong>Fuente de los Tritones y Galápagos(海豚與烏龜噴泉)</strong> —— 1832 年伊莎貝拉二世小時候蓋的,慶祝她受洗。米白風衣 + 古典雕塑 + 灰天氣 = 整個氛圍很歐洲文學。</p>
+
+    <figure>
+      <img src="images/IMG_2248.jpg" alt="海豚噴泉 + 媽媽">
+      <figcaption>Fuente de los Galápagos · 1832 · 為小公主受洗而建</figcaption>
+    </figure>
+
+    <h4>雲彩虹 · Day 6 的奇蹟瞬間</h4>
+    <p>從 Retiro 走出來繞回阿卡拉門 —— <strong>雨剛停 + 太陽透出來 + 左上角還有一道彩虹色光暈</strong>。這個極稀有的天氣現象叫「<em>Iridescence / nube iridiscente</em>(雲彩虹)」,要陽光剛好穿透雲中冰晶才會出現。</p>
+
+    <p><em>烏雲 + 藍天 + 黑色轎車駛過反光路面 + 阿卡拉門逆光剪影</em> —— 這張根本是電影開場第一個鏡頭。</p>
+
+    <figure class="bleed">
+      <img src="images/IMG_2249.jpg" alt="阿卡拉門 + 雲彩虹">
+      <figcaption>Iridescence · 雲彩虹 · 馬德里追雨的獎賞</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/IMG_2258.jpg" alt="阿卡拉門 + 雨後反光路面 + 黑色轎車">
+      <figcaption>同一個阿卡拉門 · 換個角度 · 黑色轎車駛過反光路面</figcaption>
+    </figure>
+
+    <blockquote>
+      <p>馬德里的雨追了我們一整天。</p>
+      <p>但每次雨停,<strong>都剛好站在地標前</strong>。</p>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════ §9 GOLDEN HOUR ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Nine</div>
+    <h2>Golden Hour</h2>
+    <h3>Torres de Colón · Edificio Metropolis 黃金時刻</h3>
+
+    <p>傍晚回程經過 <strong>Torres de Colón(哥倫布雙塔)</strong> —— 1976 年的怪建築,馬德里人暱稱「<em>El Enchufe(插頭)</em>」,因為頂部像兩個插頭。<strong>由上往下蓋的工法</strong>:先蓋頂部塊狀體,再用繩索把樓板掛下來,當時的工程創新。</p>
+
+    <figure>
+      <img src="images/IMG_2251.jpg" alt="Torres de Colón 雙塔 + 公車">
+      <figcaption>Torres de Colón · El Enchufe · 馬德里人暱稱「插頭」</figcaption>
+    </figure>
+
+    <h4>Edificio Metropolis · 早 vs 晚</h4>
+    <p>同一棟 Metropolis,早上拍是<strong>陰天 + 灰雲 + 雨後路面的 moody 版</strong>,傍晚拍是<strong>藍天 + 太陽斜射 + 金色雕飾發光的 golden hour 版</strong> —— <em>同一棟樓兩個情緒</em>,Day 6 的天氣 plot twist 圓滿了。</p>
+
+    <figure>
+      <img src="images/IMG_2253.jpg" alt="Edificio Metropolis 黃金時刻">
+      <figcaption>Edificio Metropolis · Golden Hour · 勝利女神在背後展翅</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════ §10 LA MUCCA ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Ten</div>
+    <h2>La Mucca de Plaza Carmen</h2>
+    <h3>晚餐 · 雞翅之夜 · 牛肉焗烤義大利捲</h3>
+
+    <p>晚餐選在 <strong>La Mucca · Plaza del Carmen 5</strong> —— 馬德里在地連鎖,Pizza + 西班牙菜混血,氣氛超好、辨識度最高的橘色雨遮 + <em>BREAKFAST LUNCH DINNER</em> 透明貼字。</p>
+
+    <figure>
+      <img src="images/IMG_2262.jpg" alt="La Mucca 招牌前媽媽合照">
+      <figcaption>LAMUCCA · Plaza del Carmen 5 · 橘色雨遮</figcaption>
+    </figure>
+
+    <h4>三道菜的雞翅之夜</h4>
+    <p><strong>Alitas de Pollo salsa Gorgonzola(戈貢佐拉雞翅)</strong> 13 € —— 鹹香重口味的義式藍紋起司醬配炸雞翅,沾著吃鹹香爆炸,<em>小米的雞翅之夜</em>;<strong>Ensalada César(凱薩沙拉)</strong> 14 € —— La Mucca 的招牌,大塊麵包丁 + 雞肉條 + 帕瑪森,<em>份量超大</em>;<strong>Canelones de Vaca(牛肉焗烤義大利捲)</strong> 15 € —— 加泰隆尼亞傳統菜,<em>手工 pasta 包牛肉餡 + Béchamel 白醬 + 焗烤</em>,La Mucca 的 hidden gem。</p>
+
+    <figure>
+      <img src="images/IMG_2263.jpg" alt="La Mucca 三道菜 + 阿米拍照">
+      <figcaption>雞翅 + 凱薩 + Canelones · 蕁麻疹友善晚餐</figcaption>
+    </figure>
+
+    <p>飲料兩杯:<strong>Moroccan Iced Tea(摩洛哥薄荷冰茶)</strong> + <strong>Limonada Casera(自製檸檬水)</strong> —— 完美的「無酒精蕁麻疹友善組合」。</p>
+
+    <table>
+      <thead>
+        <tr><th>品項</th><th>備註</th><th>價格</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Alitas de Pollo salsa Gor</td><td>戈貢佐拉雞翅</td><td>13,00 €</td></tr>
+        <tr><td>Ensalada César</td><td>凱薩沙拉</td><td>14,00 €</td></tr>
+        <tr><td>Canelones de Vaca</td><td>牛肉焗烤義大利捲</td><td>15,00 €</td></tr>
+        <tr><td>Moroccan Iced Tea</td><td>摩洛哥薄荷冰茶</td><td>3,50 €</td></tr>
+        <tr><td>Limonada Casera Copa</td><td>自製檸檬水</td><td>3,50 €</td></tr>
+        <tr><td>Total</td><td>(含 IVA 10%) · 24,50 €/人</td><td>49,00 €</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════ §11 ENDING ══════════ -->
+<section>
+  <div class="container">
+    <div class="section-num">§ Eleven</div>
+    <h2>回飯店路上</h2>
+    <h3>Hotel Mayorazgo · 霓虹窗框 · Day 6 ending shot</h3>
+
+    <p>回飯店路上隨手拍 —— <strong>Hotel Mayorazgo</strong>(Calle Flor Baja),Plaza España 旁的設計型旅館。<em>整棟建築立面,每扇窗框都嵌 LED 霓虹燈條</em>:薄荷綠 / 桃紅 / 螢光黃 / 橘紅 / 萊姆綠,藝術家 <strong>Gonzalo Lebrija</strong> 的裝置作品 *Ventanas de Color*。</p>
+
+    <p>馬德里少數會在傍晚自動點亮的建築立面藝術 —— <em>只有住附近、走 Plaza España 才會發現</em>。</p>
+
+    <figure class="bleed">
+      <img src="images/IMG_2267.jpg" alt="Hotel Mayorazgo 霓虹窗框">
+      <figcaption>Hotel Mayorazgo · Ventanas de Color · 傍晚自動點亮</figcaption>
+    </figure>
+
+    <blockquote>
+      <p>從早上 Frutería Vitaminas 的西瓜招牌,</p>
+      <p>到傍晚 Hotel Mayorazgo 的霓虹彩窗 ——</p>
+      <p><strong>「色彩」是 Day 6 的隱形主線。</strong></p>
+    </blockquote>
+
+    <div class="summary">
+      <h2>Day 6 · 馬德里追雨路線</h2>
+      <ul>
+        <li>🐤 <strong>Billy Brunch</strong> · Fuencarral 82 · Pancake + 小雞蛋盒 · 28,00 €</li>
+        <li>☔ <strong>Gran Vía 大雨</strong> · SAN ISIDRO 2026 · Big Bus Madrid</li>
+        <li>🏛️ <strong>Galería Canalejas</strong> · Four Seasons + La Pajarita 1852 + LV 玩具櫥窗</li>
+        <li>👑 <strong>Las Dos Coronas</strong> · Centro Canalejas + Edificio Metropolis 雙王冠</li>
+        <li>🍴 <strong>Vinitus Gran Vía 4</strong> · 鱈魚對照組 · 蕁麻疹友善 · 59,80 €</li>
+        <li>📚 <strong>Cuesta de Moyano</strong> · 1925 年百年舊書街 · 30 間紅白書攤</li>
+        <li>🎨 <strong>La Milla de Oro</strong> · Miu Miu + Chanel + LV 駐店畫家</li>
+        <li>🌈 <strong>Puerta de Alcalá</strong> · 1778 凱旋門 · 雨停雲彩虹</li>
+        <li>🌇 <strong>Golden Hour</strong> · Torres de Colón + Metropolis 黃金時刻</li>
+        <li>🍗 <strong>La Mucca de Plaza Carmen</strong> · 雞翅之夜 · 49,00 €</li>
+        <li>💡 <strong>Hotel Mayorazgo</strong> · 霓虹彩窗 · Day 6 ending shot</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="moon">✦</span>
+  Day 6 · Madrid · Persiguiendo la Lluvia<br>
+  被雨追著 · 站在地標前 · 走進旗艦店
+</footer>
+
+</body>
+</html>
