@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Day 7 · 兩年後與兩千兩百年前 · 從假村莊到真神廟</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f1ea;
+    --paper:#fffdf8;
+    --ink:#2a2620;
+    --soft:#6b6258;
+    --line:#d8cfc0;
+    --accent:#a3623a;
+    --accent-soft:#c98a5e;
+    --gold:#b48a4a;
+    --night:#1c2540;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Inter","Noto Serif TC",sans-serif;
+    line-height:1.85;
+    font-size:17px;
+    -webkit-font-smoothing:antialiased;
+  }
+  main{max-width:780px;margin:0 auto;padding:48px 24px 120px;}
+
+  /* Hero */
+  .hero{margin-bottom:80px;text-align:center;animation:fadeUp 1.2s ease both;}
+  .hero .eyebrow{
+    font-family:"Cormorant Garamond",serif;
+    font-style:italic;
+    color:var(--accent);
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-size:14px;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-family:"Cormorant Garamond","Noto Serif TC",serif;
+    font-weight:600;
+    font-size:54px;
+    line-height:1.15;
+    margin-bottom:12px;
+    letter-spacing:-.01em;
+  }
+  .hero h1 em{
+    font-family:"Cormorant Garamond",serif;
+    font-style:italic;
+    color:var(--accent);
+    font-weight:500;
+    display:block;
+    font-size:32px;
+    margin-top:6px;
+  }
+  .hero .sub{
+    font-family:"Cormorant Garamond",serif;
+    font-style:italic;
+    color:var(--soft);
+    font-size:18px;
+    letter-spacing:.04em;
+    margin-bottom:36px;
+  }
+  .hero-img{
+    width:100%;
+    border-radius:6px;
+    overflow:hidden;
+    margin:32px 0 18px;
+    box-shadow:0 14px 50px -22px rgba(40,30,20,.45);
+  }
+  .hero-img img{width:100%;display:block;}
+  .hero-caption{
+    font-family:"Cormorant Garamond",serif;
+    font-style:italic;
+    color:var(--soft);
+    font-size:15px;
+    margin-bottom:14px;
+  }
+  .hero-lead{
+    font-family:"Noto Serif TC",serif;
+    color:var(--ink);
+    font-size:17px;
+    line-height:1.95;
+    margin:28px auto 0;
+    max-width:640px;
+    text-align:left;
+  }
+  .hero-lead p{margin-bottom:14px;}
+  .hero-lead p:last-child{margin-bottom:0;}
+
+  /* Sections */
+  section{
+    margin-top:80px;
+    animation:fadeUp 1s ease both;
+  }
+  .marker{
+    font-family:"Cormorant Garamond",serif;
+    font-style:italic;
+    color:var(--accent);
+    letter-spacing:.2em;
+    font-size:13px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+    display:block;
+  }
+  h2{
+    font-family:"Cormorant Garamond","Noto Serif TC",serif;
+    font-weight:600;
+    font-size:36px;
+    line-height:1.25;
+    margin-bottom:8px;
+    letter-spacing:-.005em;
+  }
+  h3{
+    font-family:"Cormorant Garamond",serif;
+    font-style:italic;
+    font-weight:500;
+    color:var(--soft);
+    font-size:21px;
+    margin-bottom:24px;
+    letter-spacing:.01em;
+  }
+  h3::before{content:"· ";color:var(--accent);}
+  h4{
+    font-family:"Noto Serif TC",serif;
+    font-weight:600;
+    font-size:18px;
+    color:var(--ink);
+    margin:32px 0 14px;
+    letter-spacing:.02em;
+  }
+  h4::before{content:"※ ";color:var(--accent);}
+  p{margin-bottom:18px;}
+  p strong{color:var(--ink);font-weight:600;}
+  p em{color:var(--accent);font-style:italic;}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-soft);}
+
+  /* Figures */
+  figure{margin:24px 0;}
+  figure img{
+    width:100%;
+    display:block;
+    border-radius:5px;
+    box-shadow:0 10px 36px -22px rgba(40,30,20,.4);
+  }
+  figcaption{
+    font-family:"Cormorant Garamond",serif;
+    font-style:italic;
+    color:var(--soft);
+    font-size:14.5px;
+    text-align:center;
+    margin-top:10px;
+    letter-spacing:.02em;
+  }
+  .bleed{margin:32px -24px;}
+  .bleed img{border-radius:0;}
+  .bleed figcaption{padding:0 24px;}
+
+  /* Grids */
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin:24px 0;
+  }
+  .grid-2 figure{margin:0;}
+  .grid-2 figcaption{font-size:13px;margin-top:6px;}
+
+  .grid-3{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:8px;
+    margin:24px 0;
+  }
+  .grid-3 figure{margin:0;}
+  .grid-3 figcaption{font-size:12.5px;margin-top:6px;line-height:1.4;}
+
+  /* Receipt */
+  .receipt{
+    width:60%;
+    margin:32px auto;
+  }
+  .receipt img{box-shadow:0 14px 40px -18px rgba(40,30,20,.45);}
+
+  /* Tables */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:24px 0;
+    font-family:"Noto Serif TC","Inter",sans-serif;
+    font-size:15.5px;
+  }
+  th,td{
+    text-align:left;
+    padding:10px 14px;
+    border-bottom:1px solid var(--line);
+  }
+  th{
+    font-family:"Cormorant Garamond",serif;
+    font-weight:600;
+    font-size:15px;
+    color:var(--accent);
+    letter-spacing:.04em;
+    background:rgba(163,98,58,.06);
+  }
+  td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums;}
+  tr:last-child td{
+    border-bottom:2px solid var(--ink);
+    font-weight:600;
+    color:var(--ink);
+  }
+
+  /* Blockquote */
+  blockquote{
+    border-left:3px solid var(--accent);
+    padding:8px 0 8px 20px;
+    margin:28px 0;
+    font-family:"Cormorant Garamond","Noto Serif TC",serif;
+    font-style:italic;
+    color:var(--soft);
+    font-size:18px;
+    line-height:1.8;
+  }
+  blockquote p{margin-bottom:8px;}
+  blockquote p:last-child{margin-bottom:0;}
+  blockquote strong{color:var(--accent);font-style:normal;}
+
+  /* Stat row */
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin:32px 0;
+    padding:20px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .stat-row .stat{text-align:center;}
+  .stat-row .num{
+    font-family:"Cormorant Garamond",serif;
+    font-weight:600;
+    font-size:28px;
+    color:var(--accent);
+    line-height:1.1;
+    display:block;
+  }
+  .stat-row .lbl{
+    font-family:"Cormorant Garamond",serif;
+    font-style:italic;
+    color:var(--soft);
+    font-size:13.5px;
+    letter-spacing:.05em;
+    margin-top:6px;
+    display:block;
+  }
+
+  /* Footer */
+  footer{
+    margin-top:120px;
+    padding-top:36px;
+    border-top:1px solid var(--line);
+    text-align:center;
+    animation:fadeUp 1s ease both;
+  }
+  footer .sig{
+    font-family:"Cormorant Garamond",serif;
+    font-style:italic;
+    color:var(--accent);
+    font-size:17px;
+    letter-spacing:.08em;
+    line-height:1.7;
+  }
+  footer .sig strong{
+    font-style:normal;
+    color:var(--ink);
+    font-weight:600;
+    display:block;
+    font-size:20px;
+    margin-bottom:6px;
+    letter-spacing:.1em;
+  }
+
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(18px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  @media (max-width:560px){
+    body{font-size:16px;}
+    main{padding:32px 18px 80px;}
+    .hero h1{font-size:38px;}
+    .hero h1 em{font-size:24px;}
+    h2{font-size:28px;}
+    h3{font-size:18px;}
+    .grid-3{grid-template-columns:1fr 1fr;}
+    .receipt{width:80%;}
+    .bleed{margin:24px -18px;}
+    .stat-row{grid-template-columns:1fr;gap:18px;}
+  }
+</style>
+</head>
+<body>
+<main>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="eyebrow">Day · Seven</div>
+  <h1>從假村莊到真神廟<em>兩年後 與 兩千兩百年前</em></h1>
+  <div class="sub">Las Rozas Village · Mentidero · Templo de Debod · Asgaya 🌅</div>
+
+  <div class="hero-img">
+    <img src="images/IMG_2385.jpg" alt="Templo de Debod 觀景台金粉夕陽 · 一家三口全家福">
+  </div>
+  <div class="hero-caption">Templo de Debod 觀景台 · 馬德里的金粉夕陽 · 一家三口</div>
+
+  <div class="hero-lead">
+    <p>Day 5 我們被雨追,Day 6 我們**站著躲雨**,Day 7 —— 雨從早上一路追到中午,然後突然就放過我們了。</p>
+    <p>早上搭客運出城,在 Las Rozas Village 那座**假西班牙小鎮**買了兩年後才能穿的 Ralph Lauren;傍晚回市區,小跑步去看一座**兩千兩百年前的古埃及神廟**。</p>
+    <p>1 歲 11 個月 vs 2,200 年。**時間的尺度被馬德里壓扁成同一個下午。**</p>
+  </div>
+</header>
+
+<!-- ===== § One — 客運出發 ===== -->
+<section>
+  <span class="marker">§ One</span>
+  <h2>Las Rozas Village</h2>
+  <h3>搭客運出城 · 小紅書真的可以用</h3>
+
+  <p>從 Plaza de España 上搭 **Avanza 625 路客運**,半小時就到馬德里西北郊的 **Las Rozas Village** —— 西班牙第一家、也是規模最大的精品 outlet,1996 年開幕,屬於英國 **The Bicester Collection** 旗下,跟巴塞隆納 La Roca、巴黎 La Vallée 同一個體系。</p>
+
+  <figure>
+    <img src="images/IMG_2331.jpg" alt="Las Rozas Village 招牌 · 灰雲壓頂">
+    <figcaption>Las Rozas Village · 招牌前的灰雲 · 雨追了上來</figcaption>
+  </figure>
+
+  <p>下車時天空灰得徹底 —— **馬德里連續第三天的雨快來了**。遠方山脊一片霧,前景灌木叢綠到發光,outlet 那排淺黃淺綠的「西班牙小鎮假村莊」反而被陰天襯得更鮮豔。</p>
+
+  <blockquote>
+    <p>小紅書情報是真的能用 ——</p>
+    <p>說搭客運比火車轉乘划算,還真的是這樣。</p>
+    <p><strong>票價現金支付,單程 4,20 €。</strong></p>
+  </blockquote>
+</section>
+
+<!-- ===== § Two — Mentidero ===== -->
+<section>
+  <span class="marker">§ Two</span>
+  <h2>Mentidero Sal y Brasas</h2>
+  <h3>沒有歷史的三明治 · 葡萄牙式雞肉美乃滋</h3>
+
+  <p>Outlet **沒有 food court**,這是 Chic Outlet 系列的設定 —— 它們不想被做成 mall,要做成「歐洲小鎮」氛圍,所以餐廳全部散在小鎮街道上。對親子來說有點不方便,但這就是它的脾氣。</p>
+
+  <p>下大雨,直接閃進 **Mentidero Sal y Brasas**(鹽與炭火)。深綠色拱形雨遮 + 兩側 Keith Haring 風的食物塗鴉壁畫 + 中間藍色馬賽克牆,門口擺著綠色高腳椅。整家店在雨裡很美。</p>
+
+  <figure>
+    <img src="images/IMG_2332.jpg" alt="Mentidero 餐廳門口 · 雨絲與綠色雨遮">
+    <figcaption>Mentidero Sal y Brasas · 雨絲穿過畫面 · 「閒嗑牙的鹽與炭火」</figcaption>
+  </figure>
+
+  <h4>店名的西班牙幽默</h4>
+  <p>*Mentidero* 在西班牙文是「**八卦聚集地 / 街角閒嗑牙的地方**」—— 字根 *mentir*(撒謊)+ -dero(處所)。馬德里有條老街就叫 *Mentidero de las Musas*(繆思八卦街),17 世紀的文人聚集處。這家店名翻成中文大概是:**「閒嗑牙·鹽與炭火」**。</p>
+
+  <figure>
+    <img src="images/IMG_2339.jpg" alt="阿米托腮看主菜上桌 · 印著沙丁魚 logo 的盤子">
+    <figcaption>阿米托腮的「我累了你決定」少婦感 · 「不過火腿我可以幫你吃一口」</figcaption>
+  </figure>
+
+  <h4>三餐裡的蕁麻疹閃避賽</h4>
+  <p>阿米點了 **Huevos Fritos de Corral**(放山雞炸蛋) —— 三顆橘黃色蛋黃,蛋白邊緣焦脆,**下面是手切粗薯塊,旁邊鋪一片伊比利火腿**。一般 Huevos Rotos 大概 8-10 €,這家用放山雞蛋升級成 12,50 €。</p>
+
+  <p>我這邊點 **Mollete Portugués**(葡萄牙式扁麵包) —— 翻開來其實是**雞肉+調味美乃滋三明治**。10,90 €,**真正的葡萄牙人不會這樣叫它**,但這就是西班牙人想像中的葡萄牙感:軟麵包+簡單餡料+一個聽起來很國際的名字。</p>
+
+  <blockquote>
+    <p>蕁麻疹進入第三天 ——</p>
+    <p>連 Huevos Rotos 都不能吃完。</p>
+    <p><strong>阿米吃蛋跟薯塊,火腿給我一口意思一下;</strong></p>
+    <p>我這邊一份沒有歷史的雞肉三明治,</p>
+    <p>**零地雷。**</p>
+  </blockquote>
+
+  <table>
+    <thead><tr><th>品項</th><th>備註</th><th>價格</th></tr></thead>
+    <tbody>
+      <tr><td>Huevos Fritos Corral</td><td>放山雞炸蛋 + 薯塊 + 伊比利火腿</td><td>12,50 €</td></tr>
+      <tr><td>Mollete Portugués</td><td>葡式雞肉美乃滋三明治</td><td>10,90 €</td></tr>
+      <tr><td>Latte Machiato</td><td>—</td><td>3,90 €</td></tr>
+      <tr><td>Limonada Natural</td><td>鮮榨檸檬汁</td><td>5,50 €</td></tr>
+      <tr><td>Leche Normal</td><td>小米的牛奶 ❤️</td><td>0,00 €</td></tr>
+      <tr><td>Total</td><td>2 comensales(小米免費)· IVA 10%</td><td>32,80 €</td></tr>
+    </tbody>
+  </table>
+
+  <figure class="receipt">
+    <img src="images/IMG_2341.jpg" alt="Mentidero 收據 32,80 €">
+    <figcaption>Mentidero Sal y Brasas · 10/05/2026 12:54 · 服務生 Philips Miguel</figcaption>
+  </figure>
+</section>
+
+<!-- ===== § Three — Outlet 逛街 ===== -->
+<section>
+  <span class="marker">§ Three</span>
+  <h2>Outlet 的兩個幻滅 · 一個霸氣</h2>
+  <h3>Hoff · Bonpoint · Burberry · 小米的太陽眼鏡</h3>
+
+  <h4>幻滅 1 · 沒有 food court</h4>
+  <p>確認了。Las Rozas Village 真的沒有美食街。剛剛已經吃完了。</p>
+
+  <h4>幻滅 2 · Hoff 的特殊鞋墊沒那麼好</h4>
+  <p>**Hoff** 是 2017 年從西班牙 Elche(艾爾切,鞋業重鎮)起家的 sneaker 品牌,主打**「以城市為靈感」**的設計,2022 年營收 3,900 萬歐元,這幾年最紅的西班牙潮鞋。昨天在馬德里市區的櫥窗看到很心動,小紅書都說特殊鞋墊很厲害 ——</p>
+
+  <p>今天進了 outlet 的 Hoff 旗艦店,鞋拿起來摸了一下,**特殊鞋墊變普通鞋**。**outlet 的真相 #1:你昨天心動的東西,進來摸到反而冷靜。**</p>
+
+  <div class="grid-2">
+    <figure>
+      <img src="images/IMG_2342.jpg" alt="Bonpoint 童裝店 · 小米坐藍色 Pumpkin 椅">
+      <figcaption>Bonpoint · 法國童裝 · 小米霸佔 Pierre Paulin 風藍色椅</figcaption>
+    </figure>
+    <figure>
+      <img src="images/IMG_2344.jpg" alt="Burberry 店內 · 巨大藍色雕塑 + 經典格紋小包">
+      <figcaption>Burberry · 巨大藍色當代雕塑 + 經典 Vintage Check 小包</figcaption>
+    </figure>
+  </div>
+
+  <h4>小米的太陽眼鏡霸氣坐姿</h4>
+  <p>在某家店的試衣間旁邊,小米爬上了一張**棕色皮椅**,**自己戴上了一副大人的太陽眼鏡**,然後翹腳給鏡頭看自己的 New Balance 童鞋 —— 全程沒大人指導。三秒鐘就拍出了**「我才一歲十一個月,但我已經在歐洲打過卡」**的氣場。</p>
+
+  <figure>
+    <img src="images/IMG_2349.jpg" alt="小米戴太陽眼鏡坐棕色皮椅 · Day 7 hero shot">
+    <figcaption>Day 7 的小米 hero shot · 翹腳 · 戴墨鏡 · 不看鏡頭</figcaption>
+  </figure>
+
+  <blockquote>
+    <p>後來才發現 ——</p>
+    <p><strong>那副太陽眼鏡是阿米自己帶來的。</strong></p>
+    <p>小米只是趁媽媽試衣服的時候,</p>
+    <p>把它從包包裡偷出來戴上。</p>
+    <p>整張照片是一場 1 歲 11 個月的擺拍。</p>
+  </blockquote>
+</section>
+
+<!-- ===== § Four — Madrid en Vena ===== -->
+<section>
+  <span class="marker">§ Four</span>
+  <h2>Madrid en Vena</h2>
+  <h3>達利火箭 · 巨型 Banderilla 雕塑藝術季</h3>
+
+  <p>吃完飯出來,**雨停了,太陽出來了。** Las Rozas Village 的小鎮街道一下子變成藍天綠樹,我們才注意到 outlet 的大廣場上**散佈著好幾座超大型彩色雕塑**。</p>
+
+  <p>這是 outlet 為了 5 月 15 日 **San Isidro 馬德里守護神節**特別策劃的 2026 春季藝術季 ——**「Madrid en Vena(馬德里入血)」**:5 位藝術家、3 大母題(扇子、康乃馨、Banderilla),把馬德里最傳統的元素變成大型公共雕塑。</p>
+
+  <div class="grid-3">
+    <figure>
+      <img src="images/IMG_2357.jpg" alt="Banderilla 雕塑 · 紅黃綠">
+      <figcaption>Cohete Dalí · 達利火箭 · piparra 醃辣椒像達利的鬍子</figcaption>
+    </figure>
+    <figure>
+      <img src="images/IMG_2360.jpg" alt="Banderilla 雕塑 · 黑橄欖沙丁魚 · Gucci 前">
+      <figcaption>橄欖 · 紅椒 · 沙丁魚 · Gucci 旗艦店前</figcaption>
+    </figure>
+    <figure>
+      <img src="images/IMG_2362.jpg" alt="Banderilla 雕塑 · 紅蛋黃醬螺旋 · Ralph Lauren 前">
+      <figcaption>紅蛋黃醬螺旋 + 雞蛋 · Ralph Lauren 前</figcaption>
+    </figure>
+  </div>
+
+  <h4>Banderilla 是什麼?</h4>
+  <p>*Banderilla* 是西班牙國民下酒小菜 —— 用竹籤把**橄欖、辣椒、鯷魚、洋蔥、酸黃瓜**串起來。名字來自鬥牛場上鬥牛士插在牛背上的「**banderilla 短矛**」,因為造型像。Asgaya 集團那位 Esteban 在新聞訪問裡形容:**「這座叫 *Cohete Dalí*(達利火箭),因為串裡的 *piparra*(醃辣椒)讓人想到達利的鬍子。」**</p>
+
+  <blockquote>
+    <p>從假西班牙小鎮的精品 outlet,</p>
+    <p>到守護神節暖身的下酒菜雕塑展 ——</p>
+    <p><strong>Las Rozas Village 把「商業」跟「在地文化」串起來</strong></p>
+    <p>串成一根巨大的下酒菜。</p>
+  </blockquote>
+</section>
+
+<!-- ===== § Five — 戰利品總覽 ===== -->
+<section>
+  <span class="marker">§ Five</span>
+  <h2>戰利品 · 兩年後的 Ralph Lauren</h2>
+  <h3>一家三口三條時間軸</h3>
+
+  <p>逛完一輪,各自帶著自己的小包離開:</p>
+
+  <table>
+    <thead><tr><th>品牌</th><th>戰利品</th><th>誰</th></tr></thead>
+    <tbody>
+      <tr><td>Scalpers</td><td>長袖 × 2</td><td>應急 · 擋一下預估錯的冷天氣</td></tr>
+      <tr><td>Prada</td><td>鞋一雙</td><td>用戶我</td></tr>
+      <tr><td>Miu Miu</td><td>小包</td><td>阿米</td></tr>
+      <tr><td>Ralph Lauren</td><td>童裝</td><td>小米 · <strong>2 年後才能穿</strong></td></tr>
+    </tbody>
+  </table>
+
+  <p>**Scalpers** 是馬德里在地 streetwear 品牌,**骷髏頭 logo**,**長袖 outlet 不貴** —— 但這個購買動機超寫實:**5 月歐洲的氣溫不穩定,你以為帶夠了,結果還是冷。**</p>
+
+  <blockquote>
+    <p>**時間的尺度,在這間 outlet 被攤開來看:**</p>
+    <p>阿米的 Miu Miu 小包 → <em>立刻能用</em></p>
+    <p>我的 Prada 鞋 → <em>旅程剩下幾天就會穿到</em></p>
+    <p>Scalpers 長袖 → <em>今晚就會冷到要穿</em></p>
+    <p>小米的 Ralph Lauren → <em>兩年後</em></p>
+    <p>**為兩年後的小米,預付了一份旅行記憶。**</p>
+  </blockquote>
+
+  <p>等 2028 年 5 月小米穿上去那天,**今天 Las Rozas 的這趟,就會被重新拆封一次**。✨</p>
+</section>
+
+<!-- ===== § Six — 客運回程 + 地鐵 ===== -->
+<section>
+  <span class="marker">§ Six</span>
+  <h2>客運站 · 唐吉訶德的地鐵牆</h2>
+  <h3>Parada 12447 · Plaza de España Andén 2</h3>
+
+  <figure>
+    <img src="images/IMG_2363.jpg" alt="Las Rozas Village 招牌 · 藍天白雲版">
+    <figcaption>離開前的 Las Rozas Village · 雨停了 · 同樣的招牌,不同的天</figcaption>
+  </figure>
+
+  <p>從 Parada 12447(**Trva. Navalcarbón – Heron City**)搭 **Avanza 625** 回 Moncloa,再轉 3 號線到 Plaza de España。客運上小米已經睡著了。</p>
+
+  <h4>Bibliometro · 把唐吉訶德印在月台上</h4>
+  <p>進地鐵站抬頭一看 —— **整面月台牆貼滿了《唐吉訶德》第十八章原文**。這是馬德里地鐵 **Bibliometro 文學牆計畫**,讓通勤族邊等車邊讀塞萬提斯。**Plaza de España 是這個計畫最有代表性的一站**,因為站名跟廣場上那座唐吉訶德雕像是同一個。</p>
+
+  <figure>
+    <img src="images/IMG_2365.jpg" alt="Plaza de España 地鐵站 · 唐吉訶德牆 · 母女背影">
+    <figcaption>Plaza de España · Andén 2 · CAPÍTULO XVIII · 整面唐吉訶德牆</figcaption>
+  </figure>
+
+  <blockquote>
+    <p>1605 年塞萬提斯寫《唐吉訶德》,</p>
+    <p>四百多年後馬德里把它**整章印在月台上**,</p>
+    <p>讓每天通勤的上班族,</p>
+    <p>**站到地鐵來之前先讀兩段** ——</p>
+    <p>一個城市對文學的尊重,</p>
+    <p>會印在它最日常的角落。</p>
+  </blockquote>
+</section>
+
+<!-- ===== § Seven — Templo de Debod ===== -->
+<section>
+  <span class="marker">§ Seven</span>
+  <h2>Templo de Debod</h2>
+  <h3>馬德里市中心的古埃及神廟 · 2,200 年</h3>
+
+  <p>回飯店快速游了泳,換了乾衣服,**走路 5 分鐘到 Templo de Debod**。</p>
+
+  <p>這座神廟是**真的古埃及神廟,不是仿製品**。原本在尼羅河旁邊,2,200 年前的卑底斯(Adijalamani 王朝)建造,獻給女神 Isis。**1968 年埃及為了感謝西班牙幫忙搶救 Abu Simbel 神廟**(因 Aswan 水壩工程要被尼羅河水庫淹沒),把整座 Debod 神廟**石塊拆下來、海運到馬德里、1972 年在山丘上重組**。是埃及境外**唯二**的完整古埃及神廟之一(另一座在紐約大都會博物館)。</p>
+
+  <figure>
+    <img src="images/IMG_2372.jpg" alt="Templo de Debod 神廟側面 · 阿米母女合照">
+    <figcaption>Templo de Debod · 阿米跟小米 · 母女撞色淡風衣 · 雨後地面反光</figcaption>
+  </figure>
+
+  <figure class="bleed">
+    <img src="images/IMG_2397.jpg" alt="Templo de Debod 神廟正門對稱 · 保全走進去">
+    <figcaption>三道門洞縱深 · 一個保全的背影 · 蜜糖色的夕陽石</figcaption>
+  </figure>
+
+  <h4>三道門 · 古埃及的進階儀式</h4>
+  <p>神廟有**三道門**,代表進入越深越神聖 —— 從世俗 → 淨化 → 聖殿。**最內側是獻給女神 Isis 的浮雕**。免費入內,但黃昏關門前 30 分鐘就停止放人。這個保全當時剛好在巡視最後一輪。</p>
+
+  <blockquote>
+    <p>站在這裡會有一種奇怪的時空感:</p>
+    <p>背後是 21 世紀的馬德里街景,</p>
+    <p>前面是 2,200 年前的埃及砂岩,</p>
+    <p>**保全穿著現代制服走進神廟,**</p>
+    <p>**夕陽把石頭染成蜜糖色。**</p>
+  </blockquote>
+</section>
+
+<!-- ===== § Eight — 小米的歐洲學分 ===== -->
+<section>
+  <span class="marker">§ Eight</span>
+  <h2>小米的歐洲學分 +2</h2>
+  <h3>追鴿子 · 摸狗</h3>
+
+  <p>神廟周圍的廣場是**馬德里人遛狗、餵鴿、慢跑、看夕陽的聖地**。小米剛從推車上下來,就被解放出來 ——</p>
+
+  <div class="grid-2">
+    <figure>
+      <img src="images/IMG_2371.jpg" alt="小米追鴿子 · 兩隻鴿子起飛">
+      <figcaption>歐洲學分 +1 · 第一次追鴿子</figcaption>
+    </figure>
+    <figure>
+      <img src="images/IMG_2370.jpg" alt="小米繼續追鴿子 · 古埃及石柱">
+      <figcaption>1 歲 11 個月 · 鴿子永遠追不到</figcaption>
+    </figure>
+  </div>
+
+  <p>追完鴿子,旁邊一對遛狗的西班牙夫婦,**牽著一隻灰黑色貴賓 + 一隻白色比熊**。小米直接蹲下來抱住白色比熊的脖子 —— 沒有怕生、沒有警戒,**1 歲 11 個月的「我跟全世界的狗都是朋友」階段**。</p>
+
+  <figure>
+    <img src="images/IMG_2367.jpg" alt="小米蹲下來抱白色比熊狗">
+    <figcaption>歐洲學分 +2 · 西班牙的狗都很親人 · 紅色胸背帶配貴賓 · 比熊讓她抱</figcaption>
+  </figure>
+</section>
+
+<!-- ===== § Nine — 黃金時刻 ===== -->
+<section>
+  <span class="marker">§ Nine</span>
+  <h2>El Mejor Mirador de Madrid</h2>
+  <h3>馬德里最佳觀景點 · 雙王宮 · 金粉夕陽</h3>
+
+  <p>從神廟往南走一小段就是 Debod **西側觀景平台** —— 馬德里人公認的**「El mejor mirador de Madrid」**(全馬德里最佳觀景點)。海拔 650 公尺的西郊森林 + 沒有高樓遮擋 + 雲層多變的 5 月天 = **黃昏聖地**。</p>
+
+  <h4>一張照片裡的雙王冠</h4>
+  <p>大部分人會往西看夕陽,但只要轉個身往南看 —— **馬德里王宮 + 阿穆德納主教座堂同框**。王宮 2,800 個房間是全歐洲最大,大教堂蓋了 114 年(1879-1993),2004 年 Felipe 王儲跟 Letizia 王妃在這裡結婚。</p>
+
+  <figure class="bleed">
+    <img src="images/IMG_2395.jpg" alt="一家三口黃昏 · 背景馬德里王宮 + 大教堂">
+    <figcaption>背景剪影 · 左 Palacio Real(馬德里王宮)· 右 Catedral de la Almudena(阿穆德納主教座堂)</figcaption>
+  </figure>
+
+  <figure>
+    <img src="images/IMG_2396.jpg" alt="一家三口大笑 · 小米手揮舞">
+    <figcaption>同一個位置 · 換個情緒 · 小米手揚得最高</figcaption>
+  </figure>
+
+  <h4>馬德里的金粉夕陽</h4>
+  <p>天空被劈成兩半:**左邊淡藍灰紫,右邊金黃蜜桃**,中間一抹萊姆綠。雲層上層是被風吹散的羽毛狀卷雲,下層是蓬鬆 cotton candy 雲 —— **兩層雲在不同高度被不同角度的夕陽染色**。鑄鐵欄杆 + 街燈剪影自然形成前景畫框。</p>
+
+  <blockquote>
+    <p>三天的雨追在我們後面,</p>
+    <p>結果在這個傍晚,</p>
+    <p><strong>馬德里決定把所有的好天氣一次給我們。</strong></p>
+  </blockquote>
+</section>
+
+<!-- ===== § Ten — 時空摺疊 ===== -->
+<section>
+  <span class="marker">§ Ten</span>
+  <h2>1,200 年的馬德里 · 壓進一張照片</h2>
+  <h3>從地鐵口 → 阿拉伯城牆 → 18 世紀大圓頂</h3>
+
+  <p>離開觀景台往地鐵方向走,**回頭一張隨手拍** —— 結果發現整個馬德里的歷史軸線都被壓進這張照片:</p>
+
+  <figure class="bleed">
+    <img src="images/IMG_2398.jpg" alt="馬德里時空摺疊 · 地鐵口 + 阿拉伯城牆 + 聖方濟各大教堂彩釉圓頂">
+    <figcaption>左下 21 世紀地鐵口 · 右下 9 世紀阿拉伯城牆 · 遠方 18 世紀彩釉大圓頂</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>畫面位置</th><th>建築</th><th>年代</th></tr></thead>
+    <tbody>
+      <tr><td>左下</td><td>Plaza de España 地鐵站出口</td><td>21 世紀</td></tr>
+      <tr><td>右下</td><td>Murallas Árabes(摩爾人阿拉伯城牆)</td><td>9 世紀 · 860 年</td></tr>
+      <tr><td>遠方</td><td>Real Basílica de San Francisco el Grande</td><td>18 世紀 · 1761 完工</td></tr>
+      <tr><td>天空</td><td>馬德里 5 月的雲</td><td>2026/05/10 黃昏</td></tr>
+    </tbody>
+  </table>
+
+  <h4>馬德里的彩釉大圓頂</h4>
+  <p>遠方那座**斑斕的圓頂** = **聖方濟各大教堂(Real Basílica de San Francisco el Grande)**,**直徑 33 米的圓頂是西班牙第三大、世界第四大**(僅次於羅馬聖伯多祿、佛羅倫斯主教座堂、米蘭主教座堂)。**圓頂的彩色釉瓷馬賽克 + 頂端金色皇冠**在夕陽下會發光。</p>
+
+  <h4>Murallas Árabes · 馬德里的真正起點</h4>
+  <p>右下那座小拱門是**摩爾人 9 世紀蓋的阿拉伯城牆**。**馬德里這座城市原本就是阿拉伯人建立的**,名字 *Mayrit* 在阿拉伯語裡意思是「水道」,後來才被基督教徒收復。**這段拱門是馬德里現存最古老的人造遺跡。**</p>
+
+  <blockquote>
+    <p>一張隨手拍,</p>
+    <p>**包含了馬德里 1,200 年。**</p>
+  </blockquote>
+</section>
+
+<!-- ===== § Eleven — Asgaya ===== -->
+<section>
+  <span class="marker">§ Eleven</span>
+  <h2>Asgaya Cervecería</h2>
+  <h3>Abundancia · 豐盛的代價</h3>
+
+  <p>從觀景台往北走兩個路口,就到 **Calle Ferraz 8** —— **Asgaya Cervecería**。「**Asgaya**」在阿斯圖里亞斯語(*Asturiano*,西班牙北部地區語言)裡意思是**「豐盛 / 滿溢」**。這家店是 Grupo Asgaya 旗下,**2018 年得過「馬德里最佳 Cachopo + 全西班牙第三名」**。</p>
+
+  <figure>
+    <img src="images/IMG_2401.jpg" alt="Asgaya 招牌前 · 阿米跟小米合照">
+    <figcaption>Asgaya cervecería · 金色手寫字招牌 · 海軍藍 + 金的西班牙 taberna 翻新風</figcaption>
+  </figure>
+
+  <h4>蕁麻疹友善版 Gin Tonic</h4>
+  <p>桌上點了一杯**沒有酒精的 Gin Tonic** —— 服務生用的是 **Tanqueray 0.0% Sin Alcohol**(無酒精版本)+ tonic + 自家檸檬汁。**蕁麻疹進入第三天,真的酒不能喝,但西班牙廚房幫我們調了一杯假酒。**</p>
+
+  <figure>
+    <img src="images/IMG_2404.jpg" alt="服務生倒檸檬汁進高腳杯 · Tanqueray Sin Alcohol · 小米啃 nacho">
+    <figcaption>Sin Alcohol Gin Tonic · Day 7 的「假酒」· 小米啃 nacho chip 監工</figcaption>
+  </figure>
+
+  <h4>三道菜 + 一份甜點(店家送)</h4>
+  <p>阿米點了**鮭魚塔塔(Tartar de Salmón)**, 我點了**牛菲力切片(Tacos de Solomillo)**配 padrón 青椒,小米的份是**全西班牙第三名的 Cachopito**。</p>
+
+  <figure>
+    <img src="images/IMG_2407.jpg" alt="阿米咬鮭魚塔塔 · 桌上有牛菲力薯條 + 麵包">
+    <figcaption>「鮭魚塔塔一份有夠多 · 要不是有調味會吃到吐」· Day 7 晚餐金句</figcaption>
+  </figure>
+
+  <h4>Cachopito · 全西班牙第三名的炸牛排起司三明治</h4>
+  <p>**Cachopo** 是**阿斯圖里亞斯(北西班牙)國民菜** —— **兩片牛排中間夾伊比利火腿 + 起司**,裹麵包粉炸。一般 cachopo 是巨無霸(平均 800g-1kg),這家叫 *Cachopito*(小版本)—— **「小」是相對的,還是巨無霸。**</p>
+
+  <figure>
+    <img src="images/IMG_2408.jpg" alt="Cachopito 全西班牙第三名 · 切片露出火腿與起司 · 配 padrón">
+    <figcaption>Cachopito · 全西班牙第三名 · 切開來流出 jamón + 融化起司 · 配 Pimientos de Padrón</figcaption>
+  </figure>
+
+  <blockquote>
+    <p>**Day 7 的終極矛盾:**</p>
+    <p>我們點了全西班牙第三名的炸牛排起司三明治,</p>
+    <p><strong>然後把裡面的火腿挑掉了。</strong></p>
+    <p>(蕁麻疹進入第三天,jamón 還是不行。)</p>
+  </blockquote>
+
+  <h4>店家加碼 · Bizcocho con Dulce de Leche</h4>
+  <p>結帳時店家送了一份**焦糖蛋糕(Bizcocho con Dulce de Leche)** —— 蜂蜜色海綿蛋糕,三塊小方塊,上面淋阿根廷風 **dulce de leche**(牛奶 + 糖煮 3 小時的焦糖醬)。**小米換了一件深藍白條紋無袖 polo 衫,滿臉狐疑看著:這個我可以吃嗎?**</p>
+
+  <figure>
+    <img src="images/IMG_2409.jpg" alt="Bizcocho con Dulce de Leche · 小米換了 polo 衫看甜點">
+    <figcaption>店家送的 Bizcocho con Dulce de Leche · 小米的「這個我可以吃嗎?」表情</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>品項</th><th>備註</th><th>價格</th></tr></thead>
+    <tbody>
+      <tr><td>2× Servicio de Pan</td><td>麵包費</td><td>2,00 €</td></tr>
+      <tr><td>Tartar de Salmón</td><td>鮭魚塔塔(份量極大)</td><td>15,00 €</td></tr>
+      <tr><td>Tacos de Solomillo</td><td>牛菲力切片配 padrón</td><td>19,00 €</td></tr>
+      <tr><td>Cachopito ⭐</td><td>全西班牙第三名炸牛排</td><td>20,00 €</td></tr>
+      <tr><td>Zumo Piña</td><td>鳳梨汁</td><td>3,50 €</td></tr>
+      <tr><td>Coca Cola</td><td>—</td><td>3,50 €</td></tr>
+      <tr><td>Total</td><td>2 comensales · IVA 10%</td><td>63,00 €</td></tr>
+    </tbody>
+  </table>
+
+  <figure class="receipt">
+    <img src="images/IMG_2410.jpg" alt="Asgaya 收據 63,00 €">
+    <figcaption>Asgaya Cervecería · LIBEA Restauración S.L. · Mesa 002</figcaption>
+  </figure>
+</section>
+
+<!-- ===== § Twelve — Ending ===== -->
+<section>
+  <span class="marker">§ Twelve</span>
+  <h2>夜歸的小米 · 啃著麵包</h2>
+  <h3>馬德里第三夜 · 一塊麵包當睡前儀式</h3>
+
+  <p>從 Asgaya 走出來,夜風吹著,街燈散出星芒。對面就是剛剛走出來的店,紅色雨遮還在發光。**小米拿著 Asgaya 桌上沒吃完的一塊麵包,坐在推車裡繼續啃。**</p>
+
+  <figure class="bleed">
+    <img src="images/IMG_2411.jpg" alt="夜晚街頭 · 小米推車裡啃麵包">
+    <figcaption>Day 7 的最後一格 · 街燈星芒 · 對街 Asgaya 紅色雨遮 · 小米抱著麵包啃</figcaption>
+  </figure>
+
+  <blockquote>
+    <p>Day 7 結束的方式 ——</p>
+    <p>不是夕陽,</p>
+    <p>不是 2,200 年的神廟,</p>
+    <p>不是 63 € 的晚餐 ——</p>
+    <p><strong>是小米抱著一塊免費的麵包,</strong></p>
+    <p><strong>在馬德里的街角繼續啃。</strong></p>
+  </blockquote>
+</section>
+
+<!-- ===== STATS ===== -->
+<section>
+  <div class="stat-row">
+    <div class="stat">
+      <span class="num">2,200</span>
+      <span class="lbl">年前 · Templo de Debod</span>
+    </div>
+    <div class="stat">
+      <span class="num">2</span>
+      <span class="lbl">年後 · 小米的 Ralph Lauren</span>
+    </div>
+    <div class="stat">
+      <span class="num">95,80 €</span>
+      <span class="lbl">三人三餐 · 蕁麻疹友善 0% 酒精</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ROUTE ===== -->
+<section>
+  <h2>Day 7 · 路線總覽</h2>
+  <h3>從假村莊到真神廟</h3>
+
+  <ul style="list-style:none;padding:0;font-family:'Noto Serif TC',sans-serif;font-size:15.5px;line-height:2.2;">
+    <li>🚌 <strong>Avanza 625</strong> · Moncloa → Las Rozas Village · 4,20 € 現金</li>
+    <li>🛍️ <strong>Las Rozas Village</strong> · 西班牙第一家精品 outlet · 1996 開幕</li>
+    <li>🍳 <strong>Mentidero Sal y Brasas</strong> · 葡式雞肉三明治 + 放山雞炸蛋 · 32,80 €</li>
+    <li>🎨 <strong>Madrid en Vena</strong> · San Isidro 守護神節雕塑藝術季</li>
+    <li>👗 <strong>戰利品</strong> · Scalpers / Prada / Miu Miu / Ralph Lauren(2 年後)</li>
+    <li>🚇 <strong>Plaza de España</strong> · Bibliometro 唐吉訶德牆</li>
+    <li>🏊 <strong>飯店泳池快閃</strong> · Riu Plaza España</li>
+    <li>🏛️ <strong>Templo de Debod</strong> · 2,200 年古埃及神廟 · 馬德里市中心</li>
+    <li>🐦 <strong>小米的歐洲學分</strong> · 追鴿子 + 摸西班牙人的狗</li>
+    <li>🌅 <strong>El Mejor Mirador de Madrid</strong> · 全馬德里最佳觀景點 · 雙王宮夕陽</li>
+    <li>🏰 <strong>1,200 年壓在一張照片裡</strong> · 阿拉伯城牆 + 彩釉大圓頂</li>
+    <li>🍻 <strong>Asgaya Cervecería</strong> · 全西班牙第三名 Cachopito + Sin Alcohol Gin · 63,00 €</li>
+    <li>🥖 <strong>小米的夜歸儀式</strong> · 推車裡啃麵包回飯店</li>
+  </ul>
+</section>
+
+<footer>
+  <div class="sig">
+    <strong>Day 7 · Madrid · Las Dos Escalas</strong>
+    兩年後 · 與 · 兩千兩百年前<br>
+    從假村莊到真神廟 ☀️☔☀️🏛️🌅
+  </div>
+</footer>
+
+</main>
+</body>
+</html>
