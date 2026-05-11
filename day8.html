@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Day 8 · Madrid → Lisboa · As Duas Despedidas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+TC:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f1ea;
+    --ink:#1a1612;
+    --muted:#6b6357;
+    --accent:#a3623a;     /* 西班牙赭紅 — 馬德里告別餘溫 */
+    --accent2:#2f5d50;    /* 葡萄牙青苔綠 — 里斯本第一眼 */
+    --gold:#b08d57;
+    --line:rgba(26,22,18,0.12);
+    --paper:#fbf7ef;
+    --cream:#efe7d8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);font-family:'Noto Serif TC','Cormorant Garamond',serif;line-height:1.75;-webkit-font-smoothing:antialiased}
+  body{
+    background:
+      radial-gradient(1200px 600px at 20% -10%, rgba(163,98,58,0.08), transparent 60%),
+      radial-gradient(900px 500px at 90% 110%, rgba(47,93,80,0.07), transparent 65%),
+      var(--bg);
+    min-height:100vh;
+  }
+
+  .wrap{max-width:840px;margin:0 auto;padding:64px 32px 120px}
+
+  /* ============ HERO ============ */
+  .hero{
+    text-align:center;
+    padding:48px 0 64px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:64px;
+    animation:fadeUp 1s ease both;
+  }
+  .hero .day{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:18px;
+    letter-spacing:6px;
+    color:var(--accent);
+    text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;
+    font-size:clamp(36px,6vw,58px);
+    line-height:1.15;
+    letter-spacing:-0.5px;
+    margin-bottom:22px;
+  }
+  .hero h1 em{font-style:italic;color:var(--accent2)}
+  .hero .sub{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:20px;
+    color:var(--muted);
+    max-width:600px;
+    margin:0 auto 28px;
+    letter-spacing:0.3px;
+  }
+  .hero .meta{
+    display:flex;justify-content:center;gap:32px;
+    font-family:'Inter',sans-serif;font-size:12px;
+    letter-spacing:2px;text-transform:uppercase;color:var(--muted)
+  }
+  .hero .meta span:not(:last-child)::after{content:"·";margin-left:32px;color:var(--accent)}
+
+  /* ============ SECTIONS ============ */
+  section{
+    margin:0 0 88px;
+    animation:fadeUp 0.9s ease both;
+    animation-delay:0.05s;
+  }
+  .sect-num{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:14px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:14px;
+  }
+  h2{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;
+    font-size:clamp(28px,4.2vw,40px);
+    line-height:1.2;
+    margin-bottom:10px;
+    letter-spacing:-0.3px;
+  }
+  h3{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:20px;
+    color:var(--muted);
+    margin-bottom:28px;
+    letter-spacing:0.3px;
+  }
+  h4{
+    font-family:'Noto Serif TC',serif;
+    font-weight:600;
+    font-size:16px;
+    margin:32px 0 14px;
+    color:var(--accent);
+  }
+  h4::before{content:"※ ";color:var(--gold);font-weight:400}
+
+  p{margin-bottom:18px;font-size:16.5px;color:#221d17}
+  p em{font-style:italic;color:var(--accent2)}
+  p strong{font-weight:600;color:var(--ink)}
+
+  /* ============ FIGURES & IMAGES ============ */
+  figure{margin:28px 0}
+  figure img{
+    width:100%;height:auto;display:block;
+    border-radius:2px;
+    box-shadow:0 12px 40px rgba(26,22,18,0.13), 0 2px 8px rgba(26,22,18,0.08);
+  }
+  figcaption{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:14.5px;
+    color:var(--muted);
+    text-align:center;
+    margin-top:12px;
+    line-height:1.5;
+    letter-spacing:0.2px;
+  }
+
+  /* Bleed — 滿版圖 */
+  .bleed{
+    margin-left:calc(-50vw + 50%);
+    margin-right:calc(-50vw + 50%);
+    max-width:100vw;
+    margin-top:48px;
+    margin-bottom:48px;
+  }
+  .bleed img{border-radius:0;box-shadow:none}
+  .bleed figcaption{padding:0 32px;max-width:840px;margin-left:auto;margin-right:auto;margin-top:16px}
+
+  /* Grid */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  .grid-2x2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid-2 figure,.grid-3 figure,.grid-2x2 figure{margin:0}
+  @media (max-width:640px){
+    .grid-3{grid-template-columns:1fr 1fr}
+  }
+
+  /* Receipt — 收據樣式 */
+  .receipt{
+    max-width:60%;margin:32px auto;
+  }
+  .receipt img{
+    box-shadow:0 18px 36px rgba(26,22,18,0.18),0 4px 12px rgba(26,22,18,0.1);
+    transform:rotate(-1.5deg);
+  }
+  .receipt.flip img{transform:rotate(180deg) rotate(-1.5deg)}
+
+  /* Blockquote */
+  blockquote{
+    margin:36px 12px;
+    padding:24px 28px;
+    border-left:3px solid var(--accent);
+    background:linear-gradient(135deg, rgba(163,98,58,0.05), rgba(176,141,87,0.03));
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:19px;
+    line-height:1.6;
+    color:#3a322a;
+    border-radius:0 4px 4px 0;
+  }
+  blockquote strong{
+    font-style:normal;
+    font-family:'Noto Serif TC',serif;
+    color:var(--accent);
+    font-weight:600;
+  }
+  blockquote.pt{
+    border-left-color:var(--accent2);
+    background:linear-gradient(135deg, rgba(47,93,80,0.05), rgba(176,141,87,0.03));
+  }
+  blockquote.pt strong{color:var(--accent2)}
+
+  /* Tables */
+  table{
+    width:100%;border-collapse:collapse;
+    margin:24px 0;font-size:15px;
+    font-family:'Noto Serif TC',sans-serif;
+  }
+  th,td{
+    padding:11px 14px;text-align:left;
+    border-bottom:1px solid var(--line);
+  }
+  th{
+    font-weight:600;color:var(--accent);
+    font-size:13px;letter-spacing:1px;
+    text-transform:uppercase;
+    border-bottom:2px solid var(--accent);
+  }
+  td:last-child,th:last-child{text-align:right}
+  table.totals tr:last-child td{
+    border-bottom:none;
+    border-top:2px solid var(--ink);
+    font-weight:600;
+    padding-top:14px;
+  }
+
+  /* Stat row 三宮格 */
+  .stat-row{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:12px;
+    margin:32px 0;
+    padding:24px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .stat-row .stat{text-align:center}
+  .stat-row .num{
+    font-family:'Cormorant Garamond',serif;
+    font-size:32px;
+    color:var(--accent);
+    line-height:1;
+    margin-bottom:6px;
+  }
+  .stat-row .label{
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  /* Pull-line — 章節間金句 */
+  .pull{
+    text-align:center;
+    margin:72px auto;
+    max-width:640px;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:24px;
+    line-height:1.5;
+    color:var(--accent);
+    letter-spacing:0.3px;
+  }
+  .pull::before,.pull::after{
+    content:"";display:block;width:60px;height:1px;
+    background:var(--gold);margin:18px auto;
+  }
+
+  /* Footer */
+  footer{
+    text-align:center;
+    padding:80px 0 0;
+    border-top:1px solid var(--line);
+    margin-top:80px;
+    animation:fadeUp 1s ease both;
+  }
+  footer .sig{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:22px;
+    color:var(--accent);
+    margin-bottom:8px;
+  }
+  footer .sig em{color:var(--accent2)}
+  footer .meta{
+    font-family:'Inter',sans-serif;
+    font-size:11px;letter-spacing:3px;
+    text-transform:uppercase;color:var(--muted);
+  }
+  footer .ola{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:48px;
+    color:var(--accent2);
+    margin:24px 0 12px;
+    line-height:1;
+  }
+
+  /* Animations */
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  @media (max-width:640px){
+    .wrap{padding:48px 22px 100px}
+    .hero{padding:32px 0 48px;margin-bottom:48px}
+    section{margin-bottom:64px}
+    blockquote{margin:28px 0;padding:20px 22px;font-size:17px}
+    .stat-row{grid-template-columns:1fr;gap:18px}
+    .stat-row .stat{padding:8px 0}
+    .receipt{max-width:80%}
+    .hero .meta{flex-direction:column;gap:8px}
+    .hero .meta span:not(:last-child)::after{display:none}
+    .pull{font-size:20px;margin:48px auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ============ HERO ============ -->
+<div class="hero">
+  <div class="day">Day 8 · 11 May 2026 · Domingo→Lunes</div>
+  <h1>從 1738 走進王座 ·<br><em>飛 1,500 公里 抵達大西洋</em></h1>
+  <div class="sub">Palacio Real · Faborit · Le Coq · TAP 1018 · Marquês de Pombal · Altis Prime · Madame Bistrot</div>
+  <div class="meta">
+    <span>Madrid → Lisboa</span>
+    <span>三餐 58,10 €</span>
+    <span>兩個首都 一片大西洋</span>
+  </div>
+</div>
+
+<!-- ============ § ONE — 退房散步 ============ -->
+<section>
+  <div class="sect-num">§ One</div>
+  <h2>退房，但馬德里還沒放我們走</h2>
+  <h3>Plaza de España · 母女走向皇宮</h3>
+  <p>早上 Torre de Madrid 退房。行李寄在大廳,人先走。<strong>「退房 ≠ 真的離開」</strong> —— 飯店其實還會再見一次,晚上回來拿行李才會真的告別。但今天從這一步開始,我們已經在馬德里的最後幾個小時裡了。</p>
+  <p>太陽今天決定出來。空氣是那種馬德里 5 月特有的脾氣:<strong>有太陽時熱,沒太陽時風很冷</strong>。內陸高原的真實寫照,Day 7 三天的雨終於收尾後,Day 8 改成「**陰晴一秒切換體感**」。Scalpers 長袖救命。</p>
+  <figure>
+    <img src="images/IMG_2422.jpg" alt="母女牽手走向皇宮,背景 Torre de Madrid">
+    <figcaption>阿米象牙白風衣 + 黑色托特包,小米灰色 Ralph Lauren 連帽外套 —— 那是昨天 outlet「臨時加購」的 3 歲版,本來要兩年後才能穿,結果今天就上身。背景塔樓就是我們已經退房、但行李還在的 Torre de Madrid。</figcaption>
+  </figure>
+  <blockquote>
+    昨天的戰利品表寫著「<strong>兩年後</strong>」,今天就反悔。<br>
+    歐洲 5 月的氣溫,讓所有「兩年後」的衣服都變成「今晚」。
+  </blockquote>
+  <figure>
+    <img src="images/IMG_2423.jpg" alt="Cervantes 紀念碑前一家三口">
+    <figcaption>Plaza de España 中央 · Cervantes 紀念碑(1930 立)· 上方坐著的是塞萬提斯本人,下方青銅騎馬的是 Don Quijote,騎驢的是 Sancho Panza。</figcaption>
+  </figure>
+  <h4>Day 7 § Six 的伏筆,在這裡兌現</h4>
+  <p>Day 7 § Six 我們在 Plaza de España 地鐵月台,讀到整面 <em>Bibliometro</em> 文學牆上的《唐吉訶德》第十八章。<strong>昨天在月台讀第十八章,今天本人就站在他腳下</strong>。馬德里這座城市對文學的尊重,從地下印到地上,從石碑刻到青銅。</p>
+</section>
+
+<!-- ============ § TWO — 兵器廣場 ============ -->
+<section>
+  <div class="sect-num">§ Two</div>
+  <h2>遠望→走進</h2>
+  <h3>Plaza de la Armería · 黑白棋盤地板上的小米</h3>
+  <p>Day 7 § Nine 黃金時刻,我們站在 Templo de Debod 觀景台,<strong>遠望王宮輪廓</strong>。<br>Day 8 § Two,我們走進那條輪廓裡。</p>
+  <p><strong>Palacio Real de Madrid</strong> —— 歐洲現存最大的王宮,以樓地板面積算 135,000 m²,擁有 <em>3,418 個房間</em>。建在 9 世紀阿拉伯城堡 Alcázar 原址(就是 Day 7 § Ten「時空摺疊」那段阿拉伯城牆的同一個建築群),1734 年聖誕夜大火燒毀原 Alcázar,Felipe V(波旁王朝第一任、路易十四的孫子)決定重建,1738 動工、1764 完工。</p>
+  <p>現任國王 Felipe VI 不住這裡 —— 平常住郊區的 El Pardo 小宮殿,這裡只用於國事典禮、國宴、外賓接見。<strong>但我們等等發現,今天國旗是升的</strong> —— 西班牙王宮傳統:國王人在 = 降旗,國王不在 = 升旗,因為旗代表王權留守。</p>
+  <div class="grid-2">
+    <figure>
+      <img src="images/IMG_2431.jpg" alt="父女自拍 + 王宮立面 + 西班牙國旗">
+      <figcaption>兵器廣場黑白棋盤地板上的父女自拍。背景立面正中央,西班牙國旗高高升起。</figcaption>
+    </figure>
+    <figure>
+      <img src="images/IMG_2427.jpg" alt="小米 vs Almudena 大教堂">
+      <figcaption>小米食指比天 + 低頭看自己腳,背景是 Almudena 主教座堂。</figcaption>
+    </figure>
+  </div>
+  <h4>Almudena 主教座堂的 110 年</h4>
+  <p>右邊那座是 <strong>Catedral de la Almudena</strong> —— 馬德里<em>唯一</em>的主教座堂,也是<em>全西班牙唯一</em>由教宗親自祝聖的大教堂(1993 教宗 John Paul II 親自來)。<strong>1883 動工 → 1993 完工,蓋了 110 年</strong>。</p>
+  <p>馬德里身為首都,卻直到 1993 才有自己的主教座堂 —— 因為西班牙天主教中心歷史上一直是 Toledo,不是 Madrid。Almudena 完工那年,小米的爸媽都還沒出生。</p>
+  <figure>
+    <img src="images/IMG_2428.jpg" alt="小米一個小小人影 vs 王宮立面">
+    <figcaption>整個廣場後退,王宮立面當背景,小米一個小小人影站在棋盤中央。1 歲 11 個月 vs 3,418 個房間。</figcaption>
+  </figure>
+</section>
+
+<div class="pull">王宮的設計師被國王下令:<br>「我要能騎馬上樓。」<br>於是 Escalera Principal 的踏面,從此夠寬。</div>
+
+<!-- ============ § THREE — 大階梯 + EEC ============ -->
+<section>
+  <div class="sect-num">§ Three</div>
+  <h2>大階梯,跟 1985 的條約</h2>
+  <h3>Escalera Principal · Salón de Columnas</h3>
+  <p>進王宮第一個震撼點 —— <strong>Escalera Principal 主樓梯</strong>。建築師受 Carlos III 國王指示:「<em>我要能騎馬上樓</em>」,於是這座階梯踏面特別寬,真的可以騎馬。階梯平台上方,是 1763 年 Corrado Giaquinto 的濕壁畫《Religion Protected by Spain · 西班牙保護宗教》。兩側 18 世紀金色燭台 + 紅絨布 + 西班牙王徽。</p>
+  <figure>
+    <img src="images/IMG_2449.jpg" alt="阿米站在大階梯平台">
+    <figcaption>阿米手上拿著紙本導覽,黑色托特 + 米色風衣,背後是 Felipe VI 紋章 + Giaquinto 1763 的濕壁畫。手機殼貼滿小米的貼紙。</figcaption>
+  </figure>
+  <h4>1985 年 6 月 12 日,這個房間發生過一件大事</h4>
+  <p>往內走到 <strong>Salón de Columnas 圓柱廳</strong>。牆上有一塊不大的石碑,寫著一段話:</p>
+  <blockquote>
+    En este Salón de Columnas del Palacio Real de Madrid<br>
+    <strong>se firmó el Tratado de Adhesión de España a las Comunidades Europeas</strong><br>
+    el día 12 de junio de 1985<br>
+    Presidió la ceremonia Su Majestad El Rey Don Juan Carlos I
+  </blockquote>
+  <p><strong>翻譯:</strong>1985 年 6 月 12 日,西班牙加入歐洲共同體(EEC,今天歐盟前身)的條約,在這個圓柱廳簽署,儀式由 Juan Carlos I 國王主持。</p>
+  <p>那一刻 Franco 獨裁結束剛滿 10 年。西班牙正式從歐洲邊陲的孤立者,重新走回歐洲的核心。今天我們持台灣護照、用歐元、在申根區自由移動,某種意義上,Schengen + Euro 都從這一張 1985 的紙開始算起。</p>
+  <figure>
+    <img src="images/IMG_2451.jpg" alt="小米站在圓柱廳大紅地毯前 + 1985 EEC 石碑">
+    <figcaption>小米站的這個位置,40 年前是西班牙正式加入今日歐盟的歷史現場。中央青銅雕像是聖喬治屠龍,地毯捲在地上沒鋪平。</figcaption>
+  </figure>
+</section>
+
+<!-- ============ § FOUR — 王宮細節 ============ -->
+<section>
+  <div class="sect-num">§ Four</div>
+  <h2>鎏金鳥,跟乾隆的瓷</h2>
+  <h3>波旁王朝的東方收藏</h3>
+  <p>王宮裡面繞,小米的視線跟我們完全不同。我們看天頂濕壁畫,她看地上閃亮的東西。</p>
+  <div class="grid-2">
+    <figure>
+      <img src="images/IMG_2457.jpg" alt="小米觀察鎏金蒼鷺花器">
+      <figcaption>18 世紀仿凡爾賽風格的鎏金青銅花器,腳邊三隻金色蒼鷺啄食。小米半蹲、頭微低,專心程度滿分。</figcaption>
+    </figure>
+    <figure>
+      <img src="images/IMG_2460.jpg" alt="小米伸手要摸鎏金天鵝 + 清代廣彩花瓶">
+      <figcaption>小米伸手要摸鎏金天鵝。<strong>後方那個花瓶是清代廣彩</strong> —— 不是 Chanel logo,那是中式雙喜紋裝飾。</figcaption>
+    </figure>
+  </div>
+  <h4>波旁王朝的中國熱</h4>
+  <p>王宮裡面有非常多<strong>清代乾隆/嘉慶時期外銷瓷</strong> —— 當年波旁王朝透過<em>馬尼拉大帆船</em>(Galeón de Manila,1565-1815,跨越太平洋連接墨西哥阿卡普科 ↔ 菲律賓馬尼拉的貿易路線)收藏。中國的瓷器先到馬尼拉,再從馬尼拉跨太平洋到墨西哥,再從墨西哥跨大西洋到塞維利亞,最後送進馬德里王宮。</p>
+  <p>小米在 2026 年伸手要摸的這個鎏金天鵝,腳邊的廣彩瓶,可能跑了三個大洋才來到她面前。Day 7 § Five 我們花 RL 的錢「為兩年後的小米預付一份記憶」,Day 8 § Four 換西班牙王宮花了三個世紀預付給她一段。</p>
+  <h4>歐洲學分繼續累積</h4>
+  <p>Day 5 Billieblush 失守、Day 6 Miu Miu 構不到帽子、Day 6 LV 塗鴉、Day 7 outlet 太陽眼鏡霸氣坐姿、Day 7 抱比熊狗、Day 7 追鴿子。<strong>Day 8 王宮編號:伸手要摸 250 年前的鎏金鳥</strong>。她沒摸到,因為旁邊有保全。</p>
+</section>
+
+<!-- ============ § FIVE — 禮拜堂 + 王座廳 ============ -->
+<section>
+  <div class="sect-num">§ Five</div>
+  <h2>抬頭看的雲,跟低頭怕的獅</h2>
+  <h3>Capilla Real · Salón del Trono</h3>
+  <p>王宮的高潮有兩個房間,氣質完全相反。</p>
+  <h4>皇家禮拜堂 · 1750 的天頂雲</h4>
+  <p><strong>Capilla Real</strong> 是 Ventura Rodríguez 1750 年代設計的,黑色大理石柱 + 描金灰泥 + 大紅地毯。主祭壇是 Mengs 畫的<em>聖母升天</em>,華蓋上方有金色鴿子光環(聖神)。我們站的位置,正是西班牙國王做彌撒的位置。</p>
+  <figure>
+    <img src="images/IMG_2464.jpg" alt="阿米抱小米 + 禮拜堂華蓋">
+    <figcaption>阿米抱小米站中央,背後是王室專用觀禮席 + 王徽刺繡帳幕。Mengs 的聖母升天在右後方。</figcaption>
+  </figure>
+  <figure class="bleed">
+    <img src="images/IMG_2465.jpg" alt="禮拜堂圓頂濕壁畫仰拍">
+    <figcaption>Corrado Giaquinto《Trinity in Glory · 聖三榮耀》, 1750 年代 —— 西班牙巴洛克天頂畫的代表作。<br>Day 7 § Nine 黃金時刻看的是傍晚的雲,Day 8 § Five 看的是 1750 年的雲。</figcaption>
+  </figure>
+  <h4>王座廳 · 1764 的金獅</h4>
+  <p>禮拜堂出來幾個房間之後,是整個王宮最重要的房間 —— <strong>Salón del Trono 王座廳</strong>。四隻鎏金巨獅守護 Carlos III 的黃金王座,階梯紅絨布 + 銀製獅腳扶手。天花板是 <em>Giambattista Tiepolo</em> 1764 年的《西班牙君主制的榮耀》—— 威尼斯大師最後遺作之一。</p>
+  <figure>
+    <img src="images/IMG_2468.jpg" alt="小米 vs 金獅">
+    <figcaption><strong>驚恐 + 疑惑 + 小手指控</strong> 同時上線。1 歲 11 個月寶寶第一次看到她以為是真獅子的東西。背景金獅守護的是 Carlos III 王座。</figcaption>
+  </figure>
+  <blockquote>
+    禮拜堂讓你抬頭看,看 1750 的雲。<br>
+    王座廳讓你低頭怕,怕 1764 的獅。<br>
+    王宮在兩個房間之內,完成了它對權力的展示。
+  </blockquote>
+  <figure class="bleed">
+    <img src="images/IMG_2473.jpg" alt="圓頂濕壁畫滿版仰拍">
+    <figcaption>金箔灰泥浮雕天使 + 圓形採光天窗 + 圓頂濕壁畫 —— 純粹的建築物色情。</figcaption>
+  </figure>
+</section>
+
+<!-- ============ § SIX — 兵器庫 + 出宮 ============ -->
+<section>
+  <div class="sect-num">§ Six</div>
+  <h2>哈布斯堡的盔甲,跟伽利略幫忙的馬</h2>
+  <h3>Real Armería · Plaza de Oriente</h3>
+  <p>王宮西側獨立館是 <strong>Real Armería 皇家兵器博物館</strong> —— 被認為是世界第三大兵器收藏,僅次於維也納跟倫敦塔。粉紅牆 + 古典壁毯 + 鎧甲騎士的反差,完全 cinematic。</p>
+  <figure>
+    <img src="images/IMG_2475.jpg" alt="16 世紀全身板甲 + 馬甲">
+    <figcaption>16 世紀全身板甲 + 馬甲,屬於 Charles V(查理五世)或 Felipe II —— 西班牙哈布斯堡王朝的標誌性騎士裝。粉紅牆是 2020 年代的策展選擇,跟鎧甲反差超強。</figcaption>
+  </figure>
+  <h4>出宮 · Felipe IV 騎馬像 · 一個冷知識核彈</h4>
+  <p>從王宮東面廣場 <strong>Plaza de Oriente</strong> 走出,正中央是 <em>Felipe IV 騎馬青銅像</em>,1640 年完工。看似平凡,但這座像隱藏了 17 世紀歐洲最強的跨界合作:</p>
+  <div class="stat-row">
+    <div class="stat"><div class="num">Velázquez</div><div class="label">設計畫稿</div></div>
+    <div class="stat"><div class="num">Galileo</div><div class="label">力學計算</div></div>
+    <div class="stat"><div class="num">1640</div><div class="label">世界第一座</div></div>
+  </div>
+  <p>這是<strong>世界第一座馬抬起前腳的青銅騎馬像</strong>。技術上極難,因為整匹馬+國王的重量全靠馬尾跟兩條後腿支撐。<em>Diego Velázquez</em>(那個畫《宮娥》的西班牙宮廷畫家)畫了設計圖,寄到佛羅倫斯後 —— <strong>伽利略本人</strong>幫忙算了力學。Tuscan 鑄造廠執行,1640 完工後運到馬德里。</p>
+  <p>所以這座像同時集合了:西班牙最偉大的畫家、義大利物理之父、跟一個試圖讓馬飛起來的瘋狂技術問題。</p>
+</section>
+
+<div class="pull">告別馬德里的方式,<br>是被算錯一根香蕉,<br>然後上一份不存在的外帶。</div>
+
+<!-- ============ § SEVEN — Faborit + Le Coq ============ -->
+<section>
+  <div class="sect-num">§ Seven</div>
+  <h2>馬德里送我們的兩張怪收據</h2>
+  <h3>Faborit Plaza de España · Le Coq T2</h3>
+  <p>王宮出來,飯店方向走 5 分鐘就是 <strong>Faborit Leganitos · Plaza de España 2</strong> —— 西班牙連鎖 fresh coffee house,屬於 Rodilla 集團(西班牙國民三明治連鎖),走輕食路線。算是西班牙版的 Pret a Manger,馬德里機場 T1/T4 都有店。</p>
+  <p>13:58。我們點外帶,因為「衝機場」實錘。</p>
+  <figure>
+    <img src="images/IMG_2476.jpg" alt="Faborit 店內 menu board">
+    <figcaption>Faborit · Calle Leganitos / Plaza de España · Torre de Madrid 正下方那一帶。黃色檯面 + 白磚牆 + 數位 menu board。</figcaption>
+  </figure>
+  <h4>怪收據 #1:兩根香蕉的錢,一根香蕉的事實</h4>
+  <table>
+    <tr><th>品項</th><th>價格</th></tr>
+    <tr><td>Menu Panino Vita(鮪魚芥末酪梨,<em>Sin Aliño</em>)+ Iced Cacao Latte</td><td>10,90 €</td></tr>
+    <tr><td>Vita Mel Banana(蜂蜜香蕉果昔 350ml)</td><td>5,25 €</td></tr>
+    <tr><td>Pieza de Fruta × <strong>2</strong></td><td>1,90 €</td></tr>
+    <tr><td>Total · 4 件</td><td><strong>18,05 €</strong></td></tr>
+  </table>
+  <p>結果發現 —— <strong>我們只拿了一根香蕉</strong>。多算 0,95 €。但飛機在跑道上等,理論這 0,95 € 的時間我們沒有。</p>
+  <figure class="receipt">
+    <img src="images/IMG_2477.jpg" alt="Faborit 收據">
+    <figcaption>11 may. 2026 · 13:58 · Para Llevar · T001902-242301 · Dayara B.</figcaption>
+  </figure>
+  <h4>怪收據 #2:內用的碗,外帶的單</h4>
+  <p>抵達 Barajas T2 後,小米已經睡著,飯店帶來的麵包沒吃。在 T2 想找個位置坐下啃麵包,結果走進去是 <strong>Le Coq by The Kikiri Co.</strong> —— Areas SAU 集團(西班牙最大機場餐飲)旗下的西班牙國旗配色速食店。<em>Le Coq</em> 在法文是「公雞」,<em>kikirikí</em> 是西班牙語「咕咕咕」的擬聲詞 —— 全店叫「<strong>公雞 by 公雞叫公司</strong>」。</p>
+  <p>沒地方坐 + 服務生 expectant 的眼神 = 不得不點。一份 11,35 € 的 Bolognese 義大利麵,本來只是要佔位的,結果<strong>真的超好吃</strong>,小米嘴邊一圈紅醬,吃到沒空理我們。</p>
+  <div class="grid-2">
+    <figure>
+      <img src="images/IMG_2483.jpg" alt="Le Coq 店面">
+      <figcaption>紅磚牆 + 黃 logo + 藍頂蓋 + 蜂巢六角磚吧台 = 機場版的西班牙國旗。</figcaption>
+    </figure>
+    <figure>
+      <img src="images/IMG_2486.jpg" alt="小米吃 Bolognese 義大利麵">
+      <figcaption>小米嘴邊一圈紅醬,專心夾粉碗裡的麵。窗外停機坪 + TAP 小白機,下一段就是它。</figcaption>
+    </figure>
+  </div>
+  <figure>
+    <img src="images/IMG_2484.jpg" alt="小米 vs Le Coq 巨型公雞剪影">
+    <figcaption>整面牆黃底 + 黑色公雞剪影 + 雞籠網。1 歲 11 個月 vs 馬德里機場公雞。嘴邊還有義大利麵醬。</figcaption>
+  </figure>
+  <p>結帳完拿收據才發現第二件怪事:<strong>收據印著「PARA LLEVAR(外帶)」</strong>,但我們明明用陶瓷大黑碗 + 小米專屬粉色防滑碗,在窗邊內用了 30 分鐘。</p>
+  <figure class="receipt flip">
+    <img src="images/IMG_2482.jpg" alt="Le Coq 收據">
+    <figcaption>15:53 · Mesa 431 · 11,35 € · 一份「Platos Diversos」(混合餐)</figcaption>
+  </figure>
+  <blockquote>
+    告別馬德里的方式,就是被收了一份不存在的香蕉,<br>
+    跟一份不存在的外帶 —— <br>
+    <strong>而我們都不在乎了,因為飛機在跑道上等。</strong>
+  </blockquote>
+</section>
+
+<!-- ============ § EIGHT — Zona Infantil + 登機 ============ -->
+<section>
+  <div class="sect-num">§ Eight</div>
+  <h2>赤腳玩瘋,然後告別</h2>
+  <h3>Zona Infantil · TAP Gate 124</h3>
+  <p>結帳出 Le Coq,T2 候機區轉角發現 —— <strong>Children's Playroom · Zona Infantil</strong>。免費。Madrid Barajas 是少數歐洲機場提供免費兒童遊戲間的(T1/T2/T4 都有),裡面有玩具車、積木、毛玻璃手繪塗鴉牆(畫滿星星、月亮、熱氣球、紙飛機、泰迪熊、犀牛喝奶瓶)。</p>
+  <figure>
+    <img src="images/IMG_2488.jpg" alt="Zona Infantil 入口">
+    <figcaption>玻璃磚牆 + 奶瓶+搖搖馬 pictogram + Selecta 自動販賣機。免費進去玩。</figcaption>
+  </figure>
+  <figure>
+    <img src="images/IMG_2490.jpg" alt="小米赤腳玩玩具車">
+    <figcaption>小米進去 30 秒,鞋脫了 —— <strong>機場兒童遊戲間 dress code = 沒鞋</strong>。藍色圓桌、五輛各色玩具車排成一列,小米專心擺車。</figcaption>
+  </figure>
+  <p>玩瘋 30 分鐘。Day 8 從早上的 Plaza de España 唐吉訶德、王宮 3,418 房、伽利略的馬,降回到一個 1 歲 11 個月的小孩,赤腳排玩具車。<strong>歐洲學分今天比較豐富。</strong></p>
+  <figure class="bleed">
+    <img src="images/IMG_2496.jpg" alt="阿米抱小米望向 TAP 班機">
+    <figcaption>登機前最後一張 —— 阿米抱小米望向停機坪 TAP A320(紅色尾翼)。阿米手上拿著中華民國護照 + 登機證。下午太陽出來了。<br>Day 8 § One 母女牽手走向皇宮 → Day 8 § Eight 母女望向 TAP 班機 —— 一條母女敘事弧線,完美閉環。</figcaption>
+  </figure>
+  <p>登機橋上,阿米跟小米並肩站。玻璃斜骨架把畫面切成三角形,身後是 TAP 機身上的 <strong>P</strong> 跟 <strong>A</strong>。Felipe VI 的旗還高高升著 —— 因為他今天不在馬德里。我們也即將不在。</p>
+  <figure>
+    <img src="images/IMG_2501.jpg" alt="登機橋上母女 + TAP 機身">
+    <figcaption>Gate 124 · TAP A320 · 紅綠 logo 是葡萄牙國旗。1945 創立,葡萄牙國營航空。</figcaption>
+  </figure>
+</section>
+
+<div class="pull">起飛時是馬德里的藍天白雲,<br>降落時是大西洋的紅瓦屋頂。<br>—— 之間是 2 小時 35 分鐘的午睡。</div>
+
+<!-- ============ § NINE — 抵達 ============ -->
+<section>
+  <div class="sect-num">§ Nine</div>
+  <h2>Olá. 第一眼里斯本。</h2>
+  <h3>Ponte Vasco da Gama · 大航海家的橋</h3>
+  <p>降落前,機窗外是一座超長的拉索橋,橫跨整個 <em>Tagus 河</em>(Rio Tejo)河口。</p>
+  <figure class="bleed">
+    <img src="images/IMG_2500.jpg" alt="機窗外 Vasco da Gama 大橋">
+    <figcaption><strong>Ponte Vasco da Gama</strong> —— 全長 12.3 公里,歐洲第二長橋,1998 通車前是<em>歐洲最長</em>。命名紀念 1498 年 Vasco da Gama 開闢印度航線 500 週年。<br>設計時要抗黎克特震級 8.7 地震 + 250 km/h 強風 —— 因為 1755 里斯本大地震的陰影。</figcaption>
+  </figure>
+  <h4>第一個「不是西班牙了」的視覺信號</h4>
+  <p>Uber 從 Humberto Delgado 機場開往 Avenida da Liberdade —— 葡萄牙法律規定 12 歲以下/135 公分以下必須坐兒童座椅,Bolt/Uber 葡萄牙版有 Family 選項自帶座椅。小米五點式安全帶綁起來,窗外是葡萄牙黃色計程車跟紅色公車站。</p>
+  <figure>
+    <img src="images/IMG_2503.jpg" alt="Bolt 車上 · 阿米揉眼 + 小米兒童座椅">
+    <figcaption>「剛落地 + 累 + 又要打起精神」三合一表情。小米居然沒睡(機上睡飽了)。</figcaption>
+  </figure>
+  <p>到市區,第一個視覺信號是路燈。<strong>馬德里的路燈頂上是皇冠+王徽,里斯本的路燈頂上是船+海錨+守護聖人 São Vicente</strong>。傳說 1173 年聖 Vicente 的遺骸從南方被船運到里斯本時,兩隻烏鴉一路在桅杆上守護。船 + 烏鴉,從此成為里斯本的城市符號 —— 印在路燈上、市徽上、人孔蓋上。</p>
+  <figure>
+    <img src="images/IMG_2504.jpg" alt="里斯本街景 · 大理石陽台 + 金色船海錨路燈">
+    <figcaption>左:葡萄牙特色 cantilever 陽台 + 大理石板立面。右:現代鉚釘金屬牆。中間黑色路燈頂上,<strong>金色小船 + 海錨 + 里斯本市徽</strong>。</figcaption>
+  </figure>
+  <h4>救城者的雕像</h4>
+  <p>Uber 經過 <strong>Praça Marquês de Pombal 龐巴爾侯爵廣場</strong> —— Avenida da Liberdade 自由大道的起點,里斯本市中心地標。中央高柱上是<em>龐巴爾侯爵</em>(Sebastião José de Carvalho e Melo, 1699-1782),腳邊一頭獅子(代表強權)。</p>
+  <p><strong>1755 年 11 月 1 日,里斯本大地震 + 海嘯 + 大火三連擊,摧毀全城 85% 以上</strong>。死亡估計 4-5 萬。龐巴爾侯爵以鐵腕在 6 年內重建里斯本 —— 把市中心 Baixa 改成棋盤格網狀街道、抗震木構建築、寬廣大道。世界上第一個現代化都市規劃案例,被稱為 <em>pombaline 風格</em>。</p>
+  <p>沒有龐巴爾,就沒有今天的里斯本。我們抵達里斯本看到的第一個雕像,是把這座城從廢墟救回來的人。</p>
+  <figure>
+    <img src="images/IMG_2507.jpg" alt="Marquês de Pombal 紀念碑">
+    <figcaption>龐巴爾侯爵高高站著,腳邊獅子,背景 Santander 銀行 + 工地塔吊 —— 現代里斯本的日常。</figcaption>
+  </figure>
+  <blockquote class="pt">
+    馬德里給我們的最後一個雕像,是<strong>塞萬提斯</strong> —— 寫故事的人。<br>
+    里斯本給我們的第一個雕像,是<strong>龐巴爾</strong> —— 把廢墟變回城市的人。<br>
+    兩個首都都用一個雕像送/接我們。
+  </blockquote>
+</section>
+
+<!-- ============ § TEN — Altis Prime ============ -->
+<section>
+  <div class="sect-num">§ Ten</div>
+  <h2>Altis Prime · 蛋塔本家,先輸一分</h2>
+  <h3>Hotel de Apartamentos · 我們訂的就是公寓式</h3>
+  <p>Bolt 停在 <strong>Altis Prime · Hotel de Apartamentos</strong> 門口。Altis 集團旗下的公寓式酒店,Rua Rodrigo da Fonseca。當初訂這個就是因為公寓式空間大、有廚房 + 客廳 + 臥室分區,適合帶 1 歲 11 個月的小米。</p>
+  <p>招牌不鏽鋼字體 + 米色石材牆 + 葡萄牙經典 <em>calçada portuguesa</em> 鵝卵石人行道(那個黑白小方塊石磚 = 里斯本身份證)。</p>
+  <figure>
+    <img src="images/IMG_2508.jpg" alt="Altis Prime 招牌">
+    <figcaption>Altis 在拉丁語意思是「最高/至高」。Day 7 Asgaya 在阿斯圖里亞斯語意思是「豐盛/滿溢」(Abundancia)—— 兩晚兩個語源的飯店名字。</figcaption>
+  </figure>
+  <h4>小米的歐洲名椅 mini series 又 +1</h4>
+  <figure>
+    <img src="images/IMG_2509.jpg" alt="小米霸佔 Hans Wegner 風藤編單椅">
+    <figcaption>Lobby 全是 mid-century Scandinavian 設計 —— 灰色繩編 + 橡木框 + 芥末黃抱枕 + 黑色木格柵 + 水磨石地板。小米半蹲背影 + 黃枕反差,完成系列收集。</figcaption>
+  </figure>
+  <p>Day 7 § Three Bonpoint 藍色 Pierre Paulin Pumpkin 椅 → Day 7 § Three 棕色皮椅(太陽眼鏡霸氣坐姿)→ <strong>Day 8 § Ten 灰色藤編 Hans Wegner 風椅</strong>。小米的歐洲「霸佔名椅」mini series 三件套完成。</p>
+  <h4>歡迎信 + 四顆蛋塔 + 一張怪臉</h4>
+  <figure>
+    <img src="images/IMG_2506.jpg" alt="飯店 welcome amenity · 蛋塔 + 礦泉水 + 歡迎信">
+    <figcaption>大理石小圓桌 + 兩個玻璃杯 + <em>Água mineral sem gás</em> 無氣礦泉水 + 客製歡迎信(<strong>Dear ShangHung Shih</strong>)+ 四顆撒了肉桂粉的 Pastéis de Nata + 紅醋栗。小米一手抓電視遙控器,一手揮舞。</figcaption>
+  </figure>
+  <h4>Pastel de Nata 的故事</h4>
+  <p>葡萄牙國民甜點,18 世紀初 <em>Jerónimos Monastery</em>(熱羅尼莫斯修道院)的修士發明。<strong>發明原因:</strong>當時修士用蛋白漿熨衣服(對,真的用蛋白上漿),剩下大量蛋黃 → 拿來做奶蛋撻。1834 自由派革命後修道院關閉,修士把秘方賣給附近糖廠 → 1837 開了 <em>Pastéis de Belém</em> 至今仍是傳奇店。</p>
+  <p>所以飯店這四顆是葡萄牙國家送的見面禮。我們開心切開、撒了肉桂粉、咬一口 ——</p>
+  <blockquote class="pt">
+    <strong>「飯店蛋塔很普,台灣的好吃非常多。」</strong>
+  </blockquote>
+  <p>蛋塔本家,第一回合先輸一分。但這是飯店 welcome amenity,不是專業店家。明天 Belém 1837 本店再戰。</p>
+</section>
+
+<!-- ============ § ELEVEN — Madame ============ -->
+<section>
+  <div class="sect-num">§ Eleven</div>
+  <h2>葡萄牙第一晚,吃義大利披薩</h2>
+  <h3>Madame Bistrot · Rua Braamcamp 68</h3>
+  <p>22 點,真的晚才出門吃晚餐。從飯店往北走兩分鐘就是 <strong>Madame Bistrot · Pizza-Bistrot-Cocktails</strong>。法國老闆開的法義 bistro,招牌是<em>慢發酵 + Iberian flour</em> 的拿坡里風披薩。Google 4.8 / 2000+ 評論,TheFork 9.3/10。</p>
+  <p>葡萄牙第一晚,我們本來想吃 Bacalhau(鱈魚) —— 但 Madame 沒鱈魚,只有披薩跟義大利麵。小米已經到累的臨界點,選最近的兩分鐘抵達。<strong>第一晚的鱈魚,留給明天的 Belém。</strong></p>
+  <figure>
+    <img src="images/IMG_2515.jpg" alt="小米蹲在 Madame 門口的葡萄牙鵝卵石上">
+    <figcaption>Madame 門口 · <em>PIZZA · BISTROT · COCKTAILS</em> · Prato do Dia 黑板。小米蹲在葡萄牙 calçada 鵝卵石上 —— Day 8 第一次踩到正式的里斯本地磚。</figcaption>
+  </figure>
+  <h4>菜單上的地雷區跟安全島</h4>
+  <p>蕁麻疹還沒完全解禁,菜單巡禮一遍:Joana 有 mortadella、Andréa 有 presunto、Maria 有 anchovies、Claire 有 Azores 熟成起司加 prosciutto、Caroline 有 prosciutto chips + Brie —— 全部都地雷。安全島只剩三個:<em>Marguerite</em>(經典)、<em>Jade</em>(burrata + arugula)、<em>Sofia</em>(白蘑菇 + 香菇 + Taleggio + 檸檬皮)、<em>Matilde</em>(松露 + 蘑菇)。</p>
+  <p>最後點 <strong>Sofia 14 €</strong>。</p>
+  <figure>
+    <img src="images/IMG_2522.jpg" alt="Sofia 蘑菇披薩 hero shot + 阿米托腮塞嘴">
+    <figcaption>慢發酵餅皮 cornicione(餅邊)漂亮焦點 + 蓬鬆氣孔 + 白蘑菇切片 + 香菇 + 整片融化的 Mozza + Taleggio + 一片新鮮羅勒 + 檸檬皮屑。阿米兩手托腮 + 嘴塞滿 = <strong>「我嘴巴塞滿但我很滿足」</strong>。</figcaption>
+  </figure>
+  <h4>蕁麻疹週的無酒精 mojito 三部曲完成</h4>
+  <figure>
+    <img src="images/IMG_2520.jpg" alt="阿米吸 Mojito Sin Alcohol + 你的 Limonada">
+    <figcaption>阿米的 <em>Mojito Sin Alcohol</em> + 你的 Limonada。背景 QUINADO 海報的泳裝女郎剛好在阿米頭頂一線。</figcaption>
+  </figure>
+  <p>Day 5 巴塞 Vinitus mojito sin → Day 7 馬德里 Asgaya Tanqueray 0.0 → <strong>Day 8 里斯本 Madame Mojito S</strong>。三杯無酒精,三個城市,三家不同 vibe 的餐廳 —— 蕁麻疹週的隱形主線,在 Day 8 完整收齊。</p>
+  <figure>
+    <img src="images/IMG_2523.jpg" alt="Tiramisu + 阿米塞嘴">
+    <figcaption>Madame 招牌 Tiramisu · 黑陶杯 + 厚厚一層 cocoa powder。比下午飯店那盤 Pastel de Nata 好吃太多。阿米嘴鼓鼓塞滿。</figcaption>
+  </figure>
+  <h4>帳單 · 三人 28,70 €</h4>
+  <table class="totals">
+    <tr><th>品項</th><th>價格</th></tr>
+    <tr><td>Mojito Sin Alcohol</td><td>6,00 €</td></tr>
+    <tr><td>Limonada</td><td>3,20 €</td></tr>
+    <tr><td>Sofia 披薩</td><td>14,00 €</td></tr>
+    <tr><td>Tiramisu</td><td>5,50 €</td></tr>
+    <tr><td><strong>Total · Mesa 5 · 22:19</strong></td><td><strong>28,70 €</strong></td></tr>
+  </table>
+  <figure class="receipt">
+    <img src="images/IMG_2524.jpg" alt="Madame 收據">
+    <figcaption>2026-05-11 22:19:45 · Madame Bistrot · Cosysquare LDA · ATCUD JGJDGKTM-3702</figcaption>
+  </figure>
+</section>
+
+<!-- ============ § TWELVE — DAY 8 結算 ============ -->
+<section>
+  <div class="sect-num">§ Twelve · Sobremesa</div>
+  <h2>Day 8 三餐 58,10 €</h2>
+  <h3>蕁麻疹週的禁酒紅利</h3>
+  <p>Day 8 從早上的王宮 3,418 房,到晚上的 Madame 5 號桌。一整天三餐的總帳:</p>
+  <table class="totals">
+    <tr><th>餐</th><th>地點</th><th>金額</th></tr>
+    <tr><td>早餐</td><td>(機場前/沒吃)</td><td>—</td></tr>
+    <tr><td>午餐</td><td>Faborit Plaza de España</td><td>18,05 €</td></tr>
+    <tr><td>午茶</td><td>Le Coq · Barajas T2</td><td>11,35 €</td></tr>
+    <tr><td>晚餐</td><td>Madame Bistrot · Lisboa</td><td>28,70 €</td></tr>
+    <tr><td><strong>Total · 三人三餐</strong></td><td><strong>跨兩個國家</strong></td><td><strong>58,10 €</strong></td></tr>
+  </table>
+  <p>對比 Day 7 三餐 95,80 €,Day 8 省了 37 €(≈ 1,300 NTD)。原因:</p>
+  <div class="stat-row">
+    <div class="stat"><div class="num">0</div><div class="label">頓正式坐下慢吃</div></div>
+    <div class="stat"><div class="num">3</div><div class="label">杯無酒精<br>蕁麻疹紅利</div></div>
+    <div class="stat"><div class="num">1</div><div class="label">片披薩三人分</div></div>
+  </div>
+  <p>但這個省,某種程度上是 Day 8 的本質 —— 我們今天的核心不是吃,是<strong>移動</strong>。一個王宮、一個機場、一個跨海。馬德里收 95€/天的時候我們在巡禮,里斯本第一晚 28€ 的時候我們在到位。</p>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="ola">Olá, Lisboa.</div>
+  <div class="sig">Day 8 · Madrid → Lisboa · <em>As Duas Despedidas</em></div>
+  <div class="meta">兩個告別 · 一條大西洋 · 11 May 2026</div>
+</footer>
+
+</div>
+</body>
+</html>
