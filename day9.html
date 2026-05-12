@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Day 9 · Lisboa · 189 anos depois</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+TC:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f1ea;
+    --ink:#1a1612;
+    --muted:#6b6357;
+    --accent:#2f5d50;
+    --accent2:#a3623a;
+    --azulejo:#1f3a5f;
+    --custard:#d4a437;
+    --jacaranda:#7c6dab;
+    --gold:#b08d57;
+    --line:rgba(26,22,18,0.12);
+    --paper:#fbf7ef;
+    --cream:#efe7d8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);font-family:'Noto Serif TC','Cormorant Garamond',serif;line-height:1.75;-webkit-font-smoothing:antialiased}
+  body{
+    background:
+      radial-gradient(1200px 600px at 20% -10%, rgba(47,93,80,0.08), transparent 60%),
+      radial-gradient(900px 500px at 90% 110%, rgba(124,109,171,0.07), transparent 65%),
+      var(--bg);
+    min-height:100vh;
+  }
+  .wrap{max-width:840px;margin:0 auto;padding:64px 32px 120px}
+
+  .hero{text-align:center;padding:48px 0 64px;border-bottom:1px solid var(--line);margin-bottom:64px;animation:fadeUp 1s ease both}
+  .hero .day{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;letter-spacing:6px;color:var(--accent);text-transform:uppercase;margin-bottom:24px}
+  .hero h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,6vw,64px);line-height:1.15;letter-spacing:-0.5px;margin-bottom:16px}
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:var(--muted);margin-bottom:32px}
+  .hero .meta{display:inline-flex;gap:24px;padding:14px 28px;background:var(--paper);border:1px solid var(--line);border-radius:999px;font-family:'Inter',sans-serif;font-size:13px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+  .hero .meta span+span{padding-left:24px;border-left:1px solid var(--line)}
+  .hero-img{margin:48px -20px 0;border-radius:4px;overflow:hidden;box-shadow:0 30px 60px rgba(26,22,18,0.18)}
+  .hero-img img{width:100%;display:block}
+
+  section{margin-bottom:88px;animation:fadeUp 0.9s ease both}
+  .num{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:14px}
+  h2{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4.5vw,44px);line-height:1.2;margin-bottom:8px}
+  h2 em{font-style:italic;color:var(--accent)}
+  h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;font-weight:400;color:var(--muted);margin-bottom:28px}
+  h4{font-family:'Noto Serif TC',serif;font-weight:600;font-size:17px;margin:32px 0 12px;color:var(--accent2)}
+  h4::before{content:"※ ";color:var(--muted)}
+
+  p{margin-bottom:18px;font-size:17px}
+  p strong{color:var(--ink);font-weight:600}
+  p em{font-style:italic;color:var(--accent2)}
+
+  blockquote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;line-height:1.5;color:var(--ink);border-left:3px solid var(--accent);padding:8px 0 8px 28px;margin:28px 0}
+  blockquote.center{text-align:center;border:none;padding:24px 0;font-size:26px;color:var(--accent)}
+
+  figure{margin:32px 0}
+  figure img{width:100%;display:block;border-radius:3px;box-shadow:0 10px 24px rgba(26,22,18,0.12)}
+  figcaption{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--muted);margin-top:12px}
+  .bleed{margin-left:-20px;margin-right:-20px}
+  .bleed img{border-radius:4px}
+
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0}
+  .duo figure{margin:0}
+  .trio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:32px 0}
+  .trio figure{margin:0}
+
+  .receipt{max-width:62%;margin:36px auto}
+  .receipt img{border:1px solid var(--line);box-shadow:0 14px 30px rgba(26,22,18,0.14)}
+
+  table{width:100%;border-collapse:collapse;margin:28px 0;font-size:15px;background:var(--paper);border-radius:3px;overflow:hidden}
+  th,td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--line)}
+  th{font-family:'Inter',sans-serif;font-weight:500;font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);background:var(--cream)}
+  td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+  tr:last-child td{border-bottom:none}
+  tr.total td{font-weight:600;background:var(--cream);color:var(--accent)}
+
+  .callout{background:var(--paper);border-left:3px solid var(--accent);padding:20px 24px;margin:28px 0;border-radius:0 3px 3px 0;font-size:15.5px;line-height:1.7}
+  .callout strong{color:var(--accent)}
+
+  .tag{display:inline-block;padding:2px 9px;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;border-radius:999px;color:#fff;background:var(--accent);margin-right:6px;vertical-align:1px}
+  .tag.alt{background:var(--accent2)}
+  .tag.gold{background:var(--custard);color:#3a2a0a}
+  .tag.jac{background:var(--jacaranda)}
+
+  hr.sep{border:none;height:1px;background:var(--line);margin:64px 20%}
+  hr.dot{border:none;text-align:center;margin:48px 0}
+  hr.dot::before{content:"✦ ✦ ✦";letter-spacing:18px;color:var(--accent);font-size:14px}
+
+  footer{text-align:center;margin-top:80px;padding-top:48px;border-top:1px solid var(--line);color:var(--muted);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px}
+  footer .pt{display:block;font-size:14px;margin-top:6px;letter-spacing:3px;color:var(--accent)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+  @media (max-width:600px){
+    .wrap{padding:36px 18px 80px}
+    .bleed{margin-left:-12px;margin-right:-12px}
+    .trio{grid-template-columns:1fr 1fr}
+    .receipt{max-width:80%}
+    blockquote{font-size:18px;padding-left:18px}
+    blockquote.center{font-size:20px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="day">Day Nine · 12 Maio 2026 · Terça-feira</div>
+  <h1>修士的蛋黃,走了 <em>189 年</em><br>抵達本店。</h1>
+  <p class="sub">Lisboa Day 1 · da Largo do Rato até à beira do mundo</p>
+  <div class="meta">
+    <span>🌤️ 21° · 多雲晴</span>
+    <span>🇵🇹 Lisboa</span>
+    <span>👨‍👩‍👧 三人 · 0% 酒精</span>
+  </div>
+  <figure class="hero-img">
+    <img src="images/IMG_2565.jpg" alt="鴿子撲翅瞬間 · 小米咧嘴大笑">
+  </figure>
+</header>
+
+<!-- § ONE · ALBÅ -->
+<section>
+  <div class="num">§ One</div>
+  <h2>Largo do Rato · <em>Rise &amp; Shine</em></h2>
+  <h3>跟里斯本的第一個正式坐下早午餐</h3>
+
+  <p>飛機落地不到 18 小時,葡萄牙的第一頓正餐被排在 <strong>Largo do Rato</strong> 廣場邊一家叫 <em>Albå</em> 的店。Bistro · Specialty Coffee · Matcha Bar 三合一招牌,小小一間,門口貼著 <em>「permitida a entrada com animais」</em>——歡迎帶寵物進來,順便也歡迎帶推車。</p>
+
+  <p>店是一間叫 <em>Dança das Borboletas Lda.</em>(「蝴蝶之舞有限公司」)經營的。葡萄牙人連開店都要先把店名寫成一首詩。</p>
+
+  <figure>
+    <img src="images/IMG_2532.jpg" alt="阿米站在 Albå 門口,身穿米白風衣 + 奈良美智小黑貓托特包">
+    <figcaption>店門口的阿米 · calçada portuguesa 鵝卵石上的第一張里斯本明信片</figcaption>
+  </figure>
+
+  <p>桌上端來的是 <strong>Strawberry Matcha Hot</strong> 雙層粉綠分層 6,50 €。底層抹茶綠、頂層粉紅奶油山,小米看到第一眼眼睛就亮起來——伸手過去用食指戳了那球粉紅奶油的最頂端。阿米下意識說了句「<em>aii</em>」,然後決定不阻止她。</p>
+
+  <div class="duo">
+    <figure><img src="images/IMG_2540.jpg" alt="小米坐 Stokke 高椅看著草莓抹茶"></figure>
+    <figure><img src="images/IMG_2542.jpg" alt="桌上 brunch 全景"></figure>
+  </div>
+
+  <blockquote>草莓抹茶認真不錯!</blockquote>
+
+  <p>主餐兩份:阿米點 <strong>Breakfast Plate</strong>(全麥麵包、起司、奶油、橄欖、番茄、煎蛋)10 €,我點 <strong>Crepe Pastrami</strong> 14 €——藍色花紋大橢圓盤上,煙燻牛肉片、白米、起司、醬汁堆成一座小山。麵包旁邊還塞了一包 Carrefour Baby 嬰兒濕紙巾——這是阿米的隨身配件。</p>
+
+  <figure>
+    <img src="images/IMG_2536.jpg" alt="阿米嘴含食物 + 紅色滅火器 + Albå menu 兩本">
+    <figcaption>店內紅色滅火器跟綠植物 · 葡萄牙日常感</figcaption>
+  </figure>
+
+  <div class="callout">
+    <strong>※ 蕁麻疹週小備註:</strong> Pastrami 是煙燻熟成牛肉,理論上組織胺偏高,屬於蕁麻疹週紅燈區。但我還是吃了。等等會不會反應,容我等晚一點再回報。
+  </div>
+
+  <table>
+    <thead><tr><th>品項</th><th>備註</th><th>€</th></tr></thead>
+    <tbody>
+      <tr><td>Breakfast plate</td><td>麵包+起司+蛋+橄欖+番茄</td><td>10,00</td></tr>
+      <tr><td>Crepe pastrami</td><td>煙燻牛肉米飯盤</td><td>14,00</td></tr>
+      <tr><td>Strawberry matcha hot</td><td>分層粉綠 hero ⭐</td><td>6,50</td></tr>
+      <tr><td>Macchiato</td><td></td><td>2,50</td></tr>
+      <tr class="total"><td>Total</td><td>IVA 13% 含</td><td>33,00</td></tr>
+    </tbody>
+  </table>
+
+  <figure class="receipt">
+    <img src="images/IMG_2543.jpg" alt="Albå 收據">
+    <figcaption>Albå 收據 · 2026-05-12 12:11 · Order #36252</figcaption>
+  </figure>
+</section>
+
+<!-- § TWO · TRAM 28 -->
+<section>
+  <div class="num">§ Two</div>
+  <h2>第一輛 <em>Eléctrico 28</em></h2>
+  <h3>離開店門口,抬頭就是里斯本的標準明信片</h3>
+
+  <p>從 Albå 走出來,順著 Rua da Escola Politécnica 往東斜下走,沒走兩步就在路口看到那台<strong>黃色的 28 號電車</strong>——*carris* 老木箱,前頭一塊小黃牌寫著終點。後面遠遠又一台 28 號跟著來。</p>
+
+  <p>里斯本的電車是 1873 年從馬拉車改成蒸氣,1901 年通電的。28 號是現在最有名的觀光路線,從 Martim Moniz 跑到 Campo de Ourique,一路爬七座山——拍它的人比坐它的人多。</p>
+
+  <figure class="bleed">
+    <img src="images/IMG_2544.jpg" alt="28號黃色電車穿過十字路口">
+  </figure>
+
+  <p>同一個十字路口,抬頭還能看到 <strong>Pastelaria 1300</strong> 那家老店——黃色立面、咖啡座、綠色洋傘。天空中還有一架小小的 TAP 班機正在飛過。</p>
+
+  <figure>
+    <img src="images/IMG_2530.jpg" alt="Pastelaria 1300 + 路燈頂船與海錨 + 飛機">
+    <figcaption>路燈頂端是金色船和海錨 · 里斯本市徽 (<em>brasão de Lisboa</em>)</figcaption>
+  </figure>
+
+  <p>路燈柱頂端是一個小小的金色<strong>船與海錨</strong>——昨天晚上飯店外面看 Pombal 雕像時也看到過。那是 <em>brasão de Lisboa</em>,里斯本市徽。市徽上一艘船兩隻烏鴉,傳說當年聖文森的遺骸從南方海運上岸時,兩隻烏鴉一路護送。船的部分,合理;烏鴉護送的部分,聽聽就好。</p>
+
+  <div class="callout">
+    <strong>※ TAP 雙視角 callback:</strong> 昨天 Day 8 我們從 TAP 機艙窗戶往下俯瞰里斯本(看到 Vasco da Gama 大橋)。今天 Day 9 在 Largo do Rato 路口抬頭看 TAP 飛過頭頂——<em>「Day 8 從天上看里斯本,Day 9 從里斯本看天上」</em>。
+  </div>
+</section>
+
+<!-- § THREE · 藍花楹 -->
+<section>
+  <div class="num">§ Three</div>
+  <h2>路上開花的 <em>Jacarandá</em></h2>
+  <h3>五月的里斯本,半個城是淡紫色的</h3>
+
+  <p>Bolt 在 Rua da Escola Politécnica 往 Belém 的路上,我隔著車窗拍下對面一棟米黃色公寓——綠色法式鐵藝陽台、窗台一盆假向日葵——前景一棵<strong>藍花楹</strong>剛盛開,紫色花序密密麻麻掛在像書法線條一樣彎曲的枝椏上。</p>
+
+  <figure>
+    <img src="images/IMG_2546.jpg" alt="車窗外的藍花楹和米黃色葡式公寓">
+    <figcaption>Jacarandá em flor · 葡語叫 <em>jacarandá</em>,音譯「夏卡蘭達」</figcaption>
+  </figure>
+
+  <p>藍花楹是<strong>南美洲原生樹種</strong>,葡萄牙人 18 世紀從巴西殖民地帶回里斯本種,結果意外地適應大西洋氣候。每年 <strong>4 月底到 6 月初</strong>整個里斯本會被染成淡紫色——尤其是 Avenida da Liberdade、Marquês de Pombal 廣場那一帶。我們剛好在 5 月中,正中花季。</p>
+
+  <p>巴西人說「藍花楹開了,期末考就到了」(<em>quando o jacarandá floresce, vêm as provas finais</em>)。里斯本人沒有這種焦慮,只是會抬頭看一眼,然後繼續走路。</p>
+</section>
+
+<!-- § FOUR · JERÓNIMOS -->
+<section>
+  <div class="num">§ Four</div>
+  <h2>修道院門口,沒進去。</h2>
+  <h3>但 1516 年的雕花已經夠看半小時</h3>
+
+  <p><strong>Mosteiro dos Jerónimos</strong> 熱羅尼莫斯修道院,1501 年起建。João de Castilho 1516 年雕的<strong>南門 Portal Sul</strong>,整面牆是密密麻麻的聖徒像、葡萄藤、繩結、海洋符號——<em>Manueline 葡式晚期哥德風格</em>的代表作,1983 年 UNESCO 世界遺產。</p>
+
+  <p>我們今天沒進去。要進去得排隊,要排隊就得把推車摺起來,把推車摺起來就得抱小米——抱完小米就抬不動推車。所以我們站在門口仰頭看了五分鐘,小米被王子抱在懷裡睡眼朦朧地看著拱門。</p>
+
+  <figure class="bleed">
+    <img src="images/IMG_2557.jpg" alt="父女在 Jerónimos 修道院南門口">
+  </figure>
+
+  <p>裡面有 <strong>Vasco da Gama 的石棺</strong>。昨天從飛機上,我們從 11,000 公尺高空看到了用他名字命名的 Vasco da Gama 大橋——今天在 11 公尺外的石頭門框前,沒進去看他的棺木。<em>É o suficiente.</em> 這樣就夠了。</p>
+
+  <div class="callout">
+    <strong>※ Jerónimos 修士 → 1837 → 蛋塔的故事閉環,留到 § Eleven 揭曉。</strong>
+  </div>
+</section>
+
+<!-- § FIVE · 鴿子大戰 -->
+<section>
+  <div class="num">§ Five</div>
+  <h2>追鴿子的下場</h2>
+  <h3>一個 22 個月大的小孩,挑戰里斯本廣場上的整個鳥群</h3>
+
+  <p>修道院前是觀光巴士集散地——紅色的、藍色的 Tomelloso、白色的 Balerma、葡萄牙國民黃色 carris metropolitana。巴士群中間是一大片碎石廣場,廣場上是<strong>整支海鷗+鴿子部隊</strong>。</p>
+
+  <p>小米剛從推車上被放下來,看到第一群鴿子,愣了 1.5 秒,然後就衝了。</p>
+
+  <div class="trio">
+    <figure><img src="images/IMG_2563.jpg" alt="小米遠景衝向 4 隻海鷗鴿子"></figure>
+    <figure><img src="images/IMG_2565.jpg" alt="鴿子撲翅 + 小米咧嘴大笑"></figure>
+    <figure><img src="images/IMG_2566.jpg" alt="小米趴倒在地"></figure>
+  </div>
+
+  <p>第一張:她遠遠衝向四隻鳥,鳥群正要展翅起飛。<br>
+  第二張:鴿子撲翅瞬間,小米咧嘴大笑,左手還抱著她那隻迷你小熊。<br>
+  第三張:結局——<strong>小米趴倒在地上</strong>,旁邊兩隻鴿子跟一隻海鷗站著用一種「人類幼崽真奇怪」的眼神看著她。</p>
+
+  <blockquote class="center">追鴿子的下場。</blockquote>
+
+  <p>這是 Day 9 的第一個 hero。也是「歐洲兒童遊戲區巡禮」的第二集——昨天 Day 8 在馬德里 Barajas T2 機場 Zona Infantil 是赤腳玩,今天在 Belém 廣場是穿著小白鞋撲鴿子。<em>O percurso continua.</em></p>
+</section>
+
+<!-- § SIX · 大發現紀念碑 -->
+<section>
+  <div class="num">§ Six</div>
+  <h2>大航海時代紀念碑 <em>🪦</em></h2>
+  <h3>阿米的命名方式</h3>
+
+  <p>從修道院往河邊走十分鐘,過了馬路,就是 <strong>Padrão dos Descobrimentos</strong> 大發現紀念碑。船頭造型,1960 年 Salazar 政權建造,紀念<strong>航海王子 Henrique 逝世 500 週年</strong>。33 個航海人物雕像,領頭最高那個拿著小帆船——就是 Henrique 本人。後排還能認出 Vasco da Gama、Magellan、Cabral(巴西的發現者)、Camões(《盧濟塔尼亞人之歌》的詩人)......</p>
+
+  <figure>
+    <img src="images/IMG_2576.jpg" alt="阿米雙手揮手在大發現紀念碑前,calçada portuguesa 海洋波浪紋廣場">
+    <figcaption>「大航海時代紀念碑🪦」—— 阿米用墓碑 emoji 介紹的</figcaption>
+  </figure>
+
+  <p>阿米看到第一眼,介紹給我聽的時候,用的就是這個 emoji——「大航海時代紀念碑🪦」。我看著螢幕笑了出來。某種程度上她說得也沒錯——這座碑紀念的是<strong>一個時代的結束</strong>,不是開始。1960 年蓋的時候,葡萄牙剛失去印度果亞,殖民地還剩非洲和澳門。再過 15 年,殖民帝國徹底瓦解。所以墓碑 emoji 用得有點準。</p>
+
+  <figure class="bleed">
+    <img src="images/IMG_2591.jpg" alt="阿米坐在紀念碑邊,海風吹頭髮望向 Tejo 河">
+  </figure>
+
+  <p>阿米坐在紀念碑底座的石頭邊,風從 Tejo 河面吹上來,頭髮整個被吹散。我從她背後拍了一張——遠方一艘白色帆船,左邊一個小小的城市輪廓。電影感拉滿。</p>
+
+  <figure>
+    <img src="images/IMG_2593.jpg" alt="紀念碑頂部:Henrique 王子和後排航海家雕像">
+    <figcaption>領頭最高的是 Henrique 王子 · 手裡的小帆船是他派出的所有遠征</figcaption>
+  </figure>
+</section>
+
+<!-- § SEVEN · 風玫瑰 + 世界地圖 -->
+<section>
+  <div class="num">§ Seven</div>
+  <h2>地上的<em>世界地圖</em></h2>
+  <h3>南非送的禮物 · 1960</h3>
+
+  <p>紀念碑前面的廣場,鋪著一塊巨型大理石<strong>玫瑰風向羅盤</strong>(<em>Rosa-dos-Ventos</em>),直徑 50 公尺。1960 年揭幕時南非送的禮物。中間是世界地圖,標滿葡萄牙人「第一次到」的年代——</p>
+
+  <figure class="bleed">
+    <img src="images/IMG_2574.jpg" alt="風玫瑰世界地圖石板,可見 Macau 1541 字樣">
+  </figure>
+
+  <table>
+    <thead><tr><th>地點</th><th>葡萄牙人第一次抵達</th></tr></thead>
+    <tbody>
+      <tr><td>Madeira 馬德拉</td><td>1419</td></tr>
+      <tr><td>R. de Cantão 廣州</td><td>1514</td></tr>
+      <tr><td>Malaca</td><td>1509</td></tr>
+      <tr><td>Molucas</td><td>1512</td></tr>
+      <tr><td>Timor 帝汶</td><td>1512</td></tr>
+      <tr><td>1ª Palau 帕勞</td><td>1525</td></tr>
+      <tr><td><strong>Macau 澳門</strong></td><td><strong>1541</strong></td></tr>
+    </tbody>
+  </table>
+
+  <p>站在地圖上 <strong>Macau 1541</strong> 那一格,腳底踩著 484 年前的事。台灣人看葡萄牙的地圖,跟看一般觀光客的地圖,還是有點不一樣。我們的西邊在這張圖上是被葡萄牙寫下來的——「<em>Ilha Formosa</em>」這個名字本身,就是葡萄牙人 16 世紀路過台灣海峽喊出來的。</p>
+
+  <p>地圖上還有一個畫風很可愛的<strong>巨型墨魚怪 + 海上噴泉</strong>——這是中世紀地圖的傳統梗,叫 <em>hic sunt dracones</em>(「這裡有龍」),意思是「我們不知道這邊有什麼,但反正先畫個怪物在這」。</p>
+</section>
+
+<!-- § EIGHT · BELÉM TOWER -->
+<section>
+  <div class="num">§ Eight</div>
+  <h2>Torre de Belém · <em>+ LISBOA</em></h2>
+  <h3>五月的草地、五月的天空、五月的招牌</h3>
+
+  <p>沿著河邊再走 800 公尺,就是 <strong>Torre de Belém</strong> 貝倫塔。1519 年完工,16 世紀守衛 Tejo 河口的瞭望塔——也是葡萄牙海權的紀念碑式建築。UNESCO 世界遺產。</p>
+
+  <p>塔本身不大,但站在草地上看它,前面河水後面藍天,有一種很模型一樣的精緻感——像被人用樂高拼出來放在草坪上。</p>
+
+  <figure class="bleed">
+    <img src="images/IMG_2598.jpg" alt="兩人在貝倫塔前草地合照,阿米微微抬腿一隻腳">
+  </figure>
+
+  <figure>
+    <img src="images/IMG_2604.jpg" alt="阿米在 LISBOA 黃白字牌前">
+    <figcaption>LISBOA 那個黃白大字牌已經被各路觀光客貼滿了貼紙——我們也沒貼</figcaption>
+  </figure>
+</section>
+
+<!-- § NINE · 25 DE ABRIL -->
+<section>
+  <div class="num">§ Nine</div>
+  <h2>第二座橋,<em>遠遠看</em></h2>
+  <h3>昨天看了 Vasco da Gama,今天看 25 de Abril</h3>
+
+  <p>從貝倫塔旁邊有一座小天橋跨過河岸大道。站上去往東看,正前方就是<strong>25 de Abril 大橋</strong>——一條跟舊金山金門大橋同顏色、同款式的紅色懸索橋。事實上兩座橋是<em>同一家美國公司</em>蓋的(American Bridge Company),1966 年通車。</p>
+
+  <figure>
+    <img src="images/IMG_2608.jpg" alt="阿米背影望向 25 de Abril 大橋">
+  </figure>
+
+  <p>橋原本叫<strong>「Salazar 橋」</strong>(Ponte Salazar),用的是當時獨裁者的名字。1974 年 4 月 25 日<em>康乃馨革命</em>(Revolução dos Cravos)推翻 Salazar 政權,革命之後橋就改名了——用革命發生的那一天當名字。葡萄牙人很愛把革命寫進地圖。</p>
+
+  <div class="callout">
+    <strong>※ Day 8 → Day 9 雙橋 callback:</strong><br>
+    Day 8 在 TAP 飛機上看到的是 <em>Vasco da Gama 大橋</em>(東邊新橋,1998 年通車紀念 da Gama 發現印度航線 500 週年)。<br>
+    Day 9 在跨橋天橋上看到的是 <em>25 de Abril 大橋</em>(西邊老橋,1966 年通車紀念 Salazar 沒推倒以前的葡萄牙)。<br>
+    兩座橋夾著里斯本市區,一新一舊、一東一西、一專制一民主。
+  </div>
+</section>
+
+<!-- § TEN · 紅陶雙牛 -->
+<section>
+  <div class="num">§ Ten</div>
+  <h2>兩隻紅陶大牛 + 一個小米</h2>
+  <h3>計畫外的對稱構圖</h3>
+
+  <figure>
+    <img src="images/IMG_2595.jpg" alt="小米盤腿坐在兩隻紅陶大牛底座中間">
+    <figcaption>不知道是誰的裝置藝術 · 但構圖太好不能不停下來拍</figcaption>
+  </figure>
+
+  <p>在貝倫塔回來的某條巷子裡,牆角放著兩隻同款<strong>紅陶大牛</strong>,屁股對屁股、角朝外、耳朵尖尖、眼睛瞇瞇微笑。小米被放下來,自己走過去,在兩隻牛底座中間盤腿一坐——構圖就完成了。</p>
+
+  <p>她身上已經換成了灰色 hoodie 連帽套裝——途中在 Bolt 上換的,藍格紋洋裝沾了草地不太能繼續穿。配色:紅、灰、米色,三色平衡。攝影師(我)的快樂時刻。</p>
+</section>
+
+<!-- § ELEVEN · PASTÉIS DE BELÉM -->
+<section>
+  <div class="num">§ Eleven</div>
+  <h2>1837 vs 1971 · <em>同一張桌子</em></h2>
+  <h3>葡萄牙國寶蛋塔 ✕ 美國西雅圖咖啡 · 同框出現</h3>
+
+  <p>下午三點半,我們終於走到 <strong>Rua de Belém 84-92</strong>——<em>Pastéis de Belém, desde 1837</em>。</p>
+
+  <figure>
+    <img src="images/IMG_2612.jpg" alt="Pastéis de Belém 1837 店面正面,藍白條紋遮陽棚+整面 azulejo 拼花磁磚">
+    <figcaption>整面葡萄牙 azulejo + 巨型銅鍋櫥窗 + 1837 年的招牌</figcaption>
+  </figure>
+
+  <p>整面店是 <em>azulejo</em>——藍、黃、綠三色幾何拼花磁磚,藍白條紋遮陽棚,中間櫥窗裡擺了那個傳奇的<strong>巨型銅鍋</strong>(<em>tacho de cobre</em>)——當年修士熬蛋黃漿的傳統工具,現在是品牌象徵物。</p>
+
+  <h4>故事閉環:走了 189 年的蛋黃</h4>
+
+  <p>故事是這樣的:18 世紀,Jerónimos 修道院的修士用<strong>蛋白漿來熨衣服</strong>(讓修士袍維持挺直)——每天用掉的蛋白多,剩下的<strong>蛋黃</strong>就更多。修士們把蛋黃 + 糖 + 麵粉做成各種糕點,蛋塔是其中一種。</p>
+
+  <p>1820 年代葡萄牙自由派革命,1834 年所有的修道院被關閉。Jerónimos 的修士為了活下去,把蛋塔的祕方賣給了隔壁的<strong>甘蔗精煉廠老闆</strong>。老闆 1837 年開了店,就是 <em>Pastéis de Belém</em>。</p>
+
+  <p>189 年後的今天,我們上午站在修道院門口(蛋黃的起源),下午站在 1837 店門口(蛋塔的歸宿),中間隔著一條 <em>Rua de Belém</em> 走過去——<strong>等於走了 189 年</strong>。</p>
+
+  <figure class="bleed">
+    <img src="images/IMG_2613.jpg" alt="同一張桌上:Pastéis de Belém 1837 紙袋 + 蛋塔本尊 + 隔壁星巴克美人魚冰拿鐵">
+  </figure>
+
+  <p>但這個故事的真正 plot twist——是<strong>本店隔壁就是星巴克</strong>。所以我們的桌上同時擺著:</p>
+
+  <ul style="list-style:none;padding:0;margin:20px 0">
+    <li style="margin:8px 0">🥮 <strong>1837 葡萄牙國寶蛋塔</strong>(深藍包裝紙、有銅鍋 logo)</li>
+    <li style="margin:8px 0">☕ <strong>1971 西雅圖美人魚冰拿鐵</strong>(綠色 logo 對著鏡頭)</li>
+    <li style="margin:8px 0">🌬 窗反射裡:海鷗飛過去的剪影</li>
+  </ul>
+
+  <p>189 年的歷史和 55 年的全球連鎖咖啡,同一張桌、同一個下午。</p>
+
+  <figure>
+    <img src="images/IMG_2611.jpg" alt="阿米在外面桌喝星巴克抹茶星冰樂,小米在推車裡咬蛋塔">
+    <figcaption>背景:星巴克櫥窗 Portugal 限定版 You Are Here 馬克杯整排</figcaption>
+  </figure>
+
+  <h4>蛋塔對決 · 結果公佈</h4>
+
+  <table>
+    <thead><tr><th>對手</th><th>用戶評語</th><th>結果</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Day 8 · Altis Prime 飯店歡迎蛋塔</td>
+        <td><em>「飯店蛋塔很普,台灣的好吃非常多」</em></td>
+        <td>⚠️ 輸給台灣</td>
+      </tr>
+      <tr>
+        <td>Day 9 · <strong>Pastéis de Belém 1837 本店</strong></td>
+        <td><strong>「蛋撻好吃😋,但肉桂粉我沒那麼愛」</strong></td>
+        <td>✅ 扳回</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <blockquote>1837 終於把面子撈回來。肉桂粉拒收。</blockquote>
+
+  <p>葡萄牙人吃蛋塔的標準動作是<strong>桌上兩罐</strong>:一罐糖粉、一罐肉桂粉,自己加。台灣人不加肉桂、不加糖粉,只吃酥皮加蛋黃焦糖。<em>Não é melhor nem pior. Apenas diferente.</em> 沒有比較好或不好,只是不一樣而已。</p>
+</section>
+
+<!-- § TWELVE · PARK SLIDE -->
+<section>
+  <div class="num">§ Twelve</div>
+  <h2>歐洲兒童遊戲區 <em>· 第 2 集</em></h2>
+  <h3>蛋塔吃完,小米要放電</h3>
+
+  <p>蛋塔吃完,需要放電。Belém 公園(<em>Jardim Vasco da Gama</em> 旁邊的兒童區)有一座<strong>紅黃配色塑膠滑梯</strong>,旁邊還畫著小蝴蝶、小花、小猴子的剪影。</p>
+
+  <div class="duo">
+    <figure><img src="images/IMG_2616.jpg" alt="小米紅滑梯俯衝中"></figure>
+    <figure><img src="images/IMG_2617.jpg" alt="小米滑到底"></figure>
+  </div>
+
+  <p>葡萄牙的兒童遊戲區地墊是深綠色軟橡膠——比馬德里機場的灰色地墊高級多了。小米滑到底沒摔倒,還回頭看了我一眼,確認我在看,然後又跑去爬樓梯第二輪。</p>
+
+  <div class="callout">
+    <strong>歐洲兒童遊戲區巡禮 mini series:</strong><br>
+    第 1 集 · Day 8 · Madrid Barajas T2 機場 Zona Infantil(<em>赤腳玩瘋</em>)<br>
+    第 2 集 · Day 9 · Lisboa Belém Jardim Vasco da Gama(<em>紅滑梯俯衝</em>)<br>
+    第 3 集 · 待定 ·
+  </div>
+</section>
+
+<!-- § THIRTEEN · O FRADE -->
+<section>
+  <div class="num">§ Thirteen</div>
+  <h2>O Frade · <em>修士的晚餐</em></h2>
+  <h3>米其林必比登 5 連霸 · 修士主題完美閉環</h3>
+
+  <p>晚上的餐廳叫 <em>O Frade</em>。<strong>O frade</strong> 在葡語裡是<strong>「修士」</strong>——也就是說,我們今天從<em>修士的修道院門口</em>開始(§ Four),走到<em>修士的蛋塔本店</em>(§ Eleven),最後吃了一家叫<em>修士</em>的米其林餐廳。<strong>修士主題的三重閉環。</strong></p>
+
+  <figure>
+    <img src="images/IMG_2625.jpg" alt="O Frade 黑色招牌 + 阿米推車站在門口">
+    <figcaption>Cozinha Tradicional Portuguesa · Michelin Bib Gourmand 五連霸</figcaption>
+  </figure>
+
+  <p><strong>O Frade</strong>:Carlos Afonso 與表弟 Sérgio Frade 2019 年創立,2020 拿到米其林必比登(Bib Gourmand),<strong>2021/2022/2023/2024/2025 連續五年</strong>都在榜上。主廚現在是 Bruno Oliveira。標榜 <em>Alentejo</em> 阿連特茹(葡萄牙南部酒鄉)傳統菜,U 形吧台 + 看主廚現場料理。</p>
+
+  <p>標榜「<em>O país inteiro servido ao balcão</em>」——「整個葡萄牙就在這吧台上」。</p>
+
+  <figure>
+    <img src="images/IMG_2632.jpg" alt="窗邊吧台座位,大理石檯面 + 葡萄酒杯 + 黑色陶盤 + 對面粉紅葡式宅邸">
+    <figcaption>窗邊吧台位 · 對面是 19 世紀粉紅色葡式宅邸 + 藍花楹</figcaption>
+  </figure>
+
+  <h4>三道菜</h4>
+
+  <p>原本想點竹蟶(razor clams)當開胃,但確認過 chef 用了大量奶油大蒜白酒醬汁——對阿米的甲殼類過敏邊緣不安全。最後改點他們的另一道招牌:</p>
+
+  <figure>
+    <img src="images/IMG_2635.jpg" alt="鱈魚韭蔥蛋:奶香高湯+酥炸洋蔥絲+紫蘇嫩芽">
+    <figcaption>Bacalhau, Alho Francês e Ovos · 18 € · 鱈魚韭蔥奶香蛋醬</figcaption>
+  </figure>
+
+  <p><strong>Bacalhau, Alho Francês e Ovos</strong> 18 € —— 葡萄牙國民菜 <em>Bacalhau à Brás</em> 的升級版。傳統版用切絲薯條混蛋液,O Frade 把馬鈴薯改成<strong>奶香韭蔥醬</strong>,頂層撒一大把<strong>酥炸洋蔥絲</strong>跟<strong>紫蘇嫩芽</strong>。盤底是琥珀色的奶湯,撒著黑色細顆粒——可能是鹽漬橄欖或炭粉。蕁麻疹週的安全牌——鱈魚絕對安全,意外地點對了。</p>
+
+  <figure>
+    <img src="images/IMG_2636.jpg" alt="小米用叉子認真吃,桃色矽膠分隔盤(自備),黃色圍兜">
+    <figcaption>小米拿叉子塞嘴裡的瞬間 · 自備桃色矽膠分隔盤 + 黃圍兜 + 粉紅水壺</figcaption>
+  </figure>
+
+  <p>小米也很認真在吃同一道。<strong>桃色矽膠分隔盤是我們自備的</strong>——隨身帶著走,在哪都拿得出來。米其林餐廳坐下,服務生看到也沒多說什麼,還貼心地把鱈魚切碎了一些分到她盤子裡。</p>
+
+  <figure class="bleed">
+    <img src="images/IMG_2644.jpg" alt="鴨肉飯 + 燉牛尾雙拼俯瞰">
+  </figure>
+
+  <figure>
+    <img src="images/IMG_2645.jpg" alt="修士鴨肉飯特寫:紫米色澤+chorizo紅丁+香芹綠末+橙皮絲">
+    <figcaption>Arroz de Pato à Frade · 23 € · 紫米鴨肉飯</figcaption>
+  </figure>
+
+  <p><strong>Arroz de Pato à Frade</strong> 23 € —— 修士鴨肉飯,O Frade 的店之星。<strong>紫米色澤</strong>(因為加了 vinho da talha 陶罐紅酒)、滿滿<strong>chorizo 紅丁</strong>、香芹綠末、橙皮絲三重奏。質地像義式 risotto 卻不糊。米其林評論用詞:「<em>flavour overshadowed by orange zest</em>」(柳橙皮香太搶)——但對我這種台灣口味,柳橙皮意外地適合。chorizo 太多,蕁麻疹角度沒去掉、放手吃,等等再說。</p>
+
+  <p><strong>Rabo de Boi Estufado com Legumes</strong> 21 € —— 燉牛尾 + 招牌薯泥。盤面構圖:左邊是奶黃色<strong>薯泥</strong>(畫上焦糖肉汁線條,像書法),右邊是<strong>燉牛尾肉絲</strong>堆成的小山,頂上覆蓋<strong>醃紫洋蔥 + 橘色甜椒丁</strong>,配菜是<strong>烤南瓜片 + broccolini 西蘭花苗</strong>。所有米其林評論一致說:<em>「薯泥才是真正的冠軍」</em>。我吃了一口同意。</p>
+
+  <h4>家庭全家福</h4>
+
+  <figure class="bleed">
+    <img src="images/IMG_2639.jpg" alt="玻璃 booth 內三人合照:用戶右邊燦笑+阿米左邊抱小米+桌上三道菜+Sprite罐+粉紅水壺">
+  </figure>
+
+  <figure>
+    <img src="images/IMG_2643.jpg" alt="阿米手扇微笑 + 小米偷瞄,桌上鴨肉飯跟牛尾">
+    <figcaption>阿米嘴塞食物 + 手扇微笑 · 小米啃麵包偷瞄鏡頭 ⭐</figcaption>
+  </figure>
+
+  <blockquote>米其林。好吃。</blockquote>
+
+  <h4>結帳:可以不給小費,但阿米堅持給</h4>
+
+  <table>
+    <thead><tr><th>品項</th><th>葡文</th><th>€</th></tr></thead>
+    <tbody>
+      <tr><td>鱈魚韭蔥蛋</td><td>Bacalhau Alho Francês</td><td>18,00</td></tr>
+      <tr><td>修士鴨肉飯</td><td>Arroz Pato Frade</td><td>23,00</td></tr>
+      <tr><td>燉牛尾</td><td>Rabo Boi Estufado</td><td>21,00</td></tr>
+      <tr><td>靜水</td><td>Água sem gás</td><td>2,00</td></tr>
+      <tr><td>Sprite</td><td></td><td>3,00</td></tr>
+      <tr><td>小計</td><td></td><td>67,00</td></tr>
+      <tr><td colspan="2">建議小費 10%</td><td>6,70</td></tr>
+      <tr class="total"><td>Total</td><td>每人 22,33 €</td><td>73,70</td></tr>
+    </tbody>
+  </table>
+
+  <figure class="receipt">
+    <img src="images/IMG_2646.jpg" alt="O Frade 收據">
+    <figcaption>O Frade 收據 · 2026-05-12 · Mesa 20 · 3 人</figcaption>
+  </figure>
+
+  <div class="callout">
+    <strong>葡萄牙小費規則:</strong> 工資已包含,理論上不強制。但米其林級店家會在收據上「<em>suggest 建議</em>」10%。
+    <br><br>
+    <em>「可以不給小費!但阿米還是要我給,畢竟有換盤子」</em>——這就是阿米式判斷邏輯。換盤子 = 服務有實質付出 = 6,70 €。最後總價 73,70 €,平均每人 22,33 € 拿下米其林必比登五連霸。CP 滿級。
+  </div>
+</section>
+
+<hr class="dot">
+
+<!-- § FOURTEEN · SOBREMESA -->
+<section>
+  <div class="num">§ Fourteen · Sobremesa</div>
+  <h2>三餐結算 + <em>明天阿米生日</em></h2>
+  <h3>蕁麻疹週倒數最後一天 · 0% 酒精</h3>
+
+  <table>
+    <thead><tr><th>餐</th><th>地點</th><th>€</th></tr></thead>
+    <tbody>
+      <tr><td>早午餐 11:29</td><td>Albå Rise &amp; Shine · Largo do Rato</td><td>33,00</td></tr>
+      <tr><td>下午茶</td><td>Pastéis de Belém 1837 + Starbucks</td><td>~12</td></tr>
+      <tr><td>晚餐</td><td><strong>O Frade · 米其林五連霸</strong></td><td>73,70</td></tr>
+      <tr class="total"><td>Total</td><td>三人 · 0% 酒精</td><td>~119</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Day 9 的四條隱形主線</h4>
+
+  <p><span class="tag jac">A</span> <strong>藍花楹日</strong> · Bolt 車窗 → 紀念碑路上 → O Frade 窗外。五月里斯本限定淡紫色背景。</p>
+
+  <p><span class="tag">B</span> <strong>修士的 189 年</strong> · Jerónimos 修道院 → Pastéis de Belém 1837 → O Frade(店名=修士)。三重修士主題完整閉環。</p>
+
+  <p><span class="tag alt">C</span> <strong>雙橋對稱</strong> · Day 8 Vasco da Gama(東/1998/紀念發現印度航線 500 年)→ Day 9 25 de Abril(西/1966/紀念康乃馨革命)。</p>
+
+  <p><span class="tag gold">D</span> <strong>蛋塔對決</strong> · Day 8 飯店蛋塔(輸給台灣)→ Day 9 1837 本店(扳回,但肉桂粉拒收)。</p>
+
+  <hr class="sep">
+
+  <blockquote class="center">
+    明天就是 5/13。<br>
+    Feliz Aniversário, 阿米.
+  </blockquote>
+
+  <p style="text-align:center;color:var(--muted);font-style:italic;margin-top:24px">
+    蕁麻疹週撐到第 9 天。明天解禁。<br>
+    Vinho Verde、Ginjinha、Presunto · 全部在 Day 10 等。
+  </p>
+</section>
+
+<footer>
+  Boa noite, Lisboa.
+  <span class="pt">DAY 9 · END</span>
+</footer>
+
+</div>
+</body>
+</html>
