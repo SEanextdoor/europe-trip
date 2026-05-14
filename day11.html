@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 11 · Lisboa → Paris · 延長賽的轉場</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f0e6;
+    --paper-2:#ece5d6;
+    --ink:#2b2620;
+    --ink-soft:#5c5346;
+    --champagne:#c69f5e;
+    --champagne-deep:#a07c3c;
+    --rose:#c97f73;
+    --rose-deep:#a85d52;
+    --sky:#8a9bb0;
+    --sky-deep:#5d7088;
+    --cloud:#d8dde3;
+    --line:#cabd9f;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Serif TC','Cormorant Garamond',serif;
+    line-height:1.85;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* paper grain */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;
+    opacity:.5;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  }
+  img{display:block;width:100%;height:auto;}
+
+  /* ---- shared layout ---- */
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .narrow{max-width:680px;margin:0 auto;padding:0 28px;}
+
+  /* ---- chapter marker ---- */
+  .marker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--champagne-deep);
+    display:flex;align-items:center;gap:14px;
+    margin-bottom:30px;
+  }
+  .marker::before{
+    content:"";height:1px;width:46px;background:var(--champagne);flex:none;
+  }
+  .marker .pt{color:var(--sky-deep);}
+  .marker .num{color:var(--rose-deep);font-weight:700;}
+
+  /* ---- typography ---- */
+  h2.chtitle{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(2.1rem,5.2vw,3.5rem);
+    line-height:1.08;
+    letter-spacing:-.012em;
+    margin-bottom:.32em;
+  }
+  h2.chtitle em{font-style:italic;color:var(--rose-deep);font-weight:400;}
+  .subtitle{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:clamp(1.05rem,2.2vw,1.4rem);
+    color:var(--ink-soft);
+    margin-bottom:1.7em;
+    letter-spacing:.01em;
+  }
+  p{font-size:1.045rem;margin-bottom:1.25em;color:var(--ink);}
+  p .hl{
+    background:linear-gradient(transparent 62%, rgba(201,127,115,.28) 62%);
+    padding:0 .06em;
+  }
+  p strong{font-weight:600;color:var(--ink);}
+  .pt-word{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--champagne-deep);}
+
+  section{padding:clamp(70px,11vw,140px) 0;position:relative;}
+  .sec-line{border-top:1px solid var(--line);}
+
+  /* ---- figures ---- */
+  figure{margin:0;}
+  .fig-cap{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.66rem;letter-spacing:.07em;
+    color:var(--ink-soft);
+    margin-top:10px;
+    display:flex;gap:10px;align-items:baseline;
+  }
+  .fig-cap .loc{color:var(--champagne-deep);font-weight:500;white-space:nowrap;}
+  .frame{
+    position:relative;
+    background:#fff;
+    padding:10px;
+    box-shadow:0 1px 0 rgba(0,0,0,.04),0 22px 44px -26px rgba(43,38,32,.5);
+    border:1px solid rgba(202,189,159,.5);
+  }
+  .frame img{filter:saturate(1.02);}
+
+  /* hero */
+  .hero{
+    min-height:100svh;
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:42px 0 50px;
+    position:relative;
+    background:
+      radial-gradient(ellipse 80% 50% at 70% 12%, rgba(201,127,115,.16), transparent 70%),
+      radial-gradient(ellipse 70% 55% at 15% 85%, rgba(138,155,176,.18), transparent 70%);
+  }
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;}
+  .hero-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .hero-kicker b{color:var(--rose-deep);font-weight:700;}
+  .hero-day{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.7rem;letter-spacing:.2em;color:var(--champagne-deep);text-align:right;
+  }
+  .hero-center{padding:18px 0;}
+  .hero h1{
+    font-family:'Fraunces',serif;
+    font-weight:300;
+    font-size:clamp(3.1rem,11vw,8.2rem);
+    line-height:.94;
+    letter-spacing:-.025em;
+  }
+  .hero h1 .l2{display:block;padding-left:.06em;}
+  .hero h1 em{font-style:italic;font-weight:400;color:var(--rose-deep);}
+  .hero h1 .arrow{
+    color:var(--champagne-deep);font-weight:300;font-style:normal;
+    display:inline-block;transform:translateY(-.06em);
+  }
+  .hero-sub{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(1.15rem,2.6vw,1.7rem);
+    color:var(--ink-soft);
+    margin-top:1.1em;max-width:30ch;
+  }
+  .hero-foot{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:24px;flex-wrap:wrap;
+    font-family:'JetBrains Mono',monospace;
+    font-size:.66rem;letter-spacing:.08em;color:var(--ink-soft);
+  }
+  .hero-foot .route{display:flex;align-items:center;gap:10px;color:var(--sky-deep);}
+  .hero-foot .route b{color:var(--ink);font-weight:700;}
+  .scrollcue{
+    font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.2em;
+    color:var(--champagne-deep);text-transform:uppercase;
+    display:flex;align-items:center;gap:8px;
+  }
+  .scrollcue::after{content:"";width:1px;height:30px;background:var(--champagne);display:inline-block;animation:cue 1.8s ease-in-out infinite;transform-origin:top;}
+  @keyframes cue{0%,100%{transform:scaleY(.3);opacity:.4;}50%{transform:scaleY(1);opacity:1;}}
+
+  /* layout pieces */
+  .lead-grid{display:grid;grid-template-columns:1fr 1fr;gap:38px;align-items:center;}
+  .lead-grid.rev{direction:rtl;}
+  .lead-grid.rev>*{direction:ltr;}
+  .stack-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .full-fig{margin:46px 0 8px;}
+  .pull{
+    font-family:'Fraunces',serif;
+    font-weight:400;
+    font-size:clamp(1.7rem,4.3vw,2.9rem);
+    line-height:1.22;
+    color:var(--rose-deep);
+    text-align:center;
+    letter-spacing:-.01em;
+    padding:clamp(46px,8vw,90px) 0;
+    max-width:18ch;margin:0 auto;
+  }
+  .pull em{font-style:italic;color:var(--champagne-deep);}
+  .pull .sm{display:block;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.2em;color:var(--ink-soft);margin-top:1.6em;text-transform:uppercase;}
+
+  /* receipt block */
+  .receipt{
+    background:#fffdf8;
+    border:1px solid var(--line);
+    box-shadow:0 18px 40px -28px rgba(43,38,32,.55);
+    padding:30px 30px 26px;
+    font-family:'JetBrains Mono',monospace;
+    max-width:380px;
+    position:relative;
+  }
+  .receipt::before,.receipt::after{
+    content:"";position:absolute;left:0;right:0;height:10px;
+    background-image:radial-gradient(circle at 6px -2px, transparent 6px, #fffdf8 6px);
+    background-size:14px 10px;background-repeat:repeat-x;
+  }
+  .receipt::before{top:-9px;transform:rotate(180deg);}
+  .receipt::after{bottom:-9px;}
+  .receipt h4{
+    font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+    text-align:center;color:var(--ink);font-weight:700;
+    padding-bottom:12px;margin-bottom:14px;
+    border-bottom:1px dashed var(--line);
+  }
+  .receipt .meta{font-size:.6rem;color:var(--ink-soft);letter-spacing:.04em;text-align:center;margin-bottom:16px;line-height:1.7;}
+  .receipt .row{display:flex;justify-content:space-between;gap:14px;font-size:.7rem;margin-bottom:7px;color:var(--ink);}
+  .receipt .row span:first-child{color:var(--ink-soft);}
+  .receipt .row.note{font-size:.58rem;color:var(--sky-deep);padding-left:14px;margin-bottom:9px;margin-top:-2px;}
+  .receipt .tot{
+    display:flex;justify-content:space-between;
+    border-top:1px dashed var(--line);margin-top:12px;padding-top:11px;
+    font-size:.85rem;font-weight:700;color:var(--rose-deep);
+  }
+  .receipt .foot{
+    text-align:center;font-size:.55rem;color:var(--ink-soft);
+    margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);
+    letter-spacing:.06em;line-height:1.8;
+  }
+
+  /* menu card (air france) */
+  .menucard{
+    background:linear-gradient(160deg,#fffdf8,#f1ead9);
+    border:1px solid var(--line);
+    padding:34px 36px;
+    max-width:440px;
+    box-shadow:0 20px 44px -28px rgba(43,38,32,.55);
+  }
+  .menucard .tag{
+    font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--champagne-deep);margin-bottom:14px;
+  }
+  .menucard .dish{
+    font-family:'Fraunces',serif;font-size:1.5rem;line-height:1.25;
+    color:var(--ink);margin-bottom:.5em;font-weight:500;
+  }
+  .menucard .dish em{font-style:italic;color:var(--rose-deep);}
+  .menucard .desc{font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-style:italic;color:var(--ink-soft);margin-bottom:1.1em;}
+  .menucard .chef{
+    display:flex;gap:12px;align-items:baseline;
+    border-top:1px dashed var(--line);padding-top:14px;
+    font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:var(--ink-soft);
+  }
+  .menucard .chef b{color:var(--ink);font-weight:700;letter-spacing:.08em;}
+
+  /* video */
+  .vidwrap{position:relative;background:#000;}
+  .vidwrap video{display:block;width:100%;height:auto;}
+  .vidtag{
+    position:absolute;left:14px;bottom:14px;z-index:2;
+    font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.12em;
+    color:#fff;background:rgba(20,18,15,.6);backdrop-filter:blur(4px);
+    padding:6px 10px;text-transform:uppercase;
+  }
+
+  /* plot twist styling */
+  .twist .marker{color:var(--rose-deep);}
+  .twist .marker::before{background:var(--rose);}
+  .twist h2.chtitle{font-style:italic;}
+  .twist-note{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.2rem;color:var(--rose-deep);
+    border-left:2px solid var(--rose);
+    padding-left:20px;margin:1.6em 0;
+  }
+
+  /* stats */
+  .stats-sec{
+    background:
+      linear-gradient(180deg, var(--paper), var(--paper-2));
+  }
+  .statgrid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin-top:10px;
+  }
+  .stat{
+    background:var(--paper);
+    padding:30px 20px;text-align:center;
+  }
+  .stat .n{
+    font-family:'Fraunces',serif;font-weight:500;
+    font-size:clamp(1.9rem,4.6vw,2.9rem);
+    color:var(--rose-deep);line-height:1;
+    letter-spacing:-.02em;
+  }
+  .stat .n .u{font-size:.5em;color:var(--champagne-deep);font-style:italic;font-family:'Cormorant Garamond',serif;}
+  .stat .lbl{
+    font-family:'JetBrains Mono',monospace;font-size:.58rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);
+    margin-top:10px;
+  }
+
+  /* map */
+  .mapbox{
+    border:1px solid var(--line);background:#fffdf8;
+    padding:26px;margin-top:10px;
+    box-shadow:0 18px 40px -30px rgba(43,38,32,.5);
+  }
+  .mapbox svg{width:100%;height:auto;display:block;}
+
+  /* timeline list */
+  .tl{list-style:none;margin:24px 0 0;}
+  .tl li{
+    display:flex;gap:16px;padding:11px 0;
+    border-bottom:1px dotted var(--line);
+    font-size:.96rem;
+  }
+  .tl li:last-child{border-bottom:none;}
+  .tl .t{
+    font-family:'JetBrains Mono',monospace;font-size:.66rem;
+    color:var(--champagne-deep);flex:none;width:58px;padding-top:.35em;letter-spacing:.04em;
+  }
+  .tl .d strong{font-weight:600;}
+  .tl .d span{color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.02rem;}
+
+  /* footer */
+  footer{
+    background:var(--ink);color:var(--paper);
+    padding:clamp(70px,10vw,120px) 0 60px;
+    text-align:center;
+  }
+  footer .fin{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:300;
+    font-size:clamp(2.4rem,7vw,4.6rem);color:var(--paper);
+    letter-spacing:-.01em;
+  }
+  footer .fin .dot{color:var(--rose);}
+  footer .fmeta{
+    font-family:'JetBrains Mono',monospace;font-size:.64rem;
+    letter-spacing:.16em;text-transform:uppercase;color:#a59c8c;
+    margin-top:2em;line-height:2.1;
+  }
+  footer .fmeta b{color:var(--champagne);}
+  footer .sign{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:#8d8474;font-size:1rem;margin-top:2.4em;
+  }
+
+  /* reveal */
+  .rv{opacity:0;transform:translateY(28px);transition:opacity 1.1s cubic-bezier(.2,.7,.2,1),transform 1.1s cubic-bezier(.2,.7,.2,1);}
+  .rv.in{opacity:1;transform:none;}
+
+  @media(max-width:760px){
+    .lead-grid,.lead-grid.rev{grid-template-columns:1fr;direction:ltr;gap:22px;}
+    .statgrid{grid-template-columns:repeat(2,1fr);}
+    .hero h1{font-size:clamp(2.8rem,15vw,5rem);}
+    section{padding:64px 0;}
+    .stack-2{gap:12px;}
+  }
+  @media(max-width:420px){
+    .wrap,.narrow{padding:0 20px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<header class="hero wrap">
+  <div class="hero-top rv in">
+    <div class="hero-kicker">Carnet de Voyage · <b>Jour 11</b></div>
+    <div class="hero-day">14 · V · 2026</div>
+  </div>
+
+  <div class="hero-center rv in">
+    <h1>Lisboa<span class="l2"><span class="arrow">→</span> <em>Paris</em></span></h1>
+    <p class="hero-sub">商務艙、果醬鋁管、一隻鬧了整路的小米——延長賽的轉場日。</p>
+  </div>
+
+  <div class="hero-foot rv in">
+    <div class="route">
+      <span><b>LIS</b></span>
+      <span>✈ ····· 2 h 30</span>
+      <span><b>CDG</b></span>
+      <span>· Air France · 商務艙</span>
+    </div>
+    <div class="scrollcue">défiler</div>
+  </div>
+</header>
+
+<!-- ============ § UN ============ -->
+<section class="wrap">
+  <div class="narrow">
+    <div class="marker rv"><span class="num">§ Un</span> · <span class="pt">Lisboa</span> · 最後一夜 · the last night</div>
+    <h2 class="chtitle rv">一根薯條，<br>和一座<em>不睡的圓環</em></h2>
+    <p class="subtitle rv">告別一座城市的方式，從來不是儀式，是日常的最後一次。</p>
+    <p class="rv">里斯本的最後一個夜晚，是從一根薯條開始收尾的。前一晚 McDonald's 打包回飯店，米米——本名施湉曦，再過一個月就滿兩歲了——戴上她那副粉色愛心墨鏡，光著身子只剩一片尿布,拎著一盒薯條在房間裡走起了台步。沒有人教她,她就是知道:墨鏡要戴、薯條要拎、下巴要抬。這是 Day 10 那張 McDonald's 收據之外，沒有印在紙上的<span class="hl">片尾彩蛋</span>。</p>
+  </div>
+  <div class="full-fig rv">
+    <figure class="frame">
+      <img src="assets/img_2793.jpg" alt="米米戴墨鏡拎薯條走台步">
+      <figcaption class="fig-cap"><span class="loc">ALTIS PRIME · 23:00</span><span>施湉曦的薯條伸展台 — 尿布、愛心墨鏡、一盒 frites</span></figcaption>
+    </figure>
+  </div>
+  <div class="narrow">
+    <p class="rv">然後我們走到窗邊。<strong>Marquês de Pombal 圓環</strong>在深夜裡空蕩蕩,只有打了光的紀念碑亮著——龐巴爾侯爵,1755 大地震後用鐵腕把里斯本重新蓋起來的那個人,站在柱頂,腳邊蹲著一頭象徵權力的獅子。柱子背後那條燈光往上延伸的,是自由大道 Avenida da Liberdade。</p>
+    <p class="rv">就是這個圓環旁邊的 Eduardo VII 公園,藏著那支我們始終沒去收的 LISBOA 字牌。Day 10 我們決定不追了,留給下次。所以這張深夜空景,某種程度上也是跟那支字牌的<span class="hl">遙遙告別</span>——有些風景,是留著當作「還會再來」的理由。</p>
+  </div>
+  <div class="full-fig rv">
+    <figure class="frame">
+      <img src="assets/img_2792.jpg" alt="深夜的 Marquês de Pombal 圓環">
+      <figcaption class="fig-cap"><span class="loc">PRAÇA MARQUÊS DE POMBAL · 23:10</span><span>里斯本的最後一夜,空蕩的大馬路與打光的紀念碑</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ § DEUX ============ -->
+<section class="wrap sec-line">
+  <div class="narrow">
+    <div class="marker rv"><span class="num">§ Deux</span> · <span class="pt">Grand Café</span> · 早午餐 · the pretty breakfast</div>
+    <h2 class="chtitle rv">斑馬、花拱門,<br>和<em>沒點的那些蛋糕</em></h2>
+    <p class="subtitle rv">里斯本的最後一個早晨,我們選了一家童話咖啡店。</p>
+    <p class="rv">我說「要去一家果醬店」,結果第一站是 <strong>Grand Café Lisboa</strong>——其實不是果醬店,是一家開在 Marquês de Pombal 圓環邊的網美咖啡烘焙坊。但「果醬」的聯想沒有錯,因為它整間店就是花團錦簇、莓果色調,門口那整片桃紅九重葛假花牆,是它的招牌打卡點。對照昨晚那張夜景——白天我們又回到了同一個圓環,只是這次是來吃早餐。</p>
+  </div>
+  <div class="full-fig rv">
+    <figure class="frame">
+      <img src="assets/img_2803.jpg" alt="阿米站在 Grand Café Lisboa 門口揮手">
+      <figcaption class="fig-cap"><span class="loc">GRAND CAFÉ LISBOA · 10:30</span><span>石材招牌、桃紅花牆 — 阿米在門口揮手,生日延長賽 Day 2</span></figcaption>
+    </figure>
+  </div>
+  <div class="narrow">
+    <p class="rv">店裡是「英式殖民地 × 草原動物」的風格:磚紅色滿版手繪斑馬壁紙、白色線板、一隻真人大小的旋轉木馬斑馬立在柱子上。米米穿著灰色連帽外套站在斑馬底下比手指,背景那面斑馬牆配上她,整個就是一頁童書插畫。</p>
+  </div>
+  <div class="full-fig rv">
+    <div class="stack-2">
+      <figure class="frame">
+        <img src="assets/img_2804.jpg" alt="米米站在斑馬雕塑下">
+        <figcaption class="fig-cap"><span class="loc">內場</span><span>米米的 Grand Café 座騎</span></figcaption>
+      </figure>
+      <figure class="frame">
+        <img src="assets/img_2807.jpg" alt="從店內往外看的花拱門">
+        <figcaption class="fig-cap"><span class="loc">花拱門</span><span>桃紅花洞,框住對街的 Art Deco</span></figcaption>
+      </figure>
+    </div>
+  </div>
+  <div class="narrow">
+    <p class="rv">從店內往外拍,整個門框被桃紅、粉、白的假花包成一個花洞,框住對街的 MANGO 旗艦店和那棟裝飾藝術老建築。米米小小一隻站在花洞中央。</p>
+    <p class="rv">早午餐很簡單:一份撒了麵粉的全麥水晶麵包夾酪梨番茄莫札瑞拉、一個油亮的炒蛋可頌、鹹焦糖拿鐵、草莓冰抹茶。<strong>可頌很好吃</strong>。可惜我們太飽,沒點那些金色圓筒蛋糕——<span class="hl">那些蛋糕真的很漂亮</span>。但有時候沒點的那一個,反而留在記憶裡更久;就像那支沒去收的字牌一樣。</p>
+  </div>
+  <div class="full-fig rv">
+    <div class="stack-2">
+      <figure class="frame">
+        <img src="assets/img_2808.jpg" alt="阿米介紹甜點櫃">
+        <figcaption class="fig-cap"><span class="loc">甜點櫃</span><span>阿米伸手介紹整排沒點的漂亮蛋糕</span></figcaption>
+      </figure>
+      <figure class="frame">
+        <img src="assets/img_2809.jpg" alt="阿米吃早午餐的生動表情">
+        <figcaption class="fig-cap"><span class="loc">10:54</span><span>嘴巴正在動 — 全麥三明治與炒蛋可頌</span></figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- receipt -->
+  <div class="full-fig rv" style="display:flex;justify-content:center;">
+    <div class="receipt">
+      <h4>Grand Café Lisboa</h4>
+      <div class="meta">Fatura simplificada FS 059/67452<br>2026·05·14 — 10:54:31<br>ATCUD: J6JD29M9-67452</div>
+      <div class="row"><span>Cristal Intg. Mozzarella</span><span>€7,40</span></div>
+      <div class="row"><span>Croissant Ovo Mexido</span><span>€4,10</span></div>
+      <div class="row"><span>Salted Caramel Latte</span><span>€4,40</span></div>
+      <div class="row"><span>Iced Matcha Morango</span><span>€5,20</span></div>
+      <div class="tot"><span>Total</span><span>€21,10</span></div>
+      <div class="foot">IVA incluído · Emp 1249<br>Obrigado e volte sempre</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ § TROIS ============ -->
+<section class="wrap sec-line">
+  <div class="narrow">
+    <div class="marker rv"><span class="num">§ Trois</span> · <span class="pt">Santa Justa</span> · 用走的 · the climb</div>
+    <h2 class="chtitle rv">別人排隊搭電梯,<br>我們<em>用腳爬</em></h2>
+    <p class="subtitle rv">那些遠景,不是搭電梯的副產品 — 是用走的才換到的視角。</p>
+    <p class="rv"><strong>Elevador de Santa Justa</strong>——里斯本最有名的鋼鐵升降梯,1902 年啟用,新哥德式的鑄鐵塔身,那些尖拱、玫瑰窗、藤蔓鏤空全是鐵鑄的。設計師 Raoul Mesnier du Ponsard 是法國工程師,據說是艾菲爾的學生(不是艾菲爾本人,這點常被誤傳)。</p>
+    <p class="rv">我們沒搭。照這家人的慣例,用走的、爬樓梯上去。所以才有了 Baixa 那整片橘色屋頂、Carmo 修道院沒有屋頂的拱頂骨架、山頂飄著國旗的聖喬治城堡——這些遠景。<span class="hl">別人排隊搭百年電梯,我們用腳把里斯本的最後一個上午爬完。</span></p>
+  </div>
+  <div class="full-fig rv">
+    <figure class="frame">
+      <img src="assets/img_2817.jpg" alt="Santa Justa 升降梯仰拍">
+      <figcaption class="fig-cap"><span class="loc">ELEVADOR DE SANTA JUSTA · 1902</span><span>鑄鐵塔身仰拍,塔裡那尊紫色當代雕像</span></figcaption>
+    </figure>
+  </div>
+  <div class="narrow">
+    <p class="rv">爬到上面那層觀景平台,Baixa 在腳下攤開成一片紅瓦的海。阿米靠著柱子,背後是山頂的聖喬治城堡;一家三口靠著欄杆,遠方就是那座 1755 大地震後沒有重建、留下骨架的 Carmo 修道院——里斯本最美的廢墟。</p>
+  </div>
+  <div class="full-fig rv">
+    <div class="stack-2">
+      <figure class="frame">
+        <img src="assets/img_2823.jpg" alt="一家三口靠欄杆看 Baixa">
+        <figcaption class="fig-cap"><span class="loc">觀景平台</span><span>一家三口 + Baixa 紅瓦海 + Carmo 修道院</span></figcaption>
+      </figure>
+      <figure class="frame">
+        <img src="assets/img_2828.jpg" alt="阿米背影望向聖喬治城堡">
+        <figcaption class="fig-cap"><span class="loc">背影</span><span>阿米望向山頂的聖喬治城堡</span></figcaption>
+      </figure>
+    </div>
+  </div>
+  <div class="full-fig rv">
+    <figure class="frame">
+      <img src="assets/img_2832.jpg" alt="一家三口在 Santa Justa 升降梯下合照">
+      <figcaption class="fig-cap"><span class="loc">塔下 · 全家福</span><span>米米照例在哭 — 右邊招牌「Normal」,一點都不 normal 的一家</span></figcaption>
+    </figure>
+  </div>
+  <div class="narrow">
+    <p class="rv">下山的路上,米米開始想睡,趴在阿米肩上;石階、逆光、長長的影子,還有牆上一小幅藍白磁磚畫。再往前走,她又自己醒過來、自己要走——小小一隻走在 ELIE SAAB 的櫥窗前,阿米在後面看著。里斯本給我們的最後一個上午,大概就是這個節奏:抱起來、放下來、再抱起來。</p>
+  </div>
+  <div class="full-fig rv">
+    <div class="stack-2">
+      <figure class="frame">
+        <img src="assets/img_2830.jpg" alt="阿米抱想睡的米米走石階">
+        <figcaption class="fig-cap"><span class="loc">CARMO 石階</span><span>逆光、長影子、想睡的米米</span></figcaption>
+      </figure>
+      <figure class="frame">
+        <img src="assets/img_2838.jpg" alt="米米自己走在街上">
+        <figcaption class="fig-cap"><span class="loc">街上</span><span>又醒了,自己要走 — 藍花楹與行人</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ § QUATRE ============ -->
+<section class="wrap sec-line">
+  <div class="narrow">
+    <div class="marker rv"><span class="num">§ Quatre</span> · <span class="pt">meia dúzia</span> · 字面意思「六」 · half a dozen</div>
+    <h2 class="chtitle rv">你以為是果醬店,<br>打開門是<em>一管管顏料</em></h2>
+    <p class="subtitle rv">里斯本最後的打包 — 把葡萄牙裝進六個鋁管裡帶走。</p>
+    <p class="rv">這才是真正的「果醬店」:<strong>meia dúzia</strong>——字面意思就是「半打、六個」,所以 logo 是一個大大的「6」。但它真正出名的,是把果醬、蜂蜜裝進像顏料管、像牙膏管一樣的鋁管裡。金色管是蜂蜜:百花蜜、迷迭香蜜、栗子蜜、橙花蜜;彩色管是果醬:藍莓、櫻桃、草莓⋯⋯棕色管是巧克力醬。試吃台上立著一塊牌子:「<span class="pt-word">por favor, não mexer</span> / please do not touch」——別自己亂擠,要店員服務。</p>
+  </div>
+  <div class="full-fig rv">
+    <div class="stack-2">
+      <figure class="frame">
+        <img src="assets/img_2836.jpg" alt="阿米抱米米站在 meia dúzia 門口">
+        <figcaption class="fig-cap"><span class="loc">MEIA DÚZIA · LISBOA</span><span>大大的「6」 — Porto | Lisboa,每日 10–20h</span></figcaption>
+      </figure>
+      <figure class="frame">
+        <img src="assets/img_2837.jpg" alt="meia dúzia 鋁管果醬試吃台">
+        <figcaption class="fig-cap"><span class="loc">試吃台</span><span>金色蜂蜜、彩色果醬、棕色巧克力 — 一管管「顏料」</span></figcaption>
+      </figure>
+    </div>
+  </div>
+  <div class="narrow">
+    <p class="rv">這次的伴手禮就是在這裡打包的,買了很多管。其中兩個口味特別跳:<span class="hl">辣味草莓</span>、還有<span class="hl">草莓薄荷</span>——辣與莓果的衝突感,正是 meia dúzia 的品牌個性,一般果醬店不會這樣玩。</p>
+    <p class="rv">如果說 Day 10 我們在里斯本買的 LV Neverfull 是「法國品牌回到法國的家」,那 meia dúzia 剛好相反:它是純葡萄牙的設計品牌,是里斯本最後塞給我們的、最「葡萄牙製造」的紀念品。一個是要帶回家鄉的法國,一個是要帶去法國的葡萄牙。</p>
+  </div>
+</section>
+
+<!-- ============ § CINQ ============ -->
+<section class="wrap sec-line">
+  <div class="narrow">
+    <div class="marker rv"><span class="num">§ Cinq</span> · <span class="pt">Confeitaria Peixinho</span> · 最後一口 · the last bite</div>
+    <h2 class="chtitle rv">蛋黃月餅的<br><em>泥狀版</em></h2>
+    <p class="subtitle rv">葡萄牙給我們的最後一口,在踏進空橋之前。</p>
+    <p class="rv">機場裡的最後一站是 <strong>Confeitaria Peixinho</strong>,招牌主打「OVOS MOLES DE AVEIRO」。Ovos moles 是葡萄牙中部潟湖城 Aveiro 的傳統甜點——蛋黃加糖熬成餡,包在一層薄薄的米紙殼裡,做成貝殼、魚、橡實、桶子這些海洋造型,因為 Aveiro 是「葡萄牙的威尼斯」。它甚至有歐盟 PGI 地理標示保護。</p>
+    <p class="rv">阿米咬了一口,給了一個非常精準的台灣式翻譯:<span class="hl">「吃起來很像蛋黃月餅的泥狀版。」</span>——確實,純蛋黃加糖、綿密濃稠,就像月餅那層蛋黃餡被放大、軟化、包進米紙裡。有趣的是,ovos moles 跟台灣蛋黃酥某種程度上是異曲同工:都是古法為了「消化掉大量蛋黃」而發明的甜點。歐洲的修女用蛋白漿衣服,於是給蛋黃找了這條濃到化不開的出路。旁邊那盒「巧克力沙丁魚」,則是把海鮮做成甜點的葡萄牙幽默。</p>
+  </div>
+  <div class="full-fig rv">
+    <div class="stack-2">
+      <figure class="frame">
+        <img src="assets/img_2842.jpg" alt="Confeitaria Peixinho 店面">
+        <figcaption class="fig-cap"><span class="loc">LIS · 機場店</span><span>整面牆的 Ovos Moles de Aveiro 包裝盒</span></figcaption>
+      </figure>
+      <figure class="frame">
+        <img src="assets/img_2843.jpg" alt="貝殼魚形的 ovos moles">
+        <figcaption class="fig-cap"><span class="loc">金紙上</span><span>貝殼、魚形的 ovos moles + 巧克力沙丁魚</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ § SIX — HERO: business class ============ -->
+<section class="wrap sec-line">
+  <div class="narrow">
+    <div class="marker rv"><span class="num">§ Six</span> · <span class="pt">Air France</span> · 商務艙 · the celebration in the sky</div>
+    <h2 class="chtitle rv">優雅的座位,<br><em>不優雅的乘客</em></h2>
+    <p class="subtitle rv">延長賽繼續 — 從里斯本的 13 號命運線,飛向巴黎。</p>
+    <p class="rv">候機室的玻璃外,那道紅藍斜紋的尾翼揭曉了今天的主角:<strong>Air France</strong>,機身編號 F-GKXS。因為昨天是阿米的生日,延長賽繼續,所以這趟 Lisboa → Paris 我們坐<span class="hl">商務艙</span>。</p>
+  </div>
+  <div class="full-fig rv">
+    <figure class="frame">
+      <img src="assets/img_2844.jpg" alt="候機室窗外的 Air France 飛機">
+      <figcaption class="fig-cap"><span class="loc">LIS · 登機門</span><span>紅藍尾翼 — F-GKXS,今天載我們去巴黎的那架</span></figcaption>
+    </figure>
+  </div>
+  <div class="narrow">
+    <p class="rv">然後就是這趟商務艙的真實版本了:<strong>優雅的座位,加上一位完全不優雅的乘客。</strong>米米鬧了一整路。阿米戴著口罩抱著她靠窗坐,她腿上扣著橘色的嬰兒安全帶,手裡抓著手機看影片——只有這個能讓她安靜三分鐘。</p>
+  </div>
+  <div class="full-fig rv">
+    <figure class="frame">
+      <img src="assets/img_2845.jpg" alt="阿米抱米米靠窗坐">
+      <figcaption class="fig-cap"><span class="loc">SEAT · 推出前</span><span>靠窗、橘色嬰兒安全帶、唯一能安撫她的手機</span></figcaption>
+    </figure>
+  </div>
+  <div class="narrow">
+    <p class="rv">餐來了。Air France 商務艙的主菜,卡片上印著掛名主廚 <strong>François Adamski</strong>,註明「Meilleur Ouvrier de France」——MOF,法國職人工藝的最高榮譽,他還是 2001 年博古斯金獎得主。一架次音速的飛機,配一份 MOF 設計的菜單:這就是「商務艙慶祝日」的 vibe。</p>
+  </div>
+  <div class="full-fig rv">
+    <div class="lead-grid">
+      <figure class="frame">
+        <img src="assets/img_2848.jpg" alt="Air France 商務艙主菜">
+        <figcaption class="fig-cap"><span class="loc">PLATEAU</span><span>雞胸、piquillos 紅椒醬、黑米沙拉、香草脆屑</span></figcaption>
+      </figure>
+      <div class="menucard">
+        <div class="tag">Air France · Business · Déjeuner</div>
+        <div class="dish">Filet de poulet,<br><em>sauce piquillos</em> relevée</div>
+        <div class="desc">salade de riz vénéré, chapelure aux herbes — 雞胸佐西班牙烤甜紅椒醬、義大利黑米沙拉、香草麵包脆屑。</div>
+        <div class="chef">設計 / <b>FRANÇOIS ADAMSKI</b> · Meilleur Ouvrier de France · Bocuse d'Or 2001</div>
+      </div>
+    </div>
+  </div>
+  <div class="narrow">
+    <p class="rv">米米在阿米腿上,沖天炮髮型整個炸開,眼睛盯著餐盤看。兩個半小時的航程,她大概只有看著食物的時候是真的安靜的。</p>
+  </div>
+  <div class="full-fig rv">
+    <figure class="frame">
+      <img src="assets/img_2847.jpg" alt="米米在阿米腿上盯著餐盤">
+      <figcaption class="fig-cap"><span class="loc">機上 · 用餐</span><span>沖天炮髮型炸開,眼睛鎖定餐盤</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ pull quote ============ -->
+<div class="wrap">
+  <p class="pull rv">
+    鬧了一整路的小米,<br>終於在最後<em>睡著了</em>。
+    <span class="sm">CDG · 空橋 · 抵達巴黎</span>
+  </p>
+</div>
+
+<section class="wrap" style="padding-top:0;">
+  <div class="full-fig rv" style="margin-top:0;">
+    <figure class="frame">
+      <img src="assets/img_2850.jpg" alt="阿米在空橋抱著睡著的米米臉貼臉">
+      <figcaption class="fig-cap"><span class="loc">CDG · JETBRIDGE · 抵達</span><span>臉貼臉 — 鬧了整路的人,在空橋裡睡著了</span></figcaption>
+    </figure>
+  </div>
+  <div class="narrow">
+    <p class="rv">落地戴高樂。空橋裡逆著光,阿米閉著眼睛、抱著終於睡著的米米臉貼臉,後面的旅客拖著行李往前走。又累又滿足的那種表情,不用任何文字。<strong>抵達巴黎了。</strong></p>
+  </div>
+</section>
+
+<!-- ============ § SEPT — Concorde ============ -->
+<section class="wrap sec-line">
+  <div class="narrow">
+    <div class="marker rv"><span class="num">§ Sept</span> · <span class="pt">Concorde</span> · 退潮的傳奇 · the speed we gave up</div>
+    <h2 class="chtitle rv">為什麼不<br><em>繼續飛快</em>呢?</h2>
+    <p class="subtitle rv">離開里斯本是看一座圓環,抵達巴黎第一個地標,是一架不再飛的飛機。</p>
+    <p class="rv">從計程車裡,隔著機場圍籬,我們看到那架靜態保存的 <strong>Concorde 協和號</strong>,機身編號 F-BVFF,掛著 Air France 的舊塗裝,立在 CDG 外圍當紀念碑。</p>
+    <p class="rv">協和號 1976 年商業運營,巡航兩倍音速,1.5 小時飛完巴黎到紐約。那它為什麼不繼續飛?答案不是速度,是<span class="hl">經濟學</span>。它油耗驚人、只能載約 100 人,票價貴到只有富豪搭得起;音爆讓它只能飛海上航線,航線網被鎖死;2000 年的空難重創了它「奢華安全」的形象;接著 911 之後高端商務旅行萎縮——英航與法航在 2003 年讓它一起退役。</p>
+    <p class="rv">它輸的從來不是速度。它是冷戰時代一個「國家面子工程」的浪漫產物,技術上輝煌,卻從沒真正賺過錢。協和號退役後,民航再也沒有超音速客機;到了今天,我們跨洋飛行的速度,其實跟 1960 年代差不多。</p>
+  </div>
+  <div class="full-fig rv">
+    <div class="stack-2">
+      <figure class="frame">
+        <img src="assets/img_2852.jpg" alt="協和號靜態展示">
+        <figcaption class="fig-cap"><span class="loc">CDG 外圍 · F-BVFF</span><span>立在草地上的協和號,黃昏的舊塗裝</span></figcaption>
+      </figure>
+      <figure class="frame">
+        <img src="assets/img_2851.jpg" alt="協和號尾翼特寫">
+        <figcaption class="fig-cap"><span class="loc">圍籬之外</span><span>速度的浪漫,被算過帳之後</span></figcaption>
+      </figure>
+    </div>
+  </div>
+  <div class="narrow">
+    <p class="rv">你今天搭的 Air France 商務艙——舒適、有 MOF 主廚菜單——飛的是次音速。這架靜靜停在草地上的協和號,剛好是它的對照組:<span class="hl">速度的浪漫,與務實的奢華。</span>人類曾經能用兩倍音速優雅地飛越大西洋,然後我們算了算帳,決定不要了。</p>
+  </div>
+</section>
+
+<!-- ============ § HUIT — Arc de Triomphe ============ -->
+<section class="wrap sec-line">
+  <div class="narrow">
+    <div class="marker rv"><span class="num">§ Huit</span> · <span class="pt">Arc de Triomphe</span> · 粉紅色的天空 · the pink welcome</div>
+    <h2 class="chtitle rv">巴黎用一道<br><em>珊瑚粉</em>迎接我們</h2>
+    <p class="subtitle rv">里斯本到巴黎,城市換了,但「圓環中央立一座國家記憶」這個母題重複了。</p>
+    <p class="rv">進市區的路上,傍晚的藍灰雲層被夕陽燒出一道珊瑚粉,配上 <strong>凱旋門 Arc de Triomphe</strong> 的米白石材——天空替我們調好了今天的色調。</p>
+    <p class="rv">凱旋門是拿破崙 1806 年下令興建的,紀念奧斯特里茨戰役的勝利,但工程拖了 30 年,1836 年才完工——拿破崙本人沒能活著看到,他最後是 1840 年遺體歸葬時,棺木從這座門下穿過。它高 50 公尺,站在戴高樂廣場,舊名「星形廣場」,因為有 12 條大道從這裡呈星芒狀放射出去。門下是 1920 年設置的無名戰士墓,火焰每天傍晚重新點燃。</p>
+    <p class="rv">想起 Day 10——我們在里斯本拍 Marquês de Pombal 圓環,還有那座大戰陣亡將士紀念碑。巴黎的第一個地標,又是一座圓環、一座戰爭紀念碑。<span class="hl">城市換了,但「在圓環中央立一座國家的記憶」這件事,重複了。</span></p>
+  </div>
+  <div class="full-fig rv">
+    <figure class="frame">
+      <img src="assets/img_2858.jpg" alt="凱旋門近景與車流">
+      <figcaption class="fig-cap"><span class="loc">ARC DE TRIOMPHE · 黃昏</span><span>米白石材 + 珊瑚粉天空 + 星形廣場的車流</span></figcaption>
+    </figure>
+  </div>
+  <div class="full-fig rv">
+    <figure class="frame">
+      <img src="assets/img_2855.jpg" alt="從香榭麗舍大道看凱旋門">
+      <figcaption class="fig-cap"><span class="loc">AV. DES CHAMPS-ÉLYSÉES</span><span>兩排梧桐、筆直的香榭麗舍,盡頭是凱旋門</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ § NEUF — PLOT TWIST: Swatch ============ -->
+<section class="wrap sec-line twist">
+  <div class="narrow">
+    <div class="marker rv"><span class="num">§ Neuf</span> · <span class="pt">Plot Twist</span> · Swatch · 你看到的是背面 the side you didn't see</div>
+    <h2 class="chtitle rv">「欸,根本<br>沒人排隊啊?」</h2>
+    <p class="subtitle rv">巴黎第一晚教的事:不要太快下結論 — 你看到的,可能只是背面。</p>
+    <p class="rv">車經過香榭麗舍那家 <strong>Swatch</strong>。當年 MoonSwatch 剛出的時候,全球門市大排長龍、限購、黃牛橫行。我從車窗看過去——玻璃門裡冷冷清清,櫥窗在放潛水系列。「欸,根本沒人排隊啊?」我心想,看吧,熱潮退了,時代變了。</p>
+    <p class="twist-note rv">結果——排隊的人在店的<strong>另一邊</strong>。而且,已經不少人了。傻眼。</p>
+    <p class="rv">我以為熱潮退了,其實人潮只是在我看不到的那一面;傳奇還在排,是我的視角騙了我。這跟協和號剛好湊成一組漂亮的雙拍:一個是<span class="hl">真的退潮了</span>(協和號),一個是<span class="hl">你以為退潮、其實沒有</span>(MoonSwatch)。巴黎第一個晚上,連著給我看了兩個關於「傳奇」的版本。</p>
+  </div>
+  <div class="full-fig rv">
+    <div class="vidwrap frame" style="padding:10px;">
+      <video src="assets/img_2865.mp4" autoplay muted loop playsinline></video>
+      <span class="vidtag">Av. des Champs-Élysées · 夜 · 鏡頭最後 pan 到排隊的那一面</span>
+    </div>
+  </div>
+  <div class="narrow">
+    <p class="rv">夜裡的香榭麗舍:電動滑板車、長椅上的人群、梧桐樹下的路燈。鏡頭一路滑過去,最後停在 Swatch 門口——那裡,真的有人在排。</p>
+  </div>
+</section>
+
+<!-- ============ § DIX — Hotel ============ -->
+<section class="wrap sec-line">
+  <div class="narrow">
+    <div class="marker rv"><span class="num">§ Dix</span> · <span class="pt">CABBIE Hôtel</span> · 進房 · the blue door</div>
+    <h2 class="chtitle rv">住進了<br><em>精品大道的家</em></h2>
+    <p class="subtitle rv">「我飯店在旁邊」——所以那不是觀光,是回家的路。</p>
+    <p class="rv">謎底揭曉:我們住的是 <strong>CABBIE Hôtel Parisien</strong>,四星,在香榭麗舍、凱旋門的步行範圍內。整棟的識別色是一種很濃的克萊因藍——藍色門面、藍色木拼牆,配上奶白沙發、深色原木、藝術掛畫。地點非常好,「難怪很貴」。「CABBIE」是計程車司機的意思,旅館用這個名字、識別色又這麼跳,挺俏皮的。</p>
+    <p class="rv">一進門就是精品旅館花錢的地方:大玻璃罐裝滿彩色糖果,立牌寫著「<span class="pt-word">servez-vous!</span> / help yourself!」;lobby 的迎賓水是兩罐 infused water——一罐莓果蘋果、一罐檸檬薄荷。米米一手扶著桌、一手已經摸上糖果罐,眼神鎖定。</p>
+    <p class="rv">想起 Day 10 的伏筆:我們在里斯本買的 LV Neverfull,是「法國品牌回到法國的家」。而現在,<span class="hl">我們自己也住進了那條精品大道上。</span>LV 回到法國的家,我們也住到了那條街。</p>
+  </div>
+  <div class="full-fig rv">
+    <figure class="frame">
+      <img src="assets/img_2864.jpg" alt="CABBIE Hôtel 藍色門面">
+      <figcaption class="fig-cap"><span class="loc">CABBIE HÔTEL PARISIEN · ★★★★</span><span>克萊因藍門面 — 8 區,香榭麗舍步行範圍</span></figcaption>
+    </figure>
+  </div>
+  <div class="full-fig rv">
+    <div class="stack-2">
+      <figure class="frame">
+        <img src="assets/img_2863.jpg" alt="米米摸糖果罐">
+        <figcaption class="fig-cap"><span class="loc">LOBBY</span><span>「servez-vous!」 — 米米的眼神已經鎖定</span></figcaption>
+      </figure>
+      <figure class="frame">
+        <img src="assets/img_2862.jpg" alt="迎賓 infused water">
+        <figcaption class="fig-cap"><span class="loc">迎賓水</span><span>莓果蘋果 + 檸檬薄荷,藍牆下的兩罐</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ § ONZE — PLOT TWIST: Five Guys ============ -->
+<section class="wrap sec-line twist">
+  <div class="narrow">
+    <div class="marker rv"><span class="num">§ Onze</span> · <span class="pt">Plot Twist</span> · Five Guys · €18,65 的現實 the price of reality</div>
+    <h2 class="chtitle rv">一份套餐 20 歐,<br><em>台灣三倍價</em></h2>
+    <p class="subtitle rv">華麗的一整天,被一份速食套餐的價格,輕輕拉回現實。</p>
+    <p class="rv">第一頓巴黎晚餐,是走出去吃的 <strong>Five Guys</strong>,就在香榭麗舍大道上。下雨的夜晚,霓虹招牌、濕亮的地磚,阿米抱著米米站在店門口。</p>
+    <p class="rv">然後我們被物價嚇到了。一份套餐快 20 歐——<span class="hl">台灣的三倍價</span>。整個白天是商務艙、是 MOF 主廚菜單、是克萊因藍的四星精品旅館、是香榭麗舍——一路的「慶祝模式」;結果第一頓巴黎晚餐,被一份 Five Guys 的帳單拉回地面。旅行不是只有優雅,還有「欸這也太貴」的瞬間。</p>
+    <p class="twist-note rv">Day 10 收尾:里斯本 McDonald's,訂單 #4244,€22,95,22:35。<br>Day 11 收尾:巴黎 Five Guys,訂單 #161,€18,65,22:35。</p>
+    <p class="rv">兩天,都是 22:35,都是速食,都是華麗一天的樸素句點。里斯本是麥當勞,巴黎是 Five Guys——同一個時間、不同的城市、不同的價格。<span class="hl">這就是雙城日記最誠實的對照組。</span></p>
+  </div>
+  <div class="full-fig rv">
+    <div class="lead-grid">
+      <figure class="frame">
+        <img src="assets/img_2873.jpg" alt="阿米抱米米站在 Five Guys 門口">
+        <figcaption class="fig-cap"><span class="loc">FIVE GUYS · CHAMPS-ÉLYSÉES · 夜雨</span><span>霓虹、濕地磚,抱著米米的剪影</span></figcaption>
+      </figure>
+      <div class="receipt">
+        <h4>Five Guys · Champs-Élysées</h4>
+        <div class="meta">49–51 Av. des Champs-Élysées<br>Commande #161 · Facture 17797<br>14/05/2026 — 22:35 · Hôte: Aïcha Sophia</div>
+        <div class="row"><span>Hot Dog au Bœuf</span><span>€6,25</span></div>
+        <div class="row note">salade · tomate · jalapeño · champignon · poivrons verts · sauce BBQ</div>
+        <div class="row"><span>Frite</span><span>€6,45</span></div>
+        <div class="row"><span>Little Shake + Iced Coffee</span><span>€5,95</span></div>
+        <div class="row"><span>TVA 10%</span><span>€1,70</span></div>
+        <div class="tot"><span>Current Total</span><span>€18,65</span></div>
+        <div class="foot">Espèces €18,70 · Rendu €0,05<br>R.C.S. Paris · Merci !</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MAP ============ -->
+<section class="wrap sec-line">
+  <div class="narrow">
+    <div class="marker rv"><span class="num">§ Carte</span> · 今天走過的路 · the day in one line</div>
+    <h2 class="chtitle rv">一條線,<br><em>兩座城市</em></h2>
+  </div>
+  <div class="mapbox rv">
+    <svg viewBox="0 0 1000 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Day 11 路線圖">
+      <defs>
+        <linearGradient id="route" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stop-color="#a07c3c"/>
+          <stop offset="0.55" stop-color="#c97f73"/>
+          <stop offset="1" stop-color="#5d7088"/>
+        </linearGradient>
+      </defs>
+      <!-- baseline -->
+      <line x1="60" y1="210" x2="940" y2="210" stroke="#cabd9f" stroke-width="1" stroke-dasharray="3 5"/>
+      <!-- flight arc -->
+      <path d="M 250 210 Q 500 70 720 210" fill="none" stroke="url(#route)" stroke-width="2.5" stroke-dasharray="6 6"/>
+      <text x="485" y="95" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="13" fill="#a07c3c">✈ Air France · 商務艙 · 2h30</text>
+      <!-- ground route lisboa -->
+      <path d="M 60 210 L 250 210" fill="none" stroke="#a07c3c" stroke-width="2.5"/>
+      <!-- ground route paris -->
+      <path d="M 720 210 L 940 210" fill="none" stroke="#5d7088" stroke-width="2.5"/>
+
+      <!-- city labels -->
+      <text x="60" y="255" text-anchor="middle" font-family="'Fraunces',serif" font-size="22" fill="#2b2620" font-style="italic">Lisboa</text>
+      <text x="940" y="255" text-anchor="middle" font-family="'Fraunces',serif" font-size="22" fill="#2b2620" font-style="italic">Paris</text>
+
+      <!-- stops: lisboa -->
+      <g font-family="'JetBrains Mono',monospace" font-size="10.5" fill="#5c5346">
+        <circle cx="60" cy="210" r="5" fill="#a07c3c"/>
+        <text x="60" y="290" text-anchor="middle">Grand Café</text>
+        <circle cx="123" cy="210" r="4" fill="#a07c3c"/>
+        <text x="123" y="305" text-anchor="middle">Santa Justa</text>
+        <circle cx="186" cy="210" r="4" fill="#a07c3c"/>
+        <text x="186" y="290" text-anchor="middle">meia dúzia</text>
+        <circle cx="250" cy="210" r="5" fill="#a07c3c"/>
+        <text x="250" y="305" text-anchor="middle">LIS · Peixinho</text>
+      </g>
+      <!-- stops: paris -->
+      <g font-family="'JetBrains Mono',monospace" font-size="10.5" fill="#5c5346">
+        <circle cx="720" cy="210" r="5" fill="#5d7088"/>
+        <text x="720" y="290" text-anchor="middle">CDG · Concorde</text>
+        <circle cx="793" cy="210" r="4" fill="#5d7088"/>
+        <text x="793" y="305" text-anchor="middle">Arc de Triomphe</text>
+        <circle cx="866" cy="210" r="4" fill="#5d7088"/>
+        <text x="866" y="290" text-anchor="middle">Swatch · CABBIE</text>
+        <circle cx="940" cy="210" r="5" fill="#c97f73"/>
+        <text x="940" y="305" text-anchor="middle">Five Guys</text>
+      </g>
+
+      <!-- 13 fate line note -->
+      <text x="500" y="160" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-style="italic" font-size="15" fill="#a85d52">從里斯本的 13,飛向巴黎 — 延長賽繼續</text>
+    </svg>
+  </div>
+  <div class="narrow">
+    <ul class="tl rv">
+      <li><span class="t">~10:54</span><span class="d"><strong>Grand Café Lisboa</strong> — <span>斑馬與花拱門的早午餐,沒點的蛋糕很漂亮</span></span></li>
+      <li><span class="t">午前</span><span class="d"><strong>Santa Justa 升降梯</strong> — <span>不搭,用走的爬上去換 Baixa 遠景</span></span></li>
+      <li><span class="t">午後</span><span class="d"><strong>meia dúzia</strong> — <span>把葡萄牙裝進六個鋁管:辣草莓、草莓薄荷</span></span></li>
+      <li><span class="t">機場</span><span class="d"><strong>Confeitaria Peixinho</strong> — <span>最後一口 ovos moles,蛋黃月餅的泥狀版</span></span></li>
+      <li><span class="t">航程</span><span class="d"><strong>Air France 商務艙</strong> — <span>François Adamski 的 MOF 菜單 · 米米鬧一整路</span></span></li>
+      <li><span class="t">落地</span><span class="d"><strong>CDG · 協和號</strong> — <span>空橋裡臉貼臉睡著 · 圍籬外退潮的傳奇</span></span></li>
+      <li><span class="t">傍晚</span><span class="d"><strong>凱旋門 · 香榭麗舍</strong> — <span>珊瑚粉天空 · Swatch「排隊在另一邊」</span></span></li>
+      <li><span class="t">22:35</span><span class="d"><strong>Five Guys</strong> — <span>€18,65,台灣三倍價 — 與里斯本麥當勞的雙城對照</span></span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats-sec sec-line">
+  <div class="narrow">
+    <div class="marker rv"><span class="num">§ Chiffres</span> · 今日數字 · by the numbers</div>
+    <h2 class="chtitle rv">Day 11,<br>用<em>數字</em>記得</h2>
+  </div>
+  <div class="wrap">
+    <div class="statgrid rv">
+      <div class="stat"><div class="n">2<span class="u">座城市</span></div><div class="lbl">Lisboa → Paris</div></div>
+      <div class="stat"><div class="n">2 h 30</div><div class="lbl">商務艙 飛行時間</div></div>
+      <div class="stat"><div class="n">6<span class="u">管</span></div><div class="lbl">meia dúzia · 字面意思「六」</div></div>
+      <div class="stat"><div class="n">€18<span class="u">,65</span></div><div class="lbl">巴黎第一餐 · Five Guys</div></div>
+      <div class="stat"><div class="n">22:35</div><div class="lbl">兩晚一樣的速食收尾時間</div></div>
+      <div class="stat"><div class="n">1<span class="u">架</span></div><div class="lbl">退役的協和號 · F-BVFF</div></div>
+      <div class="stat"><div class="n">0</div><div class="lbl">米米安靜的分鐘數(約略)</div></div>
+      <div class="stat"><div class="n">★★★★</div><div class="lbl">CABBIE Hôtel · 8 區</div></div>
+    </div>
+  </div>
+  <div class="narrow" style="margin-top:48px;">
+    <p class="rv" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--ink-soft);">附註一則:Flabelus 那兩雙鞋的退稅 PDF,直到 Day 11 結束都還沒寄到信箱。鞋子保持未拆封,人已經在巴黎了。這條伏筆,<span style="color:var(--rose-deep);">還懸著</span>。</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="narrow">
+    <div class="fin rv">Fin du Jour <span class="dot">Onze</span></div>
+    <div class="fmeta rv">
+      Lisboa → Paris · 14 mai 2026<br>
+      Air France · Business · <b>CABBIE Hôtel Parisien</b><br>
+      主角不是某一個人 — 是<b>「轉場」</b>本身
+    </div>
+    <div class="sign rv">— 里斯本的告別,與巴黎的初見,在同一天裡交接。</div>
+  </div>
+</footer>
+
+<script>
+  // staggered reveal
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
