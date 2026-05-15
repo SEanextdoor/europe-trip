@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day 12 · 巴黎全日 — A day in Paris</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=JetBrains+Mono:wght@300..600&family=Noto+Serif+TC:wght@300..700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f0e6;
+    --paper-2:#ece6d6;
+    --ink:#1d1d1b;
+    --ink-soft:#3a3833;
+    --gold:#c69f5e;
+    --gold-dim:#9e7e44;
+    --cloud:#8a9bb0;
+    --rose:#c97f73;
+    --plum:#5a3a4a;
+    --burgundy:#7a2a2a;
+    --olive:#6e6840;
+    --line:rgba(29,29,27,.14);
+    --line-strong:rgba(29,29,27,.28);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);
+    font-family:"Noto Serif TC", "Cormorant Garamond", Georgia, serif;
+    font-weight:380;line-height:1.78;font-size:17px;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:1;
+    background-image:
+      radial-gradient(rgba(60,40,20,.035) 1px, transparent 1px),
+      radial-gradient(rgba(60,40,20,.025) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1px 1px;
+    mix-blend-mode:multiply;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
+  @media (max-width:640px){ .wrap{padding:0 20px} body{font-size:16.5px} }
+
+  /* ── Cover ─────────────────────────────────────── */
+  .cover{padding:72px 0 56px;text-align:center;border-bottom:1px solid var(--line)}
+  .cover .eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--gold-dim);margin-bottom:18px}
+  .cover h1{font-family:"Fraunces",serif;font-weight:300;font-style:italic;
+    font-size:clamp(46px,9vw,84px);line-height:.98;margin:0 0 8px;letter-spacing:-.02em}
+  .cover h1 b{font-weight:600;font-style:normal}
+  .cover .sub{font-family:"Cormorant Garamond",serif;font-style:italic;
+    font-size:clamp(18px,2.6vw,22px);color:var(--ink-soft);margin-top:14px}
+  .cover .meta{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.22em;
+    color:var(--gold-dim);margin-top:36px;text-transform:uppercase}
+  .cover .rule{width:60px;height:1px;background:var(--gold);margin:28px auto 0}
+
+  /* ── Section markers ──────────────────────────── */
+  .marker{display:flex;align-items:baseline;gap:14px;margin:80px 0 22px;
+    border-top:1px solid var(--line-strong);padding-top:22px}
+  .marker .num{font-family:"Fraunces",serif;font-style:italic;font-weight:300;
+    font-size:18px;color:var(--gold);letter-spacing:.05em;white-space:nowrap}
+  .marker .loc{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.24em;
+    color:var(--ink-soft);text-transform:uppercase;flex:1}
+  .marker .loc::before{content:"·  "}
+  h2{font-family:"Fraunces",serif;font-weight:400;font-style:normal;
+    font-size:clamp(30px,4.6vw,42px);line-height:1.12;letter-spacing:-.012em;
+    margin:6px 0 4px}
+  h2 em{font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:400;color:var(--gold-dim)}
+  .subtitle{font-family:"Cormorant Garamond",serif;font-style:italic;
+    font-size:20px;color:var(--ink-soft);margin:0 0 22px}
+
+  /* Plot Twist variant */
+  .marker.twist .num{color:var(--rose);font-style:italic}
+  .twist-title{font-family:"Fraunces",serif;font-style:italic;font-weight:300;
+    font-size:clamp(28px,4.4vw,40px);color:var(--plum)}
+
+  p{margin:0 0 18px}
+  p + p{text-indent:1.2em}
+  em.fr{font-family:"Cormorant Garamond",serif;font-style:italic;color:var(--olive)}
+  strong{font-weight:600;color:var(--ink)}
+  .drop::first-letter{
+    font-family:"Fraunces",serif;font-weight:300;font-style:italic;
+    font-size:3.6em;float:left;line-height:.85;padding:6px 10px 0 0;color:var(--burgundy)
+  }
+
+  /* ── Hero figures ─────────────────────────────── */
+  figure{margin:24px 0 28px}
+  figure img{width:100%;height:auto;display:block;
+    box-shadow:0 1px 0 var(--line), 0 18px 40px -22px rgba(40,28,12,.25)}
+  figure.full{margin-left:calc(-1 * max(0px,(100vw - 880px)/2 - 28px));
+    margin-right:calc(-1 * max(0px,(100vw - 880px)/2 - 28px))}
+  @media (max-width:880px){ figure.full{margin-left:-28px;margin-right:-28px} }
+  @media (max-width:640px){ figure.full{margin-left:-20px;margin-right:-20px} }
+  figcaption{display:flex;justify-content:space-between;gap:18px;
+    font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.18em;
+    color:var(--ink-soft);text-transform:uppercase;
+    padding:10px 2px 0;border-top:1px dotted var(--line-strong);margin-top:8px}
+  figcaption .loc{color:var(--gold-dim)}
+  figcaption .cap{font-family:"Cormorant Garamond",serif;font-style:italic;
+    text-transform:none;letter-spacing:.01em;font-size:13.5px;color:var(--ink-soft);text-align:right;flex:1}
+
+  /* Two-up & three-up image grids */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0 28px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:20px 0 24px}
+  .grid2 figure, .grid3 figure{margin:0}
+  @media (max-width:640px){ .grid3{grid-template-columns:1fr 1fr} }
+
+  /* ── Pull quote ───────────────────────────────── */
+  .pull{margin:54px -8px;padding:44px 30px;background:linear-gradient(180deg,#f8e9e3 0%,#f3dcd3 100%);
+    border-top:1px solid rgba(201,127,115,.4);border-bottom:1px solid rgba(201,127,115,.4)}
+  .pull blockquote{margin:0;font-family:"Fraunces",serif;font-style:italic;font-weight:300;
+    font-size:clamp(24px,3.8vw,34px);line-height:1.28;color:var(--plum);
+    text-align:center;letter-spacing:-.01em}
+  .pull cite{display:block;font-family:"JetBrains Mono",monospace;font-style:normal;
+    font-size:10.5px;letter-spacing:.28em;color:var(--rose);margin-top:18px;text-transform:uppercase}
+
+  /* ── Receipt block ────────────────────────────── */
+  .receipt{background:#fbf7ec;border:1px solid var(--line-strong);
+    padding:24px 26px;margin:30px 0;font-family:"JetBrains Mono",monospace;
+    font-size:12.5px;line-height:1.85;color:var(--ink-soft);
+    box-shadow:0 12px 24px -18px rgba(80,60,20,.25)}
+  .receipt .r-head{display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:1px dashed var(--line-strong);padding-bottom:10px;margin-bottom:14px}
+  .receipt .r-head h4{margin:0;font-family:"Fraunces",serif;font-style:normal;font-weight:500;font-size:15px;
+    color:var(--ink);letter-spacing:.04em}
+  .receipt .r-head .when{font-size:10.5px;letter-spacing:.16em;color:var(--gold-dim)}
+  .receipt .row{display:flex;justify-content:space-between;gap:14px}
+  .receipt .row .it{flex:1}
+  .receipt .row .pr{white-space:nowrap;color:var(--ink)}
+  .receipt .total{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line-strong);
+    font-weight:600;color:var(--ink);font-size:13.5px}
+  .receipt .note{margin-top:10px;font-size:10.5px;color:var(--rose);font-style:italic;font-family:"Cormorant Garamond",serif;letter-spacing:.02em}
+
+  /* ── Notebook / aside boxes ───────────────────── */
+  .aside{border-left:2px solid var(--gold);padding:8px 18px 8px 18px;margin:24px 0;
+    background:rgba(198,159,94,.06);font-family:"Cormorant Garamond",serif;
+    font-style:italic;font-size:16.5px;color:var(--ink-soft);line-height:1.7}
+  .aside b{font-style:normal;color:var(--burgundy);font-weight:600;font-family:"Noto Serif TC",serif}
+
+  /* ── Invader collection block ─────────────────── */
+  .invader{margin:30px 0;padding:24px;background:#1a1a1a;color:#e8e4d8;
+    border:1px solid #333;font-family:"JetBrains Mono",monospace}
+  .invader h4{margin:0 0 8px;font-family:"Fraunces",serif;font-style:italic;font-weight:300;
+    font-size:22px;color:#f4f0e6;letter-spacing:.02em}
+  .invader p{margin:0 0 6px;font-size:12px;line-height:1.7;color:#bdb7a8;font-family:"JetBrains Mono",monospace;letter-spacing:.02em}
+  .invader .list{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px}
+  .invader .list span{padding:8px 10px;background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.18)}
+  .invader .list span b{color:#c69f5e;font-weight:400}
+
+  /* ── Stats / numbers page ─────────────────────── */
+  .stats{margin:80px 0 30px;padding:48px 0;border-top:1px solid var(--line-strong);
+    border-bottom:1px solid var(--line-strong)}
+  .stats h3{font-family:"Fraunces",serif;font-style:italic;font-weight:300;
+    font-size:34px;margin:0 0 30px;color:var(--ink);letter-spacing:-.01em}
+  .stats .grid{display:grid;grid-template-columns:1fr 1fr;gap:30px 36px}
+  @media (max-width:560px){ .stats .grid{grid-template-columns:1fr} }
+  .stat{border-top:1px solid var(--line);padding-top:14px}
+  .stat .n{font-family:"Fraunces",serif;font-weight:300;font-size:46px;line-height:1;
+    color:var(--burgundy);letter-spacing:-.02em}
+  .stat .n small{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:18px;color:var(--gold-dim);margin-left:6px}
+  .stat .label{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.22em;
+    color:var(--ink-soft);text-transform:uppercase;margin-top:6px}
+  .stat .desc{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:14.5px;
+    color:var(--ink-soft);margin-top:6px;line-height:1.55}
+
+  /* ── Map ───────────────────────────────────── */
+  .map{margin:40px 0;background:#efe8d6;border:1px solid var(--line-strong);padding:20px}
+  .map svg{width:100%;height:auto;display:block}
+  .map .legend{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;
+    color:var(--ink-soft);text-transform:uppercase;margin-top:12px;display:flex;justify-content:space-between}
+
+  /* ── Footer ─────────────────────────────────── */
+  footer{margin:80px 0 60px;text-align:center;border-top:1px solid var(--line)}
+  footer .fin{font-family:"Fraunces",serif;font-style:italic;font-weight:300;
+    font-size:38px;color:var(--gold);margin-top:40px}
+  footer .sign{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.22em;
+    color:var(--ink-soft);text-transform:uppercase;margin-top:18px}
+  footer .post{font-family:"Cormorant Garamond",serif;font-style:italic;
+    font-size:16px;color:var(--ink-soft);max-width:520px;margin:20px auto 0;line-height:1.7}
+
+  /* ── Reveal on scroll ─────────────────────────── */
+  @media (prefers-reduced-motion: no-preference){
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .9s ease, transform .9s ease}
+    .reveal.in{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══════════════════════════════════════ COVER ═══════════════════════════════════════ -->
+<section class="cover">
+  <div class="eyebrow">Carnet de voyage · No. 12</div>
+  <h1><em>Un jour à</em><br><b>Paris</b></h1>
+  <div class="sub">起床到深夜·從凱旋門走出地鐵·走到歌劇院旁</div>
+  <div class="rule"></div>
+  <div class="meta">15 · V · 2026 &nbsp;·&nbsp; Vendredi &nbsp;·&nbsp; ⛅ 18°C</div>
+</section>
+
+<!-- ─── § Un : Late Start ─────────────────────────────── -->
+<div class="marker reveal">
+  <div class="num">§ Un</div>
+  <div class="loc">Hôtel Parisien · Champs-Élysées · 11h00</div>
+</div>
+<h2 class="reveal">睡到十一點 <em>la grasse matinée</em></h2>
+<p class="subtitle reveal">A slow start, by design.</p>
+
+<p class="reveal drop">第一個完整的巴黎白天,我們睡到十一點才出門。<em class="fr">La grasse matinée</em> —— 法文字面是「肥美的早晨」,專指那種睡到飽、不急著起來的早上。Day 11 從里斯本一路飛到巴黎、半夜還去香榭麗舍 Five Guys 吃宵夜,身體早就在抗議,睡飽算是一種對昨天的補償。</p>
+
+<p class="reveal">阿米中午前訂好了餐廳,我們穿過 CABBIE 旁邊那條街、走到凱旋門地鐵站,準備搭 RER 進城。早午餐(brunch)被推遲成「午午餐」(lunch-lunch),這種行程鬆動感倒是很巴黎。</p>
+
+<figure class="reveal full">
+  <img src="assets/img_2875.jpg" alt="凱旋門白天">
+  <figcaption><span class="loc">Arc de Triomphe · 11:42</span><span class="cap">天空厚厚的雲,左後方艾菲爾鐵塔露了個臉。同一座凱旋門,Day 11 是珊瑚粉夕陽,Day 12 是雲層飽滿的藍天 —— 兩種臉,同一個地標。</span></figcaption>
+</figure>
+
+<div class="aside reveal">
+  <b>小知識</b> · 凱旋門所在的圓環正式名稱叫 Place Charles de Gaulle,但巴黎人習慣叫舊名「Place de l'Étoile」—— 星之廣場,因為十二條大道從這裡放射出去,像一顆星。
+</div>
+
+<!-- ─── § Deux : RER A ─────────────────────────────── -->
+<div class="marker reveal">
+  <div class="num">§ Deux</div>
+  <div class="loc">RER A · vers Châtelet · 12h15</div>
+</div>
+<h2 class="reveal">雙層地鐵 <em>à deux étages</em></h2>
+<p class="subtitle reveal">The double-decker subway.</p>
+
+<p class="reveal">買了 Navigo Easy 卡,進站直接刷。從 Charles de Gaulle – Étoile 站搭 RER A 線往東進城。月台一進來車就到了 —— 是雙層車廂,白色配薄荷綠車身。米米看到立刻精神大振:「車車!」</p>
+
+<p class="reveal">嚴格來說 RER 不是 métro 是區域快線(Réseau Express Régional),但對外國人來說都是地鐵。雙層車廂叫 <em class="fr">MI 09 / MI 2N</em>,設計成兩層是因為 RER A 是全歐洲最繁忙的通勤線,日均超過百萬人次,單層裝不下。米米第一次搭雙層,在手扶梯上一直回頭。</p>
+
+<div class="grid2 reveal">
+  <figure>
+    <img src="assets/img_2877.jpg" alt="Navigo Easy">
+    <figcaption><span class="loc">Navigo Easy</span></figcaption>
+  </figure>
+  <figure>
+    <img src="assets/img_2880.jpg" alt="RER A 雙層">
+    <figcaption><span class="loc">MI 2N · 12:15</span></figcaption>
+  </figure>
+</div>
+
+<figure class="reveal">
+  <img src="assets/img_2879.jpg" alt="米米手扶梯回頭">
+  <figcaption><span class="loc">Étoile Station · escalator</span><span class="cap">星戰 Mandalorian 廣告 LE 20 MAI —— 巴黎這週的新片檔期。米米被阿米抱著下手扶梯,回頭看鏡頭。</span></figcaption>
+</figure>
+
+<figure class="reveal">
+  <img src="assets/img_2881.jpg" alt="車廂內">
+  <figcaption><span class="loc">RER A · interior</span><span class="cap">「PRÉSERVER LE PATRIMOINE, LE PLUS BEAU CADEAU QU'ON PUISSE FAIRE AUX GÉNÉRATIONS FUTURES」—— 保護文化遺產,是我們能留給後代最美的禮物。海報旁邊坐著快兩歲的米米。</span></figcaption>
+</figure>
+
+<!-- ─── § Trois : Pho ─────────────────────────────── -->
+<div class="marker reveal">
+  <div class="num">§ Trois</div>
+  <div class="loc">Restaurant ANOI · 9ème · 13h00</div>
+</div>
+<h2 class="reveal">越南河粉 <em>Pho à Paris</em></h2>
+<p class="subtitle reveal">"It's been so long since I had Asian food."</p>
+
+<p class="reveal drop">出站走幾步,先看到老佛爺百貨 —— 三年前來過,等下會再回來。阿米先帶我們鑽進巷子,直奔她訂的餐廳:<strong>ANOI</strong>,招牌反字設計(從店內角度看是正字),紅色 awning 寫著 <em class="fr">CAFÉ · RESTAURANT · TAPAS</em>。實際上是一間越南菜。</p>
+
+<p class="reveal">我們有個朋友來巴黎旅行,號稱「每天吃一餐河粉」—— 起初我覺得太誇張,進到 ANOI 看菜單才懂。<strong>越南菜在巴黎不是外國菜,是 1950 年代就在的家鄉菜</strong>:法國從 19 世紀殖民越南到 1954 年,二戰後大量越南人移居巴黎,13 區整個變成「小亞洲」。<em class="fr">Phở</em>、<em class="fr">cuốn</em>、<em class="fr">nem</em>,在巴黎跟 baguette 一樣有歷史。</p>
+
+<div class="grid3 reveal">
+  <figure><img src="assets/img_2885.jpg" alt="阿米在 ANOI 門口"><figcaption><span class="loc">façade · 仰拍</span></figcaption></figure>
+  <figure><img src="assets/img_2886.jpg" alt="阿米推車在 ANOI 門口"><figcaption><span class="loc">stroller stop</span></figcaption></figure>
+  <figure><img src="assets/img_2887.jpg" alt="小米拿菜單"><figcaption><span class="loc">米米 · menu</span></figcaption></figure>
+</div>
+
+<figure class="reveal">
+  <img src="assets/img_2892.jpg" alt="phở bò + 越南冰咖啡">
+  <figcaption><span class="loc">Phở bò · cà phê sữa đá</span><span class="cap">綠陶碗、清湯、薄切牛肉、白蔥絲、香菜。配檸檬角和紅辣椒。阿米的越南冰咖啡分層,煉乳沉在底下。她舉手準備開吃的瞬間,被我抓拍下來。</span></figcaption>
+</figure>
+
+<div class="pull reveal">
+  <blockquote>"好久沒吃亞洲食物了。"</blockquote>
+  <cite>— Day 12, lunch · ANOI</cite>
+</div>
+
+<p class="reveal">從 Day 1 馬德里出發到現在第 12 天,我們吃過 tapas、pintxos、葡式炭烤、ovos moles、Air France 法餐、Five Guys —— 進歐洲一路 11 天,直到今天才碰到第一碗熱湯麵。那種「身體想要的味道」的感覺,湯一喝下去就鬆了一口氣。</p>
+
+<figure class="reveal">
+  <img src="assets/img_2894.jpg" alt="從店內看出去">
+  <figcaption><span class="loc">view from window</span><span class="cap">奧斯曼式立面、鍛鐵雕花陽台、停在街邊的綠白 Vespa。一個騎機車的大叔走過。和台北的越南河粉店外面那條街,差了 9778 公里。</span></figcaption>
+</figure>
+
+<!-- ─── § Quatre : Plot Twist Invaders ─────────────────────────────── -->
+<div class="marker twist reveal">
+  <div class="num">§ Quatre · Plot Twist</div>
+  <div class="loc">Street · 9ème · all day</div>
+</div>
+<h2 class="reveal twist-title">街頭的像素入侵者</h2>
+<p class="subtitle reveal">An unexpected collection begins.</p>
+
+<p class="reveal">在 ANOI 排隊的路上,牆角貼著一隻小小的<strong>像素孫悟空</strong> —— 金黃頭髮、橘色道服,大概手掌大小,馬賽克磁磚拼成。本來以為是路人塗鴉,後來在河粉店的窗戶外又看到第二隻 —— 二樓陽台旁邊一個像火苗或瑪利歐火花精靈的像素圖。</p>
+
+<p class="reveal">原來這是法國街頭藝術家 <strong>Invader</strong> 從 1998 年開始的全球計畫。他在世界各大城市貼上像素風格的馬賽克磁磚,巴黎是大本營 —— 到 2025 為止巴黎已經有超過 1500 件。每塊都有編號,粉絲用官方 app「FlashInvaders」掃描積分,像在玩寶可夢 GO 的真實世界版。</p>
+
+<div class="grid2 reveal">
+  <figure><img src="assets/img_2884.jpg" alt="像素孫悟空"><figcaption><span class="loc">Goku · 9ème</span></figcaption></figure>
+  <figure><img src="assets/img_2894.jpg" alt="像素火苗"><figcaption><span class="loc">Fire spirit · ANOI window</span></figcaption></figure>
+</div>
+
+<div class="invader reveal">
+  <h4>// Day 12 Invader collection_</h4>
+  <p>&gt; Lisboa 的字牌收集已結束(Day 7–10)。</p>
+  <p>&gt; Paris 的新支線開啟:Invader 馬賽克磁磚。</p>
+  <p>&gt; Day 12 收穫:</p>
+  <div class="list">
+    <span><b>01</b> · Super Saiyan Goku · 9ème · 中午</span>
+    <span><b>02</b> · Pixel Fire · ANOI 對面陽台 · 13:30</span>
+  </div>
+</div>
+
+<!-- ─── § Cinq : Passages ─────────────────────────────── -->
+<div class="marker reveal">
+  <div class="num">§ Cinq</div>
+  <div class="loc">Passage Jouffroy · Passage des Panoramas · 15h00</div>
+</div>
+<h2 class="reveal">拱廊街考古 <em>les passages</em></h2>
+<p class="subtitle reveal">Glass-roofed shopping, 1800s edition.</p>
+
+<p class="reveal drop">吃飽之後,我們散步往 Boulevard Montmartre 方向走,鑽進了兩條老巴黎特有的東西:<strong>covered passages</strong> —— 有玻璃天棚、煤氣燈時代留下來的拱廊街。可以理解成「19 世紀的百貨公司前身」。</p>
+
+<figure class="reveal">
+  <img src="assets/img_2898.jpg" alt="Passage Jouffroy 入口">
+  <figcaption><span class="loc">Passage Jouffroy · 1845</span><span class="cap">門楣寫著 JOUFFROY,右邊豎招牌 HÔTEL RONCERAY。入口的歡迎牌寫著 VISITEZ LES GALERIES。</span></figcaption>
+</figure>
+
+<p class="reveal"><strong>Passage Jouffroy</strong>(1845–1847 建)是巴黎僅存的覆蓋式拱廊街之一,馬賽克地板、玻璃天棚、鍛鐵裝飾,煤氣燈時代的氣味全留下來了。德國思想家華特·班雅明的未完成大作《拱廊街計畫》(<em class="fr">Passagen-Werk</em>),就是把這種空間當成現代消費文化的考古現場。</p>
+
+<figure class="reveal">
+  <img src="assets/img_2899.jpg" alt="Passage des Panoramas 入口">
+  <figcaption><span class="loc">Passage des Panoramas · 1799</span><span class="cap">過個馬路就到。巴黎最古老的拱廊街,1799 年開業 —— 比 Jouffroy 還早了 46 年,等於法國大革命剛結束沒多久的東西。</span></figcaption>
+</figure>
+
+<p class="reveal"><strong>Passage des Panoramas</strong> 的名字來自當年裡面有兩座大型 360° 全景畫展覽館 —— 算是早期的沉浸式娛樂,VR 的祖宗。現在裡面是混搭餐廳街,還掛著日式居酒屋的招牌(<em class="fr">居酒屋 IZAKAYA</em>)。世界繞了一圈又回到了這裡。</p>
+
+<div class="aside reveal">
+  <b>時代層次</b> · 巴黎這座城市的有趣之處,就是消費空間的歷史層次極長:Passage des Panoramas(1799)→ Passage Jouffroy(1845)→ 老佛爺穹頂(1912)→ 香榭麗舍的 Five Guys(2026)。都是「玻璃 + 室內逛街」的同一種需求,只是隔了 227 年。
+</div>
+
+<!-- ─── § Six : Lafayette ─────────────────────────────── -->
+<div class="marker reveal">
+  <div class="num">§ Six</div>
+  <div class="loc">Galeries Lafayette Haussmann · La Coupole · 16h00</div>
+</div>
+<h2 class="reveal">老佛爺穹頂下 <em>La Coupole, 1912</em></h2>
+<p class="subtitle reveal">Returning to a place I've been before.</p>
+
+<figure class="reveal">
+  <img src="assets/img_2921.jpg" alt="老佛爺外觀">
+  <figcaption><span class="loc">Galeries Lafayette Haussmann</span><span class="cap">外牆掛著春季活動:「QUELLES BEAUTÉS!」—— 跑到 5/31。陰天的鉛灰色巴黎,跟老佛爺白色 logo 的對比意外好看。</span></figcaption>
+</figure>
+
+<p class="reveal drop">三年前我們來過老佛爺。那次也是在這個穹頂下走過、在頂樓餐廳吃過飯 —— 那次的結論跟在馬德里 El Corte Inglés、在西班牙百貨用餐時一樣:<strong>歐洲的百貨美食街便宜又划算,跟台灣百貨美食街完全相反</strong>。</p>
+
+<p class="reveal">三年後再回到同一個穹頂下,只是多了一個米米。Day 11 的 LV Neverfull「東西回到製造地」,Day 12 變成「人回到去過的地方」—— 同一個母題,不同的對象。</p>
+
+<figure class="reveal full">
+  <img src="assets/img_2900.jpg" alt="老佛爺穹頂">
+  <figcaption><span class="loc">La Coupole · 1912</span><span class="cap">設計師 Ferdinand Chanut,彩繪玻璃出自 Jacques Gruber,離地約 43 公尺。下面正是美妝香水樓層:Guerlain、Dior、Maison Francis Kurkdjian。</span></figcaption>
+</figure>
+
+<p class="reveal">這個穹頂是 <strong>1912 年完工的拜占庭新藝術風格(Art Nouveau)</strong> —— 也就是說,Passage Jouffroy 蓋好 67 年後、巴黎人決定不要再把消費空間擠在窄窄的拱廊裡,要蓋一個大教堂級別的圓頂百貨。彩繪玻璃 + 陽台層層往上、像一個倒過來的歌劇院。</p>
+
+<!-- ─── § Sept : Jellycat & Bunnies ─────────────────────────────── -->
+<div class="marker reveal">
+  <div class="num">§ Sept</div>
+  <div class="loc">Galeries Lafayette · Étage Enfants · 17h00</div>
+</div>
+<h2 class="reveal">逛百貨變了 <em>Now with a toddler</em></h2>
+<p class="subtitle reveal">A new layer of brand-knowledge unlocked.</p>
+
+<p class="reveal">三年前我們在老佛爺主要逛精品和保養品。今年因為有了米米,整個逛街的「樓層地圖」都重新洗了一次 —— 三樓童裝、童玩具樓層忽然變成核心。逛了一圈才發現,<strong>因為有小米,我們知道了很多以前完全不認識的品牌</strong>:Bunnies by the Bay、Jellycat、Doudou et Compagnie、Trousselier…… 都是「孩子在的人才會認識的世界」。</p>
+
+<figure class="reveal">
+  <img src="assets/img_2903.jpg" alt="米米 + Bunnies by the Bay">
+  <figcaption><span class="loc">Bunnies by the Bay corner</span><span class="cap">米米穿 Polo 連帽外套 + 白色荷葉邊褲 + 小白鞋,坐在大兔子玩偶腳邊,旁邊還抱著一隻黑白柯利狗玩偶。Bunnies by the Bay 是 1987 在美國西雅圖創立的童玩具品牌。</span></figcaption>
+</figure>
+
+<figure class="reveal">
+  <img src="assets/img_2906.jpg" alt="爸爸 + 米米 @ Jellycat">
+  <figcaption><span class="loc">Jellycat London · papa &amp; 米米</span><span class="cap">米米雙手比 V,背景是 Jellycat 老佛爺專櫃 LONDON 字樣。這張是阿米偷拍的。</span></figcaption>
+</figure>
+
+<p class="reveal">這次給米米買了一堆東西。從前我們進百貨是給自己看,現在進百貨是為了她。買得超開心,結帳的數字看一眼就過了 —— 這大概也是當父母才知道的消費邏輯。</p>
+
+<!-- ─── § Huit : Lounge ─────────────────────────────── -->
+<div class="marker reveal">
+  <div class="num">§ Huit</div>
+  <div class="loc">Galeries Lafayette · Lounge · 18h00</div>
+</div>
+<h2 class="reveal">中場休息 <em>l'entracte</em></h2>
+<p class="subtitle reveal">Intermission with a 1-year-old.</p>
+
+<p class="reveal">逛累了。米米也累了。老佛爺裡面有一個 lounge,沛綠雅小綠瓶、橘子汁、零食小袋、艾菲爾鐵塔造型擺飾,芥末黃 boucle 扶手椅可以坐 —— 阿米把米米抱在腿上餵水,小米一手抓著玻璃水杯一手抓著餅乾,認真地咬。</p>
+
+<div class="grid2 reveal">
+  <figure><img src="assets/img_2919.jpg" alt="lounge 全景"><figcaption><span class="loc">Lounge interior</span></figcaption></figure>
+  <figure><img src="assets/img_2918.jpg" alt="阿米餵米米"><figcaption><span class="loc">水 + Perrier · 18:10</span></figcaption></figure>
+</div>
+
+<p class="reveal">這種<em class="fr">l'entracte</em>(中場休息)的時間,反而是最有畫面感的部分。整天的儀式中間插進來一個「兩個人在沙發上喘氣」的鏡頭,比凱旋門和穹頂都更接近真實的旅行。</p>
+
+<!-- ─── § Neuf : Grand Café Capucines ─────────────────────────────── -->
+<div class="marker reveal">
+  <div class="num">§ Neuf</div>
+  <div class="loc">Grand Café Capucines · 4 Bd des Capucines · 20h57</div>
+</div>
+<h2 class="reveal">跨海重逢 <em>Réunion</em></h2>
+<p class="subtitle reveal">An old friend, met in a 1875 brasserie.</p>
+
+<p class="reveal drop">扶輪社認識的朋友,現在在法國讀書。在巴黎能約得到實在是緣分,我們挑了 <strong>Grand Café Capucines</strong> —— 一間 1875 年開業的 Belle Époque 老牌 brasserie,就在歌劇院(Opéra Garnier)旁邊。Opéra Garnier 也是 1875 年開幕的 —— 兩個傳奇同年。</p>
+
+<figure class="reveal">
+  <img src="assets/img_2922.jpg" alt="Grand Café Capucines 菜單封面">
+  <figcaption><span class="loc">Le Grand Café · menu</span><span class="cap">菜單封面是手繪水彩:綠色藤蔓、紅色 awning、FRUITS DE MER。1875 年到現在,151 年了。</span></figcaption>
+</figure>
+
+<figure class="reveal">
+  <img src="assets/img_2927.jpg" alt="兩人合照 + Virgin Mojito">
+  <figcaption><span class="loc">Réunion · mojitos</span><span class="cap">紅絨座椅、金色簾子、棕色皮革鑲邊 —— Belle Époque brasserie 的經典裝潢。兩杯 Virgin Mojito,一綠一粉(草莓口味)。</span></figcaption>
+</figure>
+
+<div class="aside reveal">
+  <b>Beurre Charentes-Poitou A.O.P. Demi-Sel</b> · 麵包附的奶油是法國唯一獲得 AOP 原產地保護的奶油(1979 開始),產地在法國西南部 5 個省。半鹽款,米其林餐廳的標配。Brasserie 願意上這款奶油,代表餐廳本身的等級不會太差。
+</div>
+
+<div class="grid3 reveal">
+  <figure><img src="assets/img_2930.jpg" alt="麵包+奶油"><figcaption><span class="loc">Bread &amp; A.O.P. butter</span></figcaption></figure>
+  <figure><img src="assets/img_2929.jpg" alt="Burrata des Pouilles"><figcaption><span class="loc">Burrata · 15.50€</span></figcaption></figure>
+  <figure><img src="assets/img_2928.jpg" alt="Artichauts Poivrade"><figcaption><span class="loc">Artichauts · 14.50€</span></figcaption></figure>
+</div>
+
+<p class="reveal"><strong>前菜</strong>:阿米的朋友點了 <em class="fr">Burrata des Pouilles</em>(義大利 Puglia 的布拉塔,15.50€)—— 番茄、火箭菜、青醬,新鮮起司剖開來流心。另一道 <em class="fr">Artichauts Poivrade</em>(普羅旺斯春季紫朝鮮薊,14.50€)—— 配義式生牛肉碎和刨片起司。Poivrade 是小型紫色朝鮮薊的法文名,因為形狀像胡椒罐。</p>
+
+<figure class="reveal">
+  <img src="assets/img_2931.jpg" alt="Moules Chablis + 阿米吃薯條">
+  <figcaption><span class="loc">Moules Chablis · frites</span><span class="cap">阿米點的:夏布利白酒淡菜(22.50€),配薯條。她咬薯條的瞬間表情。淡菜是貝類,在阿米的飲食安全範圍內。</span></figcaption>
+</figure>
+
+<figure class="reveal">
+  <img src="assets/img_2932.jpg" alt="Filet au Poivre">
+  <figcaption><span class="loc">Filet au Poivre · 45.50€</span><span class="cap">綠胡椒奶油醬菲力牛排 —— Grand Café 的招牌之一,銅鍋上桌。Sauce au poivre vert 通常用 Cognac 干邑點火做出來。</span></figcaption>
+</figure>
+
+<figure class="reveal">
+  <img src="assets/img_2934.jpg" alt="Crème Brûlée + 兩人合照">
+  <figcaption><span class="loc">Crème Brûlée · finale</span><span class="cap">焦糖脆殼烤得均勻。朋友拿著大湯匙準備敲,阿米托著腮對鏡頭笑 —— 這張大概是 Day 12 最像 Day 12 的一張。</span></figcaption>
+</figure>
+
+<figure class="reveal">
+  <img src="assets/img_2935.jpg" alt="收據">
+  <figcaption><span class="loc">L'addition · 20:57</span><span class="cap">小冊形式的帳單,左頁是海鮮拼盤的外帶廣告,右頁是收據明細。Table 44 · 3 couverts · 收銀員 Anwar M。</span></figcaption>
+</figure>
+
+<!-- Receipt -->
+<div class="receipt reveal">
+  <div class="r-head">
+    <h4>Le Grand Café · Table 44</h4>
+    <div class="when">15-05-2026 · 20:57:10</div>
+  </div>
+  <div class="row"><span class="it">1× Virgin Mojito</span><span class="pr">9.50 €</span></div>
+  <div class="row"><span class="it">1× Virgin Mojito Fraise</span><span class="pr">9.50 €</span></div>
+  <div class="row"><span class="it">1× Burrata des Pouilles</span><span class="pr">15.50 €</span></div>
+  <div class="row"><span class="it">1× Artichauts Poivrade</span><span class="pr">14.50 €</span></div>
+  <div class="row"><span class="it">1× Moules Chablis</span><span class="pr">22.50 €</span></div>
+  <div class="row"><span class="it">1× Filet au Poivre</span><span class="pr">45.50 €</span></div>
+  <div class="row"><span class="it">1× Sup Beurre</span><span class="pr">1.00 €</span></div>
+  <div class="row"><span class="it">1× Crème Brûlée</span><span class="pr">9.50 €</span></div>
+  <div class="row total"><span class="it">TOTAL · Service Compris</span><span class="pr">127.50 €</span></div>
+  <div class="row" style="margin-top:6px;color:var(--rose)"><span class="it">+ pourboire (5%)</span><span class="pr">6.37 €</span></div>
+  <div class="row total" style="color:var(--burgundy)"><span class="it">PAID</span><span class="pr">133.87 €</span></div>
+  <div class="note">小費陷阱 · 帳單已寫 Service Compris,但侍者刷卡機螢幕跳出小費選項。法國人自己很少加,觀光區的店知道外國人不知道這條規矩。下次學起來。</div>
+</div>
+
+<!-- ─── Plot Twist : 結論 ─────────────────────────────── -->
+<div class="marker twist reveal">
+  <div class="num">§ Dix · Plot Twist</div>
+  <div class="loc">Conclusion · 21h30</div>
+</div>
+<h2 class="reveal twist-title">我覺得西班牙跟葡萄牙的餐廳比較好吃</h2>
+<p class="subtitle reveal">An unexpectedly honest verdict.</p>
+
+<p class="reveal">飯吃完,離開店門口,阿米說:「我覺得西班牙跟葡萄牙餐廳比較好吃。」</p>
+
+<p class="reveal">這話聽起來像背叛(畢竟巴黎是世界美食之都的神話太強),但其實非常有道理。Grand Café 三人 €127.50,人均 €42,給的菲力牛排其實不大塊。同樣的錢在西班牙可以三人吃到撐還有酒,在葡萄牙更是直接超值。<strong>西葡的菜系是「食材主義」</strong> —— 烤章魚、伊比利火腿、海鮮飯,核心是食材本身。<strong>法國 brasserie 是「手法主義」</strong> —— 醬汁、技法、擺盤,食物本身被「處理」過。</p>
+
+<p class="reveal">這 12 天的味覺累積,讓這句話特別有重量。Day 1–10 我們在西葡吃的所有東西,核心都是「食材講話」;Day 11 法航商務艙 + Day 12 Grand Café,則是「儀式講話」。喜歡前者的人,會覺得後者過度修飾。</p>
+
+<div class="pull reveal">
+  <blockquote>"巴黎的儀式,擋不住西葡的食材直球。"</blockquote>
+  <cite>— Day 12 verdict · 21:30 Bd des Capucines</cite>
+</div>
+
+<!-- ─── Map ─────────────────────────────── -->
+<div class="map reveal">
+  <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+    <!-- 底圖 -->
+    <rect width="600" height="300" fill="#efe8d6"/>
+    <!-- 大道 -->
+    <line x1="80" y1="180" x2="540" y2="80" stroke="#c69f5e" stroke-width="2" stroke-dasharray="4,3" opacity=".6"/>
+    <line x1="280" y1="200" x2="480" y2="120" stroke="#c69f5e" stroke-width="1.5" stroke-dasharray="3,3" opacity=".5"/>
+    <line x1="380" y1="220" x2="480" y2="120" stroke="#8a9bb0" stroke-width="1" stroke-dasharray="2,3" opacity=".5"/>
+    <!-- 凱旋門 -->
+    <circle cx="80" cy="180" r="6" fill="none" stroke="#7a2a2a" stroke-width="2"/>
+    <text x="90" y="184" font-family="JetBrains Mono, monospace" font-size="9" fill="#3a3833" letter-spacing="1">ARC DE TRIOMPHE</text>
+    <text x="90" y="196" font-family="Cormorant Garamond, serif" font-style="italic" font-size="10" fill="#9e7e44">§ Un · 11:42</text>
+    <!-- ANOI -->
+    <circle cx="320" cy="155" r="4" fill="#c97f73"/>
+    <text x="330" y="158" font-family="JetBrains Mono, monospace" font-size="9" fill="#3a3833" letter-spacing="1">ANOI · pho</text>
+    <text x="330" y="170" font-family="Cormorant Garamond, serif" font-style="italic" font-size="10" fill="#9e7e44">§ Trois · 13:00</text>
+    <!-- Passages -->
+    <circle cx="400" cy="135" r="3" fill="#6e6840"/>
+    <text x="408" y="138" font-family="JetBrains Mono, monospace" font-size="9" fill="#3a3833" letter-spacing="1">PASSAGES</text>
+    <text x="408" y="150" font-family="Cormorant Garamond, serif" font-style="italic" font-size="10" fill="#9e7e44">§ Cinq · 15:00</text>
+    <!-- Lafayette -->
+    <circle cx="440" cy="115" r="5" fill="none" stroke="#7a2a2a" stroke-width="2"/>
+    <text x="450" y="118" font-family="JetBrains Mono, monospace" font-size="9" fill="#3a3833" letter-spacing="1">GALERIES LAFAYETTE</text>
+    <text x="450" y="130" font-family="Cormorant Garamond, serif" font-style="italic" font-size="10" fill="#9e7e44">§ Six–Huit · 16:00–18:00</text>
+    <!-- Grand Cafe -->
+    <circle cx="475" cy="95" r="5" fill="#5a3a4a"/>
+    <text x="485" y="98" font-family="JetBrains Mono, monospace" font-size="9" fill="#3a3833" letter-spacing="1">GRAND CAFÉ</text>
+    <text x="485" y="110" font-family="Cormorant Garamond, serif" font-style="italic" font-size="10" fill="#9e7e44">§ Neuf · 20:57</text>
+    <!-- 標題 -->
+    <text x="30" y="40" font-family="Fraunces, serif" font-style="italic" font-size="22" fill="#1d1d1b">Day 12 · 巴黎的一日步行</text>
+    <text x="30" y="58" font-family="JetBrains Mono, monospace" font-size="9" fill="#9e7e44" letter-spacing="2">FROM L'ÉTOILE TO L'OPÉRA · RER A + footwork</text>
+    <text x="30" y="270" font-family="JetBrains Mono, monospace" font-size="8" fill="#3a3833" letter-spacing="1.5">N ↑ &nbsp;·&nbsp; not to scale &nbsp;·&nbsp; via RER A</text>
+  </svg>
+  <div class="legend">
+    <span>● 主要停點</span>
+    <span>— — 步行軸線</span>
+  </div>
+</div>
+
+<!-- ─── Stats ─────────────────────────────── -->
+<div class="stats reveal">
+  <h3><em>Day 12, en chiffres</em></h3>
+  <div class="grid">
+    <div class="stat">
+      <div class="n">11<small>h</small></div>
+      <div class="label">起床時間</div>
+      <div class="desc">睡飽的早晨,沒人催。La grasse matinée。</div>
+    </div>
+    <div class="stat">
+      <div class="n">1875</div>
+      <div class="label">Grand Café 創立年份</div>
+      <div class="desc">和 Opéra Garnier 同年開幕。151 歲了。</div>
+    </div>
+    <div class="stat">
+      <div class="n">1912</div>
+      <div class="label">老佛爺穹頂完工年份</div>
+      <div class="desc">設計師 Ferdinand Chanut · Art Nouveau。</div>
+    </div>
+    <div class="stat">
+      <div class="n">1799</div>
+      <div class="label">Passage des Panoramas 開業年份</div>
+      <div class="desc">巴黎最古老的覆蓋式拱廊街。比 Jouffroy 早 46 年。</div>
+    </div>
+    <div class="stat">
+      <div class="n">2</div>
+      <div class="label">Invader 收集</div>
+      <div class="desc">Goku + Pixel Fire。新支線開啟。</div>
+    </div>
+    <div class="stat">
+      <div class="n">3<small>yrs</small></div>
+      <div class="label">老佛爺重訪間隔</div>
+      <div class="desc">上次來這個穹頂下,還沒有米米。</div>
+    </div>
+    <div class="stat">
+      <div class="n">127.50<small>€</small></div>
+      <div class="label">Grand Café 三人晚餐</div>
+      <div class="desc">Service Compris。加被引導的小費後實付 133.87€。</div>
+    </div>
+    <div class="stat">
+      <div class="n">9778<small>km</small></div>
+      <div class="label">越南河粉店外的距離</div>
+      <div class="desc">從台北到 ANOI 門口。「好久沒吃亞洲食物了。」</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Footer ─────────────────────────────── -->
+<footer>
+  <div class="fin">— Fin —</div>
+  <div class="sign">Carnet de voyage · Day 12 · 15.V.2026 · Paris</div>
+  <div class="post">Day 12 的主角是兩條相反的情感弧線:跨海重逢 vs 想念家鄉味。Grand Café 那場飯把兩條都包了。<br>明天是最後一天。後天清晨七點往 CDG。</div>
+</footer>
+
+</div>
+
+<script>
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
