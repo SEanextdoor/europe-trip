@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 13 · Le grand tour — 巴黎最後一天</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f0e6;--ink:#1c1814;--gold:#c69f5e;--cloud:#8a9bb0;--rose:#c97f73;--rule:rgba(28,24,20,.18);--soft:rgba(28,24,20,.06);--paper:#ece5d3}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:"Noto Serif TC","Cormorant Garamond",serif;font-weight:300;line-height:1.75;font-size:17px;overflow-x:hidden;letter-spacing:.01em}
+.cover{position:relative;height:100vh;min-height:680px;overflow:hidden;background:#0a0a14}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.78) saturate(1.05)}
+.cover-grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.1) 35%,rgba(0,0,0,.55) 100%)}
+.cover-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:64px 56px;color:#f4f0e6}
+.cover-top{display:flex;justify-content:space-between;align-items:flex-start;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;opacity:.78}
+.cover-top span:first-child{color:var(--gold);font-weight:500}
+.cover-mid{margin-top:auto}
+.day-num{font-family:"Fraunces",serif;font-size:13vw;line-height:.85;font-weight:300;letter-spacing:-.02em;font-style:italic;color:var(--gold);text-shadow:0 4px 24px rgba(0,0,0,.5)}
+.cover-title{font-family:"Fraunces",serif;font-size:clamp(38px,5.5vw,76px);font-weight:300;line-height:1.05;letter-spacing:-.015em;margin-top:18px;max-width:14ch}
+.cover-sub{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:22px;font-weight:400;opacity:.85;margin-top:18px;max-width:38ch;line-height:1.5}
+.cover-bottom{display:flex;justify-content:space-between;align-items:flex-end;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;opacity:.7;margin-top:40px}
+.cover-bottom .right{text-align:right}
+.wrap{max-width:880px;margin:0 auto;padding:0 32px}
+.prologue{padding:120px 0 80px;text-align:center}
+.proem-mark{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
+.proem{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:clamp(22px,2.8vw,32px);line-height:1.5;max-width:32ch;margin:0 auto;color:var(--ink);font-weight:400}
+.proem-dash{width:48px;height:1px;background:var(--gold);margin:32px auto 0}
+.section{padding:80px 0 60px;border-top:1px solid var(--rule)}
+.section:first-of-type{border-top:none}
+.sec-num{display:flex;align-items:baseline;gap:20px;margin-bottom:14px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
+.sec-num::after{content:"";flex:1;height:1px;background:var(--rule)}
+.sec-title{font-family:"Fraunces",serif;font-size:clamp(30px,4vw,46px);font-weight:400;line-height:1.1;letter-spacing:-.01em;margin-bottom:28px}
+.sec-title em{font-family:"Cormorant Garamond",serif;font-weight:400;color:var(--rose);font-style:italic}
+p{margin-bottom:1.2em}
+p strong{color:var(--ink);font-weight:500}
+.fr{font-family:"Cormorant Garamond",serif;font-style:italic;color:var(--gold);font-weight:400}
+figure{margin:36px 0}
+figure img{width:100%;display:block;border-radius:2px}
+figcaption{margin-top:14px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cloud)}
+.loc{display:inline-block;color:var(--gold);margin-right:14px}
+.hero{margin:48px -32px}
+.hero img{border-radius:0}
+.hero figcaption{padding:0 32px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:36px 0}
+.grid-2 figure{margin:0}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:36px 0}
+.grid-3 figure{margin:0}
+.pull{margin:48px -8px;padding:32px 36px;border-left:2px solid var(--rose);font-family:"Cormorant Garamond",serif;font-style:italic;font-size:24px;line-height:1.45;color:var(--ink);font-weight:400}
+.pull em{color:var(--rose);font-style:normal;font-family:"Fraunces",serif;font-weight:500}
+.receipt{margin:48px auto;max-width:380px;padding:28px 32px;background:var(--paper);border:1px solid var(--rule);font-family:"JetBrains Mono",monospace;font-size:12px;line-height:1.9;letter-spacing:.04em;position:relative}
+.receipt h4{font-family:"Fraunces",serif;font-size:14px;text-align:center;letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px;font-weight:500}
+.receipt .sub{text-align:center;font-size:10px;letter-spacing:.15em;color:var(--cloud);text-transform:uppercase;margin-bottom:16px}
+.receipt .row{display:flex;justify-content:space-between;font-size:11px}
+.receipt hr{border:none;border-top:1px dashed var(--rule);margin:10px 0}
+.receipt .total{font-family:"Fraunces",serif;font-size:15px;font-weight:500;letter-spacing:.05em}
+.twist{margin:60px -16px;padding:40px 36px;background:linear-gradient(135deg,rgba(201,127,115,.08),rgba(138,155,176,.08));border:1px solid var(--rule);border-radius:2px;position:relative}
+.twist-tag{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--rose);padding:4px 10px;border:1px solid var(--rose);margin-bottom:18px}
+.twist-title{font-family:"Fraunces",serif;font-style:italic;font-size:28px;font-weight:400;line-height:1.25;margin-bottom:16px;color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:60px 0;padding:40px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.stat{text-align:center}
+.stat-n{font-family:"Fraunces",serif;font-size:36px;font-weight:300;color:var(--gold);line-height:1;letter-spacing:-.02em}
+.stat-l{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--cloud);margin-top:10px}
+.fin{padding:120px 0 100px;text-align:center}
+.fin-img{margin:0 -32px 60px}
+.fin-img img{width:100%;display:block;filter:brightness(.92)}
+.fin-mark{font-family:"Fraunces",serif;font-style:italic;font-size:18px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
+.fin-text{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:22px;line-height:1.5;max-width:32ch;margin:0 auto 40px;color:var(--ink)}
+.fin-meta{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--cloud);line-height:2.4}
+@media (max-width:720px){
+  body{font-size:16px}
+  .cover-content{padding:36px 28px}
+  .wrap{padding:0 22px}
+  .day-num{font-size:22vw}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .hero{margin:36px -22px}
+  .hero figcaption{padding:0 22px}
+  .fin-img{margin-left:-22px;margin-right:-22px}
+  .stats{grid-template-columns:1fr 1fr}
+  .pull{margin:36px 0;padding:24px 24px;font-size:20px}
+  .twist{margin:48px 0}
+  .receipt{padding:24px 22px}
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="cover">
+  <img src="assets/img_3116.jpeg" alt="">
+  <div class="cover-grad"></div>
+  <div class="cover-content">
+    <div class="cover-top">
+      <span>· Carnet de Paris ·</span>
+      <span>16 / 05 / 2026</span>
+    </div>
+    <div class="cover-mid">
+      <div class="day-num">Treize.</div>
+      <h1 class="cover-title">Le grand<br>tour parisien</h1>
+      <p class="cover-sub">從金字塔到金鐵塔，從蕎麥可麗餅到 Pierre Hermé 馬卡龍 —— 巴黎最後一整天，我們把這座城吃了、走了、抱在懷裡了。</p>
+    </div>
+    <div class="cover-bottom">
+      <span>巴黎 · Paris 8ᵉ–6ᵉ</span>
+      <span class="right">Jour 13 / 14<br>Samedi, le grand jour</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROLOGUE -->
+<div class="wrap">
+<section class="prologue">
+  <div class="proem-mark">· Préambule ·</div>
+  <p class="proem">最後一天總是這樣 —— 想多看一眼、多走一條街、多拍一張照，於是把十一個地方塞進一天裡，從清晨九點到深夜十一點，巴黎像捲底片一樣在眼前轉。</p>
+  <div class="proem-dash"></div>
+</section>
+</div>
+
+<!-- § UN · LOUVRE -->
+<div class="wrap">
+<section class="section">
+  <div class="sec-num"><span>§ Un</span></div>
+  <h2 class="sec-title">羅浮宮的金字塔，<br><em>玻璃 · 石頭 · 國王</em></h2>
+
+  <p>九點十五分，<strong>Cour Napoléon</strong> 廣場上人還不多。<span class="fr">貝聿銘</span>的玻璃金字塔在多雲的天光裡反著鐵灰色的反射，後面 Pavillon Denon 翼樓的鉛灰圓頂跟金黃石牆把整個構圖框得剛剛好。小米抱著紫色泰迪熊 —— 阿米里斯本買的伴手禮，一路要帶回台灣 —— 被阿米抱起站上廣場中央的水泥矮墩，那是清潔工平時放工具的台子，現在臨時變她的觀景台。</p>
+
+  <figure class="hero">
+    <img src="assets/img_2940.jpeg" alt="">
+    <figcaption><span class="loc">Cour Napoléon · 09:18</span>玻璃金字塔 + 紫色泰迪熊 + 阿米的奈良美智托特</figcaption>
+  </figure>
+
+  <p>繞到中軸線往西看，是 <strong>Louis XIV 騎馬雕像</strong>（貝尼尼 1665 年原作的青銅複製版本，立在這條中軸線上，正對玻璃金字塔）。<span class="fr">太陽王</span>騎在揚蹄的馬上，背後是 Pavillon Sully 的尖頂。阿米站在雕像下，米米抱著泰迪熊也來一張。</p>
+
+  <div class="grid-2">
+    <figure><img src="assets/img_2941.jpeg" alt=""></figure>
+    <figure><img src="assets/img_2945.jpeg" alt=""></figure>
+  </div>
+
+  <p>找一對日本情侶幫忙拍全家照。Cour Napoléon 廣場正面，玻璃金字塔置中，三個人靠在一起，米米抱著泰迪熊。<strong>這是 Day 13 的第一張全家福</strong>。</p>
+
+  <figure class="hero">
+    <img src="assets/img_2946.jpeg" alt="">
+    <figcaption><span class="loc">Cour Napoléon · 09:24</span>一家三口 · 玻璃金字塔正面</figcaption>
+  </figure>
+
+  <p>米米被放下來走幾步，在金字塔旁邊的水池矮牆上站著回頭看阿米 —— 那個瞬間光線斜進來，把她的背影鑲了一圈金邊，阿米也定住了。從遠處按下快門，這張不是設計過的合照，反而最像今天的開場。</p>
+
+  <figure>
+    <img src="assets/img_2951.jpeg" alt="">
+    <figcaption><span class="loc">09:31</span>米米站水池矮牆 · 阿米背影</figcaption>
+  </figure>
+
+  <p>繞過 Pavillon Mollien 那邊，看到 <span class="fr">「Corps vivants」</span>（活著的身體）展覽看板 —— <strong>米開朗基羅 vs 羅丹</strong>兩個雕塑巨匠對撞，超巴黎的策展角度。旁邊那張紅色海報是 <span class="fr">Martin Schongauer</span> 的「Le Beau immortel」（不朽之美），德國文藝復興版畫家。一面外牆，三個展覽，五百年的雕塑與線條疊在一起。</p>
+
+  <figure>
+    <img src="assets/img_2987.jpeg" alt="">
+    <figcaption><span class="loc">Pavillon Mollien · 09:42</span>Michel-Ange × Rodin · Le Beau immortel</figcaption>
+  </figure>
+
+  <p>但最大的梗在地下廣場 —— <strong>達文西密碼最後一幕 Robert Langdon 跪下的那個倒金字塔</strong>。Carrousel du Louvre 地下大廳，玻璃倒金字塔正下方，地面浮出一座小型石頭金字塔，兩個尖端遙遙相對 —— 丹·布朗寫的「聖杯藏匿處」就在這裡。我們三個各站一邊，手指比著小金字塔的尖，姿勢拍得超刻意，但這梗只有看過電影的人會懂。</p>
+
+  <figure class="hero">
+    <img src="assets/img_3017.jpeg" alt="">
+    <figcaption><span class="loc">Carrousel du Louvre · 09:50</span>達文西密碼 · 倒金字塔 · 聖杯藏匿處</figcaption>
+  </figure>
+
+</section>
+</div>
+
+<!-- § DEUX · PALAIS ROYAL -->
+<div class="wrap">
+<section class="section">
+  <div class="sec-num"><span>§ Deux</span></div>
+  <h2 class="sec-title">Palais Royal ·<br><em>那 260 根黑白柱子</em></h2>
+
+  <p>從羅浮宮北邊小門出來，過 Rue de Rivoli，幾分鐘就到 <span class="fr">Palais Royal</span>。中庭那 260 根黑白條紋柱子 —— 藝術家 <strong>Daniel Buren</strong> 1986 年的裝置作品 <span class="fr">《Les Deux Plateaux》</span>（兩座高原）。當年法國藝術界大吵了一架，有人說「毀了王宮的古典中庭」，結果四十年過去，變成巴黎打卡聖地。法國國旗在中庭背後飄揚。</p>
+
+  <figure>
+    <img src="assets/img_2957.jpeg" alt="">
+    <figcaption><span class="loc">Palais Royal · 10:02</span>阿米柱頂 · 法國國旗</figcaption>
+  </figure>
+
+  <p>柱子高度不一，從幾公分到一公尺多。每根都可以踩、可以坐、可以擺姿勢。整個中庭就是一個 4D 棋盤，所有遊客自己變棋子。阿米戴墨鏡跳上一根，手指天比一。換我跳上另一根，紅 hood + 黑白外套，姿勢演得很滿。</p>
+
+  <div class="grid-2">
+    <figure><img src="assets/img_2963.jpeg" alt=""></figure>
+    <figure><img src="assets/img_2967.jpeg" alt=""></figure>
+  </div>
+
+  <p>然後是米米的時刻 —— 她被放上一根剛好齊腰的柱子，伸出小手指天，喊「飛機！」（其實是雲，但她已經分不清差別，我們也不打算糾正她）。</p>
+
+  <figure>
+    <img src="assets/img_2979.jpeg" alt="">
+    <figcaption><span class="loc">10:11</span>米米柱頂指天 · 比一 · 「飛機！」</figcaption>
+  </figure>
+
+  <p class="pull">柱頂上的米米指著天說飛機 —— <em>那其實是一朵雲</em>，但她已經分不清差別，而我們也不打算糾正她。</p>
+
+  <p>離開時穿過 Palais Royal 拱門，三重拱底層層遞進，由 Doric 圓柱撐起，光從盡頭灑進來。阿米跟米米站在第一道拱底下 —— 像三道時光門連起來，從柱頂的玩鬧回到歷史的廊道。</p>
+
+  <figure>
+    <img src="assets/img_2983.jpeg" alt="">
+    <figcaption><span class="loc">10:18</span>三重拱門 · 通往內庭花園</figcaption>
+  </figure>
+
+</section>
+</div>
+
+<!-- § TROIS · MATIN DES OLIVIERS -->
+<div class="wrap">
+<section class="section">
+  <div class="sec-num"><span>§ Trois</span></div>
+  <h2 class="sec-title">Matin des Oliviers ·<br><em>巴黎中轉站</em></h2>
+
+  <p>離開 Palais Royal，穿過 1 區小巷往北。某家轉角 brasserie 整面外牆爬滿了白色花樹 —— 巴黎五月的特權，五分鐘走到 <strong>Matin des Oliviers</strong>（2 Rue de l'Échelle, 75001）。地中海風格 brunch 名店，Google 4.8 星，<strong>綠色摩洛哥磁磚桌 + 白色雕塑石膏拱牆</strong>，陽光從大片窗戶斜灑進來。</p>
+
+  <figure>
+    <img src="assets/img_2992.jpeg" alt="">
+    <figcaption><span class="loc">1 區轉角 · 09:55</span>白花樹 brasserie</figcaption>
+  </figure>
+
+  <p>今天這頓 brunch 有個意外：<strong>一桌十個人</strong>。我們三個之外，還有 <strong>FaceHeart 鉅怡智慧</strong>的<strong>鐘博（董事長 Morris）</strong>跟 Cliff、再加上阿米扶輪社時期交換學生的學妹 + 她的男朋友。FaceHeart 是台灣 AI 影像生理量測公司 —— 用一支相機掃臉 6 秒，就能測心跳、血壓、心率變異、壓力指數，2023 年取得美國 FDA 二類醫療軟體許可，創辦人是陽明交大電控所的吳炳飛教授。</p>
+
+  <figure class="hero">
+    <img src="assets/img_3002.jpeg" alt="">
+    <figcaption><span class="loc">Matin des Oliviers · 10:24</span>全桌十個人 · 巴黎中轉站</figcaption>
+  </figure>
+
+  <p>結果鐘博跟 Cliff 吃了 <strong>25 分鐘</strong>就跑了 —— 趕著去 Gare de Lyon 搭 TGV 直奔<strong>日內瓦</strong>開會。<strong>巴黎在他們行程裡只是「中轉站」</strong>，跟我們花十二天慢慢晃完全不同節奏。同一個桌、同一份 shakshuka，有人優雅地撕麵包，有人 25 分鐘掃光走人 —— 這就是世界。</p>
+
+  <figure>
+    <img src="assets/img_3006.jpeg" alt="">
+    <figcaption><span class="loc">10:31</span>你 + 鐘博 + 米米露肚臍嗑麵包</figcaption>
+  </figure>
+
+  <p>FaceHeart 一行離開後，扶輪社學妹接著抱起米米，邊走邊在街角親她臉頰。米米完全放鬆，懶懶靠在她肩膀上，像認得這個人。學妹的男朋友後來提議「我租了車，可以載你們去河谷村」—— 這個 plot twist 我們之後再說。</p>
+
+  <figure>
+    <img src="assets/img_3011.jpeg" alt="">
+    <figcaption><span class="loc">Rue de l'Échelle · 11:14</span>扶輪社學妹 · 米米臉頰親親</figcaption>
+  </figure>
+
+</section>
+</div>
+
+<!-- § QUATRE · MERCI -->
+<div class="wrap">
+<section class="section">
+  <div class="sec-num"><span>§ Quatre</span></div>
+  <h2 class="sec-title">Merci #2 ·<br><em>紅色四葉草的郵局</em></h2>
+
+  <p>從 Matin des Oliviers 走幾分鐘到 <strong>19 Rue de Richelieu</strong>，Merci 的第二家概念店 —— <strong>2025 年才開的新店</strong>，連 Google Maps 上的照片都還是舊的。原本這個地址是巴黎老郵局，他們保留了玻璃磚牆跟黑色鐵門框，掛上紅色四葉草 logo + 「Merci #2」紅字招牌，改造痕跡看得超清楚。</p>
+
+  <p>Merci 原本由 Bonpoint 創辦人夫婦 Bernard 與 Marie-France Cohen 在 2009 年於 11 區開店，2021 年賣給 Gérard Darel 家族，跨海聯名做過洛杉磯 Erewhon 超市的紅四葉草袋（那個 Erewhon 限定 Merci 抹布，小紅書炒到台幣兩千）。</p>
+
+  <figure>
+    <img src="assets/img_2994.jpeg" alt="">
+    <figcaption><span class="loc">19 Rue de Richelieu · 11:32</span>Merci #2 · 紅色四葉草 · 舊郵局玻璃磚牆</figcaption>
+  </figure>
+
+  <p>Merci 招牌的<strong>帆布袋牆</strong>把一整面牆做成 12 款配色 —— 海軍藍、各色條紋、丹寧、豹紋。米米指著淺紫條紋款，好像在點貨 😆</p>
+
+  <figure>
+    <img src="assets/img_2995.jpeg" alt="">
+    <figcaption><span class="loc">11:46</span>米米 vs 12 款 Merci tote 一面牆</figcaption>
+  </figure>
+
+  <p>我試穿了一件 70s 復古配色防風夾克（黑/米/橄欖三色 panel + 紅 hood，左胸還有 patch），阿米在試衣間鏡子裡幫我自拍存證。米米也戴著她從 Merci 童裝區找出來的紅色墨鏡入鏡 —— <strong>三歲不到，已經知道怎麼凹造型</strong>。</p>
+
+  <figure class="hero">
+    <img src="assets/img_2997.jpeg" alt="">
+    <figcaption><span class="loc">Merci #2 試衣間 · 11:54</span>你的 70s 夾克 + 米米的紅墨鏡</figcaption>
+  </figure>
+
+  <p>路過 <strong>Pierre Hermé</strong> 巴黎本店 —— 馬卡龍界的「畢卡索」。橙色三輪手推車停在店門口，車身上印著金字 PIERRE HERMÉ PARIS。Pierre Hermé 本人 1961 年生，14 歲就在 Lenôtre 當學徒，他發明的 <strong>Ispahan</strong>（玫瑰 + 荔枝 + 覆盆子）是被全世界抄翻的招牌口味。今天只是路過先看一眼，下午到河谷村再正式拜碼頭。</p>
+
+  <figure>
+    <img src="assets/img_3021.jpeg" alt="">
+    <figcaption><span class="loc">Pierre Hermé · 12:08</span>橙色三輪手推車 · 伏筆</figcaption>
+  </figure>
+
+</section>
+</div>
+
+<!-- § CINQ · PLOT TWIST -->
+<div class="wrap">
+<section class="section">
+  <div class="sec-num"><span>§ Cinq</span></div>
+  <h2 class="sec-title">Plot Twist ·<br><em>朋友男友的計程車</em></h2>
+
+  <div class="twist">
+    <span class="twist-tag">· Plot Twist ·</span>
+    <h3 class="twist-title">「我男朋友租了車，可以載你們去河谷村！」</h3>
+    <p>阿米的扶輪社學妹這樣說。聽起來很貼心 —— 帶著一歲多的小孩，有車比擠 RER 舒服多了。結果上車才知道：<strong>租車一日來回 €280</strong>。RER A 兩個大人來回大概 €20 —— <span class="fr">差價十四倍</span>。台灣物價真的是讚 —— 同樣的錢在台北可以叫十趟 Uber。</p>
+    <p>更慘的是巴黎週六的塞車。從 1 區開到 Val d'Europe 應該 40 分鐘，我們塞了一個多小時，沿著 A4 高速公路一路停停走走，看見的不是田園而是 La Défense 的摩天樓群（巴黎西側商務區，那棟尖頂的是 Tour Hekla）。窗外的雲層美得很 Magritte，但車內小米一邊不耐煩、阿米一邊安撫她。</p>
+  </div>
+
+  <div class="grid-2">
+    <figure><img src="assets/img_3022.jpeg" alt=""></figure>
+    <figure><img src="assets/img_3024.jpeg" alt=""></figure>
+  </div>
+
+</section>
+</div>
+
+<!-- § SIX · LA VALLEE VILLAGE -->
+<div class="wrap">
+<section class="section">
+  <div class="sec-num"><span>§ Six</span></div>
+  <h2 class="sec-title">河谷村 ·<br><em>雨中的 Polo + 米米的歐洲首次馬卡龍</em></h2>
+
+  <p><strong>La Vallée Village</strong>（Val d'Europe，3 Cours de la Garonne, 77700 Serris）—— 巴黎近郊最大的精品 outlet。下車就下大雨，普羅旺斯風格的鵝黃色建築 + 灰藍石板路被雨水打濕，反射出整片潮濕的光澤。<strong>Polo Ralph Lauren</strong> 旗艦店 —— navy 雨棚 + 經典 Ralph Lauren 馬球騎士 logo + 招牌的 <strong>Ralph's Coffee</strong> 綠色復古 Citroën HY 咖啡車，完全像 Ralph Lauren 廣告場景。</p>
+
+  <figure class="hero">
+    <img src="assets/img_3025.jpeg" alt="">
+    <figcaption><span class="loc">La Vallée Village · 14:18</span>Polo Ralph Lauren · 雨中的鵝黃建築</figcaption>
+  </figure>
+
+  <figure>
+    <img src="assets/img_3027.jpeg" alt="">
+    <figcaption><span class="loc">14:24</span>阿米 · 撐傘 · Ralph's Coffee 復古車</figcaption>
+  </figure>
+
+  <p>逛了 Polo 跟幾家童裝店之後，雨還沒停。<strong>米米的歐洲首次系列 +1：Pierre Hermé 馬卡龍</strong> 🎉 米米踮著腳扶著櫃台，睜大眼睛看著一整排彩色馬卡龍 —— Mogador、Solento、Jardin Potager、Infiniment Pignon de Cèdre —— 根本是上輩子的甜點靈魂回到老家。櫃台後方的店員姊姊看到她笑歪了。</p>
+
+  <figure>
+    <img src="assets/img_3028.jpeg" alt="">
+    <figcaption><span class="loc">Pierre Hermé · La Vallée · 16:42</span>米米的歐洲首次馬卡龍</figcaption>
+  </figure>
+
+</section>
+</div>
+
+<!-- § SEPT · RENAULT -->
+<div class="wrap">
+<section class="section">
+  <div class="sec-num"><span>§ Sept</span></div>
+  <h2 class="sec-title">Le Défilé Renault ·<br><em>米米的駕駛初體驗</em></h2>
+
+  <p>從河谷村塞車回市區已經 19 點多。下車後走過 Rue Marbeuf —— 8 區的小街，一個轉角的 BNP Paribas 銀行 ATM 上方有一塊 Invader 馬賽克作品（看起來像隻紅黑灰的吃豆人或泡泡龍）。<strong>巴黎街頭藝術家 Invader 自 1996 年起在巴黎放了 1500 多件作品，扣掉被移除/破壞的，全城還有大概一千件</strong>，掃 FlashInvaders app 累積積分超有成就感。可惜這趟旅程都沒裝 app。</p>
+
+  <figure>
+    <img src="assets/img_3046.jpeg" alt="">
+    <figcaption><span class="loc">Rue Marbeuf · 19:36</span>Invader 馬賽克 · BNP ATM</figcaption>
+  </figure>
+
+  <p>繼續走幾條街，到<strong>香榭麗舍大道 53 號的 Le Défilé Renault</strong>。開到 22 點 —— 玻璃外牆 + 金色螺旋斜坡 (carwalk)，整棟建築像汽車界的 Apple Store。米米一進門就完全變一個人。原本在門口排隊累到哭，進去之後看到車車整個亢奮。門口外牆還有另一塊 <strong>PSG（巴黎聖日耳曼）Invader 馬賽克</strong> —— 黃色星星 + 藍色 PSG 圓形 logo + 紅色塔尖。</p>
+
+  <div class="grid-2">
+    <figure><img src="assets/img_3033.jpeg" alt=""></figure>
+    <figure><img src="assets/img_3034.jpeg" alt=""></figure>
+  </div>
+
+  <p>第一台車就是<strong>粉紅色 R5 Diamant</strong>，雷諾為了慶祝 Renault 5 上市 50 週年做的純電概念車，車身鑲了 14 顆鑽石，所以叫 Diamant，設計師是 Pierre Gonalons 跟雷諾設計團隊合作。米米歪頭看車那畫面太可愛 😍 我們把這個畫面從各個角度拍了又拍。</p>
+
+  <figure class="hero">
+    <img src="assets/img_3036.jpeg" alt="">
+    <figcaption><span class="loc">Le Défilé Renault · 19:54</span>R5 Diamant · 50 週年紀念 · 米米歪頭審車</figcaption>
+  </figure>
+
+  <p>展場一路走下去：<strong>Renault 4</strong>（1961 法國國民車復刻概念版，淺灰紫色配奶油黃內裝，米米踮腳摸車頭燈）、<strong>Speed Racer 主題 Pop Art 油畫</strong>（致敬日本動畫 <span class="fr">Mach Go Go Go</span>，1967 動畫，華卓斯基姊妹 2008 拍真人版，紫色頭盔 + M 字賽車手）、<strong>R5 Turbo 3E</strong>（1380 匹馬力電動暴力 hatchback，致敬 1980 年代拉力傳奇，黑色獸氣全開，米米伸手摸車門）。</p>
+
+  <div class="grid-3">
+    <figure><img src="assets/img_3038.jpeg" alt=""></figure>
+    <figure><img src="assets/img_3039.jpeg" alt=""></figure>
+    <figure><img src="assets/img_3040.jpeg" alt=""></figure>
+  </div>
+
+  <p>真正的<strong>米米歐洲首次：駕駛初體驗</strong>—— <strong>Alpine A290</strong>，2024 上市，Alpine 第一台量產純電 hot hatch，等於 R5 E-Tech 的運動版。展車開放上座，米米被放進駕駛座，雙手握住方向盤，車門踏板下面看到 ALPINE 字樣 —— <strong>小米第一台「開」的車，起點超高</strong> 🏎️</p>
+
+  <figure class="hero">
+    <img src="assets/img_3041.jpeg" alt="">
+    <figcaption><span class="loc">Alpine A290 駕駛座 · 20:32</span>米米的駕駛初體驗 · 1Y11M</figcaption>
+  </figure>
+
+  <p>緊接著是 <strong>Rafale</strong>（2023 新旗艦 SUV coupe，白色金屬光感），米米踮腳摸後照鏡。然後爬上 carwalk 二樓 —— 那個金色螺旋斜坡 —— 站在欄杆邊往下看，POP! ART! CAR! 招牌就在腳下。室內路燈柱被她當成欄杆的延伸來玩，笑得超開心。</p>
+
+  <div class="grid-2">
+    <figure><img src="assets/img_3042.jpeg" alt=""></figure>
+    <figure><img src="assets/img_3045.jpeg" alt=""></figure>
+  </div>
+
+</section>
+</div>
+
+<!-- § HUIT · BREIZH -->
+<div class="wrap">
+<section class="section">
+  <div class="sec-num"><span>§ Huit</span></div>
+  <h2 class="sec-title">Breizh Café ·<br><em>從日本紅回巴黎的可麗餅</em></h2>
+
+  <p>地鐵搭到 <strong>Odéon</strong>（6 區）。<strong>Breizh Café Odéon</strong>（1 Rue de l'Odéon, 75006）—— 巴黎可麗餅界的故事大王。深藍色雨棚 + 玻璃磚牆 + Carrefour de l'Odéon 路牌 + 鋪滿石板的廣場，露天座位是經典 Maison Drucker 黑白條紋藤椅。</p>
+
+  <figure class="hero">
+    <img src="assets/img_3047.jpeg" alt="">
+    <figcaption><span class="loc">1 Rue de l'Odéon · 19:42</span>BREIZH CAFE · 18 號門 · 深藍雨棚</figcaption>
+  </figure>
+
+  <p>創辦人 <strong>Bertrand Larcher</strong> 是布列塔尼人，1996 年在<strong>東京神樂坂</strong>開了日本第一家可麗餅店「Le Bretagne」。在日本紅起來之後，2006 年把品牌逆向引進巴黎，「BREIZH」（布列塔尼語 = Bretagne）變成國際認證的可麗餅標誌。Odéon 店是巴黎其中一家分店，用料超講究：有機布列塔尼蕎麥粉、Bordier 奶油、Label Rouge 鮭魚、放山雞蛋。</p>
+
+  <p><strong>食物的全球化路徑</strong>：可麗餅誕生於法國布列塔尼 → 紅到日本 → 從日本再紅回巴黎。跟 Day 12 的「越南河粉是法國殖民帶回去的」剛好形成對照 —— 食物總是繞地球一圈，才找到自己的位置。</p>
+
+  <figure>
+    <img src="assets/img_3056.jpeg" alt="">
+    <figcaption><span class="loc">露台 · 19:51</span>阿米大笑 + 米米啃麵包 + 粉紅水壺</figcaption>
+  </figure>
+
+  <p>三道餐分享著吃：阿米的 <span class="fr">Galette au Pastrami de bœuf</span>（煙燻牛肉 + 紫高麗菜絲 + 青蔥 + 白醬）、我的 <span class="fr">Galette complète au jambon blanc</span>（白火腿 + 蛋 + 起司，挑安全的 —— 我蕁麻疹避煙燻）。蕎麥皮邊緣酥脆得跟蕾絲一樣，就是 Breizh Café 招牌的「lacy edges」。</p>
+
+  <div class="grid-2">
+    <figure>
+      <img src="assets/img_3057.jpeg" alt="">
+      <figcaption>Galette Pastrami</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/img_3058.jpeg" alt="">
+      <figcaption>Galette complète</figcaption>
+    </figure>
+  </div>
+
+  <p>米米的 <span class="fr">Crêpe compote de pomme maison</span>（自家蘋果泥 + 香草冰淇淋 + 鹽味焦糖）。第一口下去眼睛瞇起來 —— <strong>米米歐洲首次：可麗餅</strong>。那個表情我們之後一定會記得很久。阿米負責拆解、灌焦糖、餵她吃。</p>
+
+  <figure>
+    <img src="assets/img_3059.jpeg" alt="">
+    <figcaption><span class="loc">20:08</span>阿米的鹽味焦糖蘋果泥可麗餅</figcaption>
+  </figure>
+
+  <div class="receipt">
+    <h4>Breizh Café Odéon</h4>
+    <div class="sub">1 rue de l'Odéon · 75006 PARIS</div>
+    <div class="row"><span>N° 402299</span><span>Table 213 · 3 cou.</span></div>
+    <div class="row"><span>16/05/2026</span><span>19:47</span></div>
+    <div class="row"><span>Par</span><span>Maxime — Caisse 0</span></div>
+    <hr>
+    <div class="row"><span>1× Galette complète</span><span></span></div>
+    <div class="row"><span>1× Galette Pastrami</span><span></span></div>
+    <div class="row"><span>1× Crêpe compote pomme</span><span></span></div>
+    <hr>
+    <div class="row"><span>HT</span><span>41,36 €</span></div>
+    <div class="row"><span>TVA 10%</span><span>4,14 €</span></div>
+    <div class="row total"><span>TOTAL</span><span>45,50 €</span></div>
+    <hr>
+    <div class="sub">Merci · À très bientôt !</div>
+  </div>
+
+  <figure>
+    <img src="assets/img_3060.jpeg" alt="">
+    <figcaption><span class="loc">20:14</span>收據實照 · N°402299</figcaption>
+  </figure>
+
+  <p>飯後走出來，路過一家 Franprix 超市，看到當令草莓 <span class="fr">Fraises Gariguette</span>（250g €4.49，500g €5.99 promo）。<strong>Gariguette 是法國招牌春季草莓品種</strong>，細長橢圓形、果香超濃、口感介於野生與栽培之間 —— 5、6 月正當令。買了一盒當宵夜，回飯店米米要嗑光。</p>
+
+  <figure>
+    <img src="assets/img_3061.jpeg" alt="">
+    <figcaption><span class="loc">Franprix · 20:34</span>Fraises Gariguette · 法國春季招牌草莓 · €4.49</figcaption>
+  </figure>
+
+</section>
+</div>
+
+<!-- § NEUF · NOTRE-DAME -->
+<div class="wrap">
+<section class="section">
+  <div class="sec-num"><span>§ Neuf</span></div>
+  <h2 class="sec-title">Notre-Dame ·<br><em>重生五年</em></h2>
+
+  <p>晚餐後沿著塞納河走過去 —— 從 Odéon 到 <strong>Île de la Cité</strong> 大約十分鐘。我們從南側 Pont au Double 那邊接近聖母院。她站在那裡，沐浴在傍晚的雲灰天光裡，飛扶壁 (flying buttress) 整排撐住屋頂的弧光超有戲。</p>
+
+  <figure class="hero">
+    <img src="assets/img_3064.jpeg" alt="">
+    <figcaption><span class="loc">Quai de Montebello · 20:58</span>Notre-Dame · 側面飛扶壁 · 新塔尖</figcaption>
+  </figure>
+
+  <p>2019 年 4 月 15 日 18:20，聖母院屋頂大火，木造塔尖 (flèche) 倒塌，屋頂被燒掉一大半，塞納河兩岸的人哭著看著她燃燒。五年後 —— <strong>2024 年 12 月 7 日重新開放</strong>，馬克宏 + 全球元首到場，Pinault 跟 Arnault 兩大法國奢侈品家族都是主要捐款人。</p>
+
+  <p>重建工程花了 5 年、$9 億美元、2000 位工匠、250 家公司。<strong>塔尖完全仿照 19 世紀 Viollet-le-Duc 原設計重建</strong>（沒搞什麼「woke 改造」，守住了傳統）。塔尖頂端 2023 年 12 月重新放上金色公雞（法國國徽），裡面藏有宗教聖物。修復工程仍持續到 2026 年 —— 也就是說，我們<strong>正好在「還沒完全收工但開放」的時間點看到她</strong>。</p>
+
+  <figure>
+    <img src="assets/img_3066.jpeg" alt="">
+    <figcaption><span class="loc">21:02</span>新塔尖近拍 · 19 世紀原設計復刻 · 金色公雞</figcaption>
+  </figure>
+
+  <p>過了 Pont au Double 到另一岸，繞到聖母院東側。阿米揮手讓我拍一張 —— 背景是還在 scaffolding 中、但已經重新長出塔尖的聖母院。她不是死去過又被「保存」的標本，而是真的<strong>「重生」</strong>了 —— 從火裡長回來。</p>
+
+  <figure class="hero">
+    <img src="assets/img_3068.jpeg" alt="">
+    <figcaption><span class="loc">21:08</span>阿米揮手 · Notre-Dame 全景</figcaption>
+  </figure>
+
+  <p class="pull">她不是死去又被保存的標本 —— <em>她是真的重生了</em>。從火裡長回來，戴著一隻金色公雞站在塔尖上，像鳳凰那樣。</p>
+
+  <figure>
+    <img src="assets/img_3071.jpeg" alt="">
+    <figcaption><span class="loc">21:14</span>你抱米米 · Notre-Dame 全景</figcaption>
+  </figure>
+
+  <p>沿河岸走，5 區 Rue Saint-Julien le Pauvre 街角的 <strong>Shakespeare and Company</strong>（37 Rue de la Bûcherie）—— 全世界最有名的英文獨立書店，海明威、Fitzgerald、Joyce 都是常客。喬伊斯 1922 年第一版《尤利西斯》就是在這家原本的店出版的。書店外牆貼滿 Invader 馬賽克：丁丁、PSG logo + 黃色星星、聖誕老人、仙人掌。</p>
+
+  <figure>
+    <img src="assets/img_3073.jpeg" alt="">
+    <figcaption><span class="loc">Rue Saint-Julien le Pauvre · 21:22</span>Shakespeare and Co · Invader 牆面</figcaption>
+  </figure>
+
+  <p>對面 Rue du Petit Pont 街角的 <strong>Jardin Notre Dame</strong> 餐廳，綠色 + 鵝黃外牆。牆上又一塊 Invader —— 紫色身體 + 白頭 + 橘鳥嘴的企鵝，<strong>5 區的 PA_1083 編號</strong>。</p>
+
+  <figure>
+    <img src="assets/img_3074.jpeg" alt="">
+    <figcaption><span class="loc">Rue du Petit Pont · 21:26</span>Jardin Notre Dame · 企鵝 Invader</figcaption>
+  </figure>
+
+  <p>繞到正面廣場 —— Parvis Notre-Dame。雙塔正面、玫瑰花窗、三道大拱門、28 王雕像長廊，全擺在一張照片裡。<strong>這是聖母院最經典的明信片角度</strong>。阿米揮手 + 笑臉，門口還有黃色帳棚 (重建工地圍區)。</p>
+
+  <figure class="hero">
+    <img src="assets/img_3076.jpeg" alt="">
+    <figcaption><span class="loc">Parvis Notre-Dame · 21:30</span>阿米揮手 · 雙塔 · 玫瑰花窗</figcaption>
+  </figure>
+
+  <p>最後一張是塞納河上的視角 —— 聖母院雙塔 + 玫瑰花窗側影 + 河上的觀光船 (Bateaux-Mouches) 載著一船人從橋下開過，水波拉出長長的白浪。明信片時刻。</p>
+
+  <figure>
+    <img src="assets/img_3075.jpeg" alt="">
+    <figcaption><span class="loc">Pont au Double · 21:36</span>雙塔 + 玫瑰花窗 + 塞納河遊船</figcaption>
+  </figure>
+
+</section>
+</div>
+
+<!-- § DIX · EIFFEL NIGHT -->
+<div class="wrap">
+<section class="section">
+  <div class="sec-num"><span>§ Dix</span></div>
+  <h2 class="sec-title">Tour Eiffel ·<br><em>米米的鐵塔之夜</em></h2>
+
+  <p>地鐵 M6 從 Cluny–La Sorbonne 一路坐到 <strong>Bir-Hakeim</strong>（Tour Eiffel）。Bir-Hakeim 站名來自 1942 年北非自由法國軍對抗德義聯軍的「比爾哈凱姆戰役」，M6 線高架段就在塞納河上跨越，過橋直接看到鐵塔 —— 電影《全面啟動 Inception》最後 Ariadne 跟 Cobb 走的那座金屬拱橋，就是 Pont de Bir-Hakeim。地鐵月台月台牆上 Tour Eiffel 海報跟車站名牌一起入鏡，跟阿米來張地鐵 selfie。</p>
+
+  <figure>
+    <img src="assets/img_3127.jpeg" alt="">
+    <figcaption><span class="loc">M6 Bir-Hakeim · 21:48</span>離鐵塔最近的地鐵站</figcaption>
+  </figure>
+
+  <p>出站走五分鐘，穿過 Champ-de-Mars 廣場安檢入口排隊區。<strong>不是 Trocadéro 那個明信片視角</strong> —— 第三次來巴黎了，Trocadéro 的視角我跟阿米都看過，這次想讓米米在<strong>正下方仰望</strong>。鐵塔金光全開，整點探照燈白光在塔頂旋轉掃射，藍調時刻把天空染成靛紫。</p>
+
+  <figure>
+    <img src="assets/img_3082.jpeg" alt="">
+    <figcaption><span class="loc">21:54</span>鐵塔基座下 · 安檢入口排隊</figcaption>
+  </figure>
+
+  <p>米米被阿米抱在懷裡，鐵塔像為我們而亮。樹葉框出來的鐵塔上半身金光是另一個視角 —— 巴黎街頭巷尾隨便走幾步，鐵塔都從不同的開窗冒出來。</p>
+
+  <figure>
+    <img src="assets/img_3084.jpeg" alt="">
+    <figcaption><span class="loc">21:58</span>樹葉框景 · 鐵塔金光</figcaption>
+  </figure>
+
+  <figure class="hero">
+    <img src="assets/img_3116.jpeg" alt="">
+    <figcaption><span class="loc">Champ-de-Mars · 22:04</span>阿米抱米米貼臉 + 整座鐵塔金光直拔</figcaption>
+  </figure>
+
+  <p>我也輪流站到鐵塔正下方那座大拱門中央 —— 鐵塔金光從頭頂壓下來，向上拔到塔尖，那個透視感像把人吸進雲裡。</p>
+
+  <figure>
+    <img src="assets/img_3117.jpeg" alt="">
+    <figcaption><span class="loc">22:08</span>你站在鐵塔正下方 · 拱門框景</figcaption>
+  </figure>
+
+  <p>然後玩了一輪倒著拍 —— iPhone 直接顛倒，鐵塔變成倒掛的金色傘骨，我們三個臉貼著鏡頭笑 😆 阿米的頭髮垂下來，米米靠著我下巴。這張全家福會放在客廳很多年。</p>
+
+  <div class="grid-2">
+    <figure><img src="assets/img_3093.jpeg" alt=""></figure>
+    <figure><img src="assets/img_3090.jpeg" alt=""></figure>
+  </div>
+
+  <p>我把米米放下來。她穿著藍色愛心連身衣，在鐵塔金色拱門前那一大片廣場上，自己跑起來 —— <strong>笑著面對鏡頭奔跑而來</strong>。阿米在右邊看著她。十二天的旅程，她從里斯本走到巴黎，從不會說「謝謝」到會在鐵塔下尖叫「亮亮！」，長大了不少。</p>
+
+  <figure class="hero">
+    <img src="assets/img_3101.jpeg" alt="">
+    <figcaption><span class="loc">22:14</span>米米奔跑 · 阿米看著她 · 鐵塔下廣場</figcaption>
+  </figure>
+
+  <p>然後我退到大拱門裡面，請阿米先過去帶她走遠，留下我從正下方拍 —— <strong>米米一個小白點站在鐵塔大拱門中央，完整對稱框景</strong>。鐵塔的兩條金腿像張開的傘骨擁住夜空，米米一個人在中央。十二天旅程的縮影。</p>
+
+  <figure class="hero">
+    <img src="assets/img_3106.jpeg" alt="">
+    <figcaption><span class="loc">22:18</span>米米鐵塔下廣場 · 大拱門對稱框景</figcaption>
+  </figure>
+
+  <p class="pull">她在這座城市留下兩個首次：<em>第一台開的車，是 Alpine</em>。<em>第一次摸的鐵塔，是 Eiffel</em>。<br>起點都高得不像話。</p>
+
+  <p>家庭合照三人 + 鐵塔拱門 —— 阿米抱米米、我在旁邊、阿米手指鐵塔。<strong>這張會擺進相框</strong>。然後沿著塞納河走過 Pont de Bir-Hakeim，金光倒映在水面，探照燈光束往天空射出去一條長長的銀線 —— 巴黎告別。</p>
+
+  <figure>
+    <img src="assets/img_3125.jpeg" alt="">
+    <figcaption><span class="loc">22:26</span>一家三口 · 鐵塔拱門下 · 阿米手指鐵塔</figcaption>
+  </figure>
+
+  <figure class="hero">
+    <img src="assets/img_3130.jpeg" alt="">
+    <figcaption><span class="loc">Pont de Bir-Hakeim · 22:48</span>金光倒映塞納河 · 探照燈光束 · 巴黎晚安</figcaption>
+  </figure>
+
+</section>
+</div>
+
+<!-- STATS -->
+<div class="wrap">
+<section class="section">
+  <div class="sec-num"><span>· Le bilan ·</span></div>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">11</div><div class="stat-l">站點 · stops</div></div>
+    <div class="stat"><div class="stat-n">13h</div><div class="stat-l">在外時數</div></div>
+    <div class="stat"><div class="stat-n">€280</div><div class="stat-l">朋友的計程車</div></div>
+    <div class="stat"><div class="stat-n">€45.50</div><div class="stat-l">Breizh Café</div></div>
+    <div class="stat"><div class="stat-n">+5</div><div class="stat-l">米米歐洲首次</div></div>
+    <div class="stat"><div class="stat-n">25min</div><div class="stat-l">FaceHeart 中轉</div></div>
+    <div class="stat"><div class="stat-n">5y</div><div class="stat-l">Notre-Dame 重建</div></div>
+    <div class="stat"><div class="stat-n">324m</div><div class="stat-l">鐵塔高度</div></div>
+  </div>
+
+  <p style="margin-top:40px;text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:var(--cloud)"><strong style="color:var(--rose);font-style:normal;font-family:'Fraunces',serif">米米歐洲首次系列 · Day 13 補完：</strong><br>馬卡龍 · 可麗餅 · Alpine 駕駛座 · 鐵塔近距離 · 鐵塔拱門奔跑</p>
+
+</section>
+</div>
+
+<!-- FIN -->
+<section class="fin">
+  <div class="fin-img">
+    <img src="assets/img_3132.jpg" alt="">
+  </div>
+  <div class="wrap">
+    <div class="fin-mark">· Fin ·</div>
+    <p class="fin-text">凌晨一點，米米光屁股坐在床上嗑草莓，行李攤了一床。<br>—— 巴黎，我們明天就要走了。</p>
+    <div class="fin-meta">
+      Jour 13 / 14 · Samedi 16 mai 2026<br>
+      Paris 8ᵉ–1ᵉʳ–6ᵉ–7ᵉ<br>
+      Hôtel Gabbie · 9 Rue Washington · 75008<br>
+      —<br>
+      Demain · 07:00 · CDG · vol Taipei 11:30
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
